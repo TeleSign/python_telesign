@@ -1,0 +1,13 @@
+@import url("default.css");
+
+body {
+	font-size: 0.9em;
+}
+tt, code, kbd, samp {
+	font-family: sans-serif;
+	font-size: 100%;
+}
+div.body p, div.body dd, div.body li {
+	text-align: left;
+}
+
