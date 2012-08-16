@@ -47,6 +47,6 @@ Using our *source*
 
     If you would like to try-out the *latest* bits, you can clone a local version of our public source code repository on `GitHub <https://github.com/telesign>`_, and then install from your enlistment, as in the following example::
     
-        $ git clone git://github.com/TeleSign/telesign_python.git telesign
+        $ git clone git://github.com/TeleSign/python_telesign.git telesign
         $ cd telesign/
         $ python setup.py install
