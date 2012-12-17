@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="8f657d07-db62-4a3a-b4bd-2d52c25bebfc" revisionNumber="1">
+  <developerConceptualDocument
+    xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <introduction>
+      <para>The following classes encapsulate the core functionality of the SDK.</para>
+    </introduction>
+    <section>
+      <title></title>
+      <content>
+        <table>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>Source File</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <legacyBold>Description</legacyBold>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>VerifyService.cs</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>Contains the high-level API for interacting with the Verify service. It abstracts the underlying details of interacting with the REST API. The basic usage is to initiate a call or SMS to a phone number, and then check the status of that transaction.	</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>PhoneIdService.cs</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>Contains the high-level API for interacting with the Phone Id service. It abstracts the underlying details of interacting with the REST API, and allows you to simply specify the phone number you want details about.</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>TeleSignService.cs</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Contains the lowest-level of interaction with the REST API service. In this file you can see how the request and response objects are constructed, which headers are used in the requests, and how the authentication is performed (including the construction of the	<legacyBold>StringToSign</legacyBold> object).
+              </para>
+              <para>
+                For more information, see the	<externalLink>
+                  <linkText>TeleSign REST API   documentation</linkText>
+                  <linkUri>https://portal.telesign.com/docs/index.html</linkUri>
+                </externalLink>.
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>RawVerifyService.cs</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>Contains the lower-level interaction to the Verify service. Look here to see the parameters the service requires.</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>RawPhoneIdService.cs</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>Contains the lower-level interaction to the Phone Id service. Look here to see the parameters the service requires.</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>TeleSignResponse.cs</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>The base class for all responses. Contains the basic transaction status information. Look at the other *Response.cs files to see the data model returned from the API.</para>
+            </entry>
+          </row>
+        </table>
+      </content>
+    </section>
+    <relatedTopics>
+      <link xlink:href="9af6cf0a-fd66-4584-a80a-91cda099a967">Overview</link>
+      <link xlink:href="a9f7180c-377a-43e4-8300-81dcadf4f6e3">SDK Operating Modes</link>
+      <link xlink:href="c5db90e5-f4d4-4ef5-a301-f273c5912311">TeleSign Web Services</link>
+      <link xlink:href="d04c81bc-5c8d-4c00-bcf8-d91a4f66313d">TeleSign Namespaces &amp; Classes</link>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

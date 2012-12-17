@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="4ea0bd57-de15-4ea2-ac1e-2561078f33d9" revisionNumber="1">
+  <developerOrientationDocument
+    xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:WDCML="http://microsoft.com/wdcml">
+
+    <introduction>
+      <para>
+        To begin using the <token>ProductName</token> and <token>Services</token>, make sure you meet the requirements, 
+        follow the installation procedure, and then get acquainted with SDK by exploring our sample code.
+      </para>
+      <autoOutline />
+    </introduction>
+    <inThisSection>
+      <content>
+        <definitionTable>
+          <definedTerm>
+            <link xlink:href="0b6529b4-cd1b-4595-9d53-5db0318ea617">Requirements</link>
+          </definedTerm>
+          <definition>
+            <para>
+              You must have an account with TeleSign to use <token>Services</token>, and 
+              your computer system must meet a set of requirements.
+            </para>
+          </definition>
+          <definedTerm>
+            <link xlink:href="03e7ed35-7619-4f03-bb44-7eef119a7726">Installation</link>
+          </definedTerm>
+          <definition>
+            <para>
+              The <token>ProductName</token> is available from our public repository hosted on 
+                <link xlink:href="https://github.com/">github</link>, and you get it by cloning a local version of this repository 
+                using <link xlink:href="http://git-scm.com/">git</link> for the Windows platform.
+            </para>
+          </definition>
+          <definedTerm>
+            <link xlink:href="d8ee9679-8708-4b36-89c8-37baadf1f1ce">Sample Code</link>
+          </definedTerm>
+          <definition>
+            <para>
+              To help you get started, we included a simple console application that demonstrates the SDK's functionality.
+              You can find the console in the TeleSignCmd project, beneath the TeleSign.Sdk solution.
+            </para>
+          </definition>
+        </definitionTable>
+      </content>
+    </inThisSection>
+
+  </developerOrientationDocument>
+</topic>

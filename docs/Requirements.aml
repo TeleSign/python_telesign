@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="0b6529b4-cd1b-4595-9d53-5db0318ea617" revisionNumber="1">
+  <developerConceptualDocument
+    xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:WDCML="http://microsoft.com/wdcml">
+
+    <introduction>
+      <para>
+        You must have an account with TeleSign to use TeleSign web services.
+        To setup an account, contact our customer service at support@telesign.com.
+        Each TeleSign customer account is identified by a unique <legacyBold>Customer ID</legacyBold>,
+        and has an associated <legacyBold>Secret Key</legacyBold> for generating a signature for credentialed-access to our web services.
+      </para>
+      <alert class="security note">
+        <para>
+          Your <legacyBold>Customer ID</legacyBold> &amp; <legacyBold>Secret Key</legacyBold> are confidential.
+          Don't lose them, and don't share them.
+        </para>
+      </alert>
+    </introduction>
+
+    <section address="ProductionEnvironment">
+      <title>Production Environment</title>
+      <content>
+        <para>
+          Your computer must meet the following requirements, to develop TeleSign-based web applications.
+        </para>
+        <list class="bullet">
+          <listItem><para>Microsoft Windows (Vista, or later).</para></listItem>
+          <listItem><para>Visual Studio (Express 2010, or better).</para></listItem>
+          <listItem><para>Optional - if you want to run the unit tests included with the SDK, then install the	<legacyBold>NUnit</legacyBold> unit-testing framework.</para></listItem>
+        </list>
+        <table>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>Edition</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <legacyBold>Minimum Version</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <legacyBold>Description</legacyBold>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>
+                  <externalLink>
+                    <linkText>Visual NUnit 2010</linkText>
+                    <linkUri>http://visualstudiogallery.msdn.microsoft.com/c8164c71-0836-4471-80ce-633383031099/</linkUri>
+                  </externalLink>
+                </legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>1.2.4</para>
+            </entry>
+            <entry>
+              <para>A Visual Studio 2010 Professional add-in. This allows you to run NUnit unit tests from Visual Studio 2010.</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>
+                  <externalLink>
+                    <linkText>NUnit</linkText>
+                    <linkUri>http://www.nunit.org/</linkUri>
+                  </externalLink>
+                </legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>2.6.0.12051</para>
+            </entry>
+            <entry>
+              <para>The stand-alone version, for use with Visual Studio Express.</para>
+            </entry>
+          </row>
+          </table>
+        </content>
+    </section>
+
+    <relatedTopics>
+      <link xlink:href="4ea0bd57-de15-4ea2-ac1e-2561078f33d9"/>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

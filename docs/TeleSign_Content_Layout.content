@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topics>
+  <Topic id="6f1299e5-92f8-470a-8d3b-1bf31d7eea53" visible="True" isDefault="true" isExpanded="true" isSelected="true" title="Welcome to the TeleSign .NET SDK">
+    <Topic id="a9f7180c-377a-43e4-8300-81dcadf4f6e3" visible="True" title="SDK Operating Modes" />
+    <Topic id="c5db90e5-f4d4-4ef5-a301-f273c5912311" visible="True" title="TeleSign Web Services" />
+    <Topic id="d04c81bc-5c8d-4c00-bcf8-d91a4f66313d" visible="True" title="TeleSign Namespaces and Classes" />
+  </Topic>
+  <Topic id="4ea0bd57-de15-4ea2-ac1e-2561078f33d9" visible="True" isExpanded="true" apiParentMode="InsertAfter" title="Getting Started">
+    <HelpKeywords>
+      <HelpKeyword index="K" term="Getting Started" />
+    </HelpKeywords>
+    <Topic id="0b6529b4-cd1b-4595-9d53-5db0318ea617" visible="True" title="Requirements">
+      <HelpAttributes>
+        <HelpAttribute name="NoName" value="" />
+      </HelpAttributes>
+      <HelpKeywords>
+        <HelpKeyword index="K" term="Requirements" />
+      </HelpKeywords>
+    </Topic>
+    <Topic id="03e7ed35-7619-4f03-bb44-7eef119a7726" visible="True" title="Installation">
+      <HelpKeywords>
+        <HelpKeyword index="K" term="Installation" />
+      </HelpKeywords>
+    </Topic>
+    <Topic id="d8ee9679-8708-4b36-89c8-37baadf1f1ce" visible="True" title="Sample Code" />
+  </Topic>
+</Topics>
