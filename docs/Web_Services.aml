@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="c5db90e5-f4d4-4ef5-a301-f273c5912311" revisionNumber="1">
+  <developerConceptualDocument
+    xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:WDCML="http://microsoft.com/wdcml">
+
+    <introduction>
+      <para>
+        TeleSign web services conform to the industry-standard 
+        <legacyBold>Representational State Transfer (REST) Web Service Design Model</legacyBold>. 
+        According to this model, web services are publically exposed as URI-addressable resources, 
+        through the set of <legacyItalic>RESTful</legacyItalic> procedures that make up the 
+        <externalLink>
+          <linkText>TeleSign REST API</linkText>
+          <linkUri>https://portal.telesign.com/docs/index.html</linkUri>
+        </externalLink>—which is the low-level programming interface to TeleSign Web Services. 
+      </para>
+      <alert class="note">
+        <para>
+          Architecturally, the <legacyBold><token>ProductName</token></legacyBold> wraps the 
+          <legacyBold>TeleSign REST API</legacyBold>.
+        </para>
+      </alert>
+      <para>
+        The <legacyBold>
+          <token>ProductName</token>
+        </legacyBold> provides object-oriented interfaces to the following two products:
+      </para>
+    </introduction>
+
+    <section address="PhoneID">
+      <title>Phone ID</title>
+      <content>
+        <para>Provides varying levels of detail about a specified phone number.</para>
+        <table>
+          <row>
+            <entry><para><legacyBold>PhoneID</legacyBold></para></entry>
+            <entry>
+              <table>
+                <row>
+                  <entry><para><legacyBold>Standard</legacyBold></para></entry>
+                  <entry><para>
+                    Provides the core service. 
+                    Retrieves the standard set of details about the specified phone number. 
+                    This includes the type of phone (e.g., land line, mobile, and VoIP), 
+                    and the approximate geographic location where the phone is registered.
+                  </para></entry>
+                </row>
+                <row>
+                  <entry>
+                    <para>
+                      <legacyBold>Contact</legacyBold>
+                    </para>
+                  </entry>
+                  <entry>
+                    <para>
+                      In addition to the information retrieved by <legacyBold>Standard</legacyBold>, 
+                      this service provides the name &amp; address associated with the phone number.
+                    </para>
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+                    <para>
+                      <legacyBold>Score</legacyBold>
+                    </para>
+                  </entry>
+                  <entry>
+                    <para>
+                      In addition to the information retrieved by <legacyBold>Standard</legacyBold>,
+                      this service provides a risk assessment score for the specified phone number, 
+                      along with a recommendation as to whether to proceed with the transaction.
+                      This allows you to code your web application to handle particular use cases 
+                      (e.g., to stop things like chargebacks, identity theft, aud, and spam).
+                    </para>
+                  </entry>
+                </row>
+              </table>
+            </entry>
+          </row>
+        </table>
+      </content>
+    </section>
+    
+    <section address="Verify">
+      <title>Verify</title>
+      <content>
+        <para>
+          Provides services for performing Two-Factor Authentication (2FA), and for verification.
+          This involves sending users a one-time verification token (a three to five-digit number).
+          You can use this mechanism to simply test whether you can reach users at the phone number they supplied,
+          or you can have users submit the token to authenticate themselves with your web application.
+        </para>
+        <table>
+          <row>
+            <entry><para><legacyBold>Verify</legacyBold></para></entry>
+            <entry>
+              <table>
+                <row>
+                  <entry>
+                    <para>
+                      <legacyBold>Sms</legacyBold>
+                    </para>
+                  </entry>
+                  <entry>
+                    <para>
+                      Sends a text message containing the verification code to the specified phone number (supported for mobile phones only).
+                    </para>
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+                    <para>
+                      <legacyBold>Voice Call</legacyBold>
+                    </para>
+                  </entry>
+                  <entry>
+                    <para>
+                      Calls the specified phone number and speaks the verification code to the user.
+                    </para>
+                  </entry>
+                </row>
+              </table>
+            </entry>
+          </row>
+        </table>
+        <alert class="tip">
+          <para>
+            After users return the authentication code, you can check its validity programmatically by calling <legacyBold>VerifyService</legacyBold>.<legacyBold>ValidateCode()</legacyBold>.
+          </para>
+        </alert>
+      </content>
+    </section>
+    
+    <relatedTopics>
+      <link xlink:href="6f1299e5-92f8-470a-8d3b-1bf31d7eea53"/>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

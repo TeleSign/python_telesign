@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<topic id="03e7ed35-7619-4f03-bb44-7eef119a7726" revisionNumber="1">
+  <developerHowToDocument
+    xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:WDCML="http://microsoft.com/wdcml">
+
+    <summary>
+      <para>
+        Follow this procedure to install the <legacyBold><token>ProductName</token></legacyBold>.
+      </para>
+    </summary>
+
+    <introduction>
+      <para>
+        The	<legacyBold>TeleSign.NET SDK</legacyBold> is available from our public repository hosted on	
+        <externalLink><linkText>github</linkText><linkUri>https://github.com/</linkUri></externalLink>, 
+        and you get it by cloning a local version of this repository using 
+        <externalLink><linkText>Git</linkText><linkUri>http://git-scm.com/</linkUri></externalLink> 
+        for the Windows platform. Git is a free and open source distributed version control system.
+      </para>
+    </introduction>
+
+    <procedure>
+      <title>To Install the SDK</title>
+      <steps class="ordered">
+        <step>
+          <content>
+            <para>
+              If you don't already have	<legacyBold>Git</legacyBold>, then you can install it from the	<externalLink>
+                <linkText>Git website</linkText><linkUri>http://git-scm.com/download/win</linkUri></externalLink>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Open a Git command shell. You can do this by clicking	<legacyBold>Start</legacyBold> &gt;	<legacyBold>All Programs</legacyBold> &gt;	<legacyBold>Git</legacyBold> &gt;	<legacyBold>Git Bash</legacyBold>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>Type the following command into the Git command shell/:</para>
+            <code language="none">
+              <![CDATA[$ git clone git://github.com/TeleSign/csharp_telesign.git telesign]]>
+             </code>
+            <para>
+              <legacyItalic>
+                This creates the new folder	<legacyBold>%USERPROFILE%\</legacyBold><legacyBold>telesign\</legacyBold>, and copies the SDK software into it.
+              </legacyItalic>
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Start	<legacyBold>Visual Studio</legacyBold>, and then open the solution file %USERPROFILE%\telesign\Telesign.Sdk.sln.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              In	<legacyBold>Solution Explorer</legacyBold>, right-click the project item TeleSign.Services, 
+              and then click Open Folder in Windows Explorer.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>In	<legacyBold>Windows Explorer</legacyBold>, edit the file TeleSign.config.xml.</para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Replace the contents of	<legacyBold>CustomerId</legacyBold> and	<legacyBold>SecretKey</legacyBold> with your actual	<legacyItalic>Customer ID</legacyItalic> and you	<legacyItalic>Secret Key</legacyItalic>, and then save the file.
+            </para>
+          </content>
+        </step>
+      </steps>
+      <conclusion>
+        <content>
+          <para>
+            You have completed the installation procedure. <legacyItalic>You can now start using the TeleSign .NET class library!</legacyItalic>
+          </para>
+        </content>
+      </conclusion>
+    </procedure>
+
+    <codeExample>
+      <description>
+        <content>
+          <para>
+            The values of <legacyBold>CustomerID</legacyBold> and <legacyBold>SecretKey</legacyBold> 
+            in the following code example, contain sample values.
+            Replace them with the values associated with your TeleSign account.
+          </para>
+        </content>
+      </description>
+      <code language="xml">
+<![CDATA[
+<?xml version="1.0" encoding="utf-8" ?>
+<TeleSignConfig>
+  <ServiceUri>http://rest.qa.c11.telesign.com</ServiceUri>
+  <Accounts>
+      <Account name="default">
+        <CustomerId>FFFFFFFF-EEEE-DDDD-1234-AB1234567890</CustomerId>
+        <SecretKey>EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==</SecretKey>
+    </Account>
+  </Accounts>
+</TeleSignConfig>
+]]>
+      </code>
+    </codeExample>
+
+    <!-- <buildInstructions>Optional instructions for building a code example.</buildInstructions> -->
+    <!-- <robustProgramming>Optional discussion of error handling and other issues related to writing solid code.</robustProgramming> -->
+    <!-- <security>Optional discussion of security issues.</security> -->
+
+    <relatedTopics>
+      <link xlink:href="4ea0bd57-de15-4ea2-ac1e-2561078f33d9"/>
+    </relatedTopics>
+  </developerHowToDocument>
+</topic>

@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="d04c81bc-5c8d-4c00-bcf8-d91a4f66313d" revisionNumber="1">
+  <developerSDKTechnologyOverviewArchitectureDocument
+    xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:WDCML="http://microsoft.com/wdcml">
+
+    <introduction>
+      <para>The TeleSign namespaces group functionally-related APIs.</para>
+      <mediaLink><image xlink:href="Namespaces"/></mediaLink>
+      <para>… as do the solution's projects.</para>
+      <mediaLink><image xlink:href="Projects" /></mediaLink>
+    </introduction>
+
+    <section>
+      <title>Core Classes</title>
+      <content>
+        <para>
+          The following classes encapsulate the core functionality of the <token>ProductName</token>.
+        </para>
+        <table>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>Source File</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <legacyBold>Description</legacyBold>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>VerifyService.cs</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>Contains the high-level API for interacting with the Verify service. It abstracts the underlying details of interacting with the REST API. The basic usage is to initiate a call or SMS to a phone number, and then check the status of that transaction.	</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>PhoneIdService.cs</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>Contains the high-level API for interacting with the PhoneID service. It abstracts the underlying details of interacting with the REST API, and allows you to simply specify the phone number you want details about.</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>TeleSignService.cs</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Contains the lowest-level of interaction with the REST API service. In this file you can see how the request and response objects are constructed, which headers are used in the requests, and how the authentication is performed (including the construction of the	<legacyBold>StringToSign</legacyBold> object).
+              </para>
+              <para>
+                For more information, see the	<externalLink>
+                  <linkText>TeleSign REST API   documentation</linkText>
+                  <linkUri>https://portal.telesign.com/docs/index.html</linkUri>
+                </externalLink>.
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>RawVerifyService.cs</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>Contains the lower-level interaction to the Verify service. Look here to see the parameters the service requires.</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>RawPhoneIdService.cs</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>Contains the lower-level interaction to the PhoneID service. Look here to see the parameters the service requires.</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>TeleSignResponse.cs</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>The base class for all responses. Contains the basic transaction status information. Look at the other *Response.cs files to see the data model returned from the API.</para>
+            </entry>
+          </row>
+        </table>
+      </content>
+    </section>
+
+    <relatedTopics>
+      <link xlink:href="6f1299e5-92f8-470a-8d3b-1bf31d7eea53"/>
+    </relatedTopics>
+  </developerSDKTechnologyOverviewArchitectureDocument>
+</topic>

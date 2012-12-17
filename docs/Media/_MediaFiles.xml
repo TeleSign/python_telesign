@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stockSharedContentDefinitions fileAssetGuid="318777a5-2beb-4460-9c15-a51bc74319aa" assetTypeId="MediaContent">
+  <item id="image001">
+    <image file="image001.png" />
+  </item>
+  <item id="image002">
+    <image file="image002.png" />
+  </item>
+  <item id="image003">
+    <image file="image003.png" />
+  </item>
+</stockSharedContentDefinitions>

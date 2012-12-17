@@ -1,0 +1,11 @@
+# Build and Release folders.
+bin/
+obj/
+docs/SandcastleHtml/
+
+# Project property files.
+.suo
+.csproj.user
+
+# Solution source files.
+StyleCop.cache

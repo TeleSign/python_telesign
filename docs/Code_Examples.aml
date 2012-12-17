@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="d8ee9679-8708-4b36-89c8-37baadf1f1ce" revisionNumber="1">
+  <developerConceptualDocument
+    xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:WDCML="http://microsoft.com/wdcml">
+
+    <summary>
+      <para>
+        To help get you started, we included a simple console application called <legacyBold>TeleSignCmd</legacyBold>,
+        that demonstrates the SDK's functionality. Use this application as a learning aid.
+      </para>
+    </summary>
+
+    <introduction>
+      <para>
+        Build the project, and then step through the code to see how it works.
+      </para>
+      <alert class="tip">
+        <para>
+          Feel free to use it for code snippets—to help you get off to a productive start.
+        </para>
+      </alert>
+    </introduction>
+
+    <section>
+      <title>The TeleSignCmd Project</title>
+      <content>
+        <para>
+          You can find the console in the	<legacyBold>TeleSignCmd</legacyBold> project, beneath the	<legacyBold>TeleSign.Sdk</legacyBold> solution.
+        </para>
+        <mediaLink>
+          <image xlink:href="TeleSignCmd" />
+        </mediaLink>
+      </content>
+    </section>
+
+    <relatedTopics>
+      <link xlink:href="4ea0bd57-de15-4ea2-ac1e-2561078f33d9"/>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

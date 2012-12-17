@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="6f1299e5-92f8-470a-8d3b-1bf31d7eea53" revisionNumber="1">
+  <developerOrientationDocument
+    xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:WDCML="http://microsoft.com/wdcml">
+
+    <introduction>
+      <para>
+        The <legacyBold><token>ProductName</token></legacyBold> is a Microsoft .NET component that provides an interface to <externalLink>
+          <linkText>TeleSign Web Services</linkText>
+          <linkUri>http://www.telesign.com/products-demos/</linkUri>
+        </externalLink>.
+      </para>
+      <para>
+        It contains a .NET Framework class library that presents our web services in an intuitive, hierarchical object model,
+        so you can create and manipulate them in the way you're accustomed to.
+        You can use this SDK to build TeleSign&#8209;based web applications in managed code&#8212;as
+        <externalLink>
+          <linkText>ASP.NET MVC 3 web applications</linkText>
+          <linkUri>http://msdn.microsoft.com/en-us/library/gg416514(VS.98).aspx</linkUri>
+        </externalLink>, with
+        <externalLink>
+          <linkText>Microsoft Visual Studio</linkText>
+          <linkUri>http://www.microsoft.com/visualstudio/en-us</linkUri>
+        </externalLink>.
+      </para>
+      <autoOutline />
+    </introduction>
+
+    <inThisSection>
+      <content>
+        <definitionTable>
+          <definedTerm>
+            <link xlink:href="a9f7180c-377a-43e4-8300-81dcadf4f6e3">SDK Operating Modes</link>
+          </definedTerm>
+          <definition>
+              <para>
+                Outlines two approaches for using this SDK.
+                You can let the SDK automatically create <legacyBold>Response</legacyBold> objects
+                by parsing the JSON returned by our web servers,
+                or you can parse the JSON returned by our web servers in your own code.
+              </para>
+          </definition>
+          <definedTerm>
+            <link xlink:href="c5db90e5-f4d4-4ef5-a301-f273c5912311">TeleSign Web Services</link>
+          </definedTerm>
+          <definition>
+            <para>Provides background information about TeleSign Web Services.</para>
+          </definition>
+          <definedTerm>
+            <link xlink:href="d04c81bc-5c8d-4c00-bcf8-d91a4f66313d">TeleSign Namespaces &amp; Classes</link>
+          </definedTerm>
+          <definition>
+            <para>Describes the organization of the object model into namespaces and class, and outlines the classes that contain the core functionality.</para>
+          </definition>
+        </definitionTable>
+      </content>
+    </inThisSection>
+
+    <!--<reference>
+      <content>
+        <definitionTable>
+        </definitionTable>
+        <para></para>
+      </content>
+    </reference>-->
+
+    <relatedSections>
+      <content>
+        <definitionTable>
+          <definedTerm>
+            <link xlink:href="4ea0bd57-de15-4ea2-ac1e-2561078f33d9">Getting Started</link>
+          </definedTerm>
+          <definition>
+            <para>
+              Contains details about the requirements for using the <token>ProductName</token> and TeleSign web services, how to install the SDK, and the sample code that ships with the SDK.
+            </para>
+          </definition>
+          <definedTerm>
+            <externalLink>
+              <linkText>Class Library Reference</linkText>
+              <linkUri>R_Project_TeleSign.htm</linkUri>
+              <linkTarget>_self</linkTarget>
+            </externalLink>
+          </definedTerm>
+          <definition>
+            <para>
+              Contains technical reference information on the TeleSign .NET class library.
+            </para>
+          </definition>
+        </definitionTable>
+      </content>
+    </relatedSections>
+
+    <!--<externalResources>
+        <link>http://www.telesign.com/products-demos/</link>
+    </externalResources>-->
+    <!--<relatedTopics></relatedTopics>-->
+  </developerOrientationDocument>
+</topic>

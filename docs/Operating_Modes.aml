@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="a9f7180c-377a-43e4-8300-81dcadf4f6e3" revisionNumber="1">
+  <developerConceptualDocument
+    xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:WDCML="http://microsoft.com/wdcml">
+
+    <!--<summary><para>Optional summary abstract</para></summary>-->
+
+    <introduction>
+      <para>
+        You can use the <token>ProductName</token> in either of two modes. The one you choose depends on how you want to handle the processing of web server response entities.
+      </para>
+    </introduction>
+
+    <section>
+      <title>Operating Modes</title>
+      <content>
+        <table>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>Mode</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <legacyBold>Description</legacyBold>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>Rich</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Provides an object-oriented framework that models web services as high-level actors, and low-level processes as mediator objects. Automatically parses the JSON data from server responses, and creates	<legacyBold>Response</legacyBold> objects from it.
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <legacyBold>Raw</legacyBold>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Abstracts the interaction with only the web services. Method calls return the web service's JSON response bodies verbatim. This gives you the flexibility of handling the response processing any way you want.
+              </para>
+            </entry>
+          </row>
+        </table>
+      </content>
+    </section>
+    
+    <relatedTopics>
+      <link xlink:href="6f1299e5-92f8-470a-8d3b-1bf31d7eea53"/>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>
