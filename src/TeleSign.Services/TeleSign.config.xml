@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TeleSignConfig>
+  <ServiceUri>https://rest.telesign.com</ServiceUri>
+  <Accounts>
+    <Account name="default">
+      <!-- Enter your customer id and secret key here. -->
+      <CustomerId>00000000-0000-0000-0000-000000000000</CustomerId>
+      <SecretKey>abababababababababababababababababa+Jkababababababababababababab+3ababababababababaP1w==</SecretKey>
+    </Account>
+  </Accounts>
+</TeleSignConfig>

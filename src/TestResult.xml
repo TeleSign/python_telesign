@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Users\zkavanagh\src\telesign\csharp_telesign_sdk\src\SdkUnitTests.nunit" total="58" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2012-11-21" time="09:45:37">
+  <environment nunit-version="2.6.0.12051" clr-version="2.0.50727.5466" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Users\zkavanagh\src\telesign\csharp_telesign_sdk\src" machine-name="LZC20120416" user="zkavanagh" user-domain="HQ" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="Project" name="C:\Users\zkavanagh\src\telesign\csharp_telesign_sdk\src\SdkUnitTests.nunit" executed="True" result="Success" success="True" time="3.212" asserts="0">
+    <results>
+      <test-suite type="Assembly" name="C:\Users\zkavanagh\src\telesign\csharp_telesign_sdk\src\TeleSign.Services.UnitTests\bin\Debug\TeleSign.Services.UnitTests.dll" executed="True" result="Success" success="True" time="3.211" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="TeleSign" executed="True" result="Success" success="True" time="3.211" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Services" executed="True" result="Success" success="True" time="3.210" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="UnitTests" executed="True" result="Success" success="True" time="3.210" asserts="0">
+                    <results>
+                      <test-suite type="TestFixture" name="TestCheckArgument" executed="True" result="Success" success="True" time="0.019" asserts="0">
+                        <results>
+                          <test-case name="TeleSign.Services.UnitTests.TestCheckArgument.TestNotNullDoesntThrowWhenPassedNonNull" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                          <test-case name="TeleSign.Services.UnitTests.TestCheckArgument.TestNotNullOrEmptyDoesntThrowWhenPassedNonNullNonEmptyString" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                          <test-case name="TeleSign.Services.UnitTests.TestCheckArgument.TestNotNullOrEmptyStillWorksWhenNameIsNull" executed="True" result="Success" success="True" time="0.003" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestCheckArgument.TestNotNullOrEmptyThrowsWhenPassedEmptyString" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestCheckArgument.TestNotNullOrEmptyThrowsWhenPassedNull" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestCheckArgument.TestNotNullStillWorksWhenNameIsNull" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestCheckArgument.TestNotNullThrowsWhenPassedNull" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="TestJsonDotNetPhoneIdResponseParser" executed="True" result="Success" success="True" time="0.040" asserts="0">
+                        <results>
+                          <test-case name="TeleSign.Services.UnitTests.TestJsonDotNetPhoneIdResponseParser.BasePhoneIdResponseParserTest.TestValidPhoneIdContactMatchParsing" executed="True" result="Success" success="True" time="0.008" asserts="45" />
+                          <test-case name="TeleSign.Services.UnitTests.TestJsonDotNetPhoneIdResponseParser.BasePhoneIdResponseParserTest.TestValidPhoneIdContactNoMatchParsing" executed="True" result="Success" success="True" time="0.005" asserts="38" />
+                          <test-case name="TeleSign.Services.UnitTests.TestJsonDotNetPhoneIdResponseParser.BasePhoneIdResponseParserTest.TestValidPhoneIdLiveMatchParsing" executed="True" result="Success" success="True" time="0.001" asserts="35" />
+                          <test-case name="TeleSign.Services.UnitTests.TestJsonDotNetPhoneIdResponseParser.BasePhoneIdResponseParserTest.TestValidPhoneIdLiveNoMatchParsing" executed="True" result="Success" success="True" time="0.004" asserts="38" />
+                          <test-case name="TeleSign.Services.UnitTests.TestJsonDotNetPhoneIdResponseParser.BasePhoneIdResponseParserTest.TestValidPhoneIdScoreParsing" executed="True" result="Success" success="True" time="0.005" asserts="24" />
+                          <test-case name="TeleSign.Services.UnitTests.TestJsonDotNetPhoneIdResponseParser.BasePhoneIdResponseParserTest.TestValidPhoneIdStandardParsing" executed="True" result="Success" success="True" time="0.003" asserts="36" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="TestPhoneIdService" executed="True" result="Success" success="True" time="0.313" asserts="0">
+                        <results>
+                          <test-case name="TeleSign.Services.UnitTests.TestPhoneIdService.TestContactRejectsEmptyNumber" executed="True" result="Success" success="True" time="0.089" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestPhoneIdService.TestContactRejectsNullNumber" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestPhoneIdService.TestContactRejectsNumberWithNoDigits" executed="True" result="Success" success="True" time="0.003" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestPhoneIdService.TestPhoneIdContactWrapsParserErrors" executed="True" result="Success" success="True" time="0.192" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestPhoneIdService.TestPhoneIdScoreWrapsParserErrors" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestPhoneIdService.TestPhoneIdStandardWrapsParserErrors" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestPhoneIdService.TestScoreRejectsEmptyNumber" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestPhoneIdService.TestScoreRejectsNullNumber" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestPhoneIdService.TestScoreRejectsNumberWithNoDigits" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestPhoneIdService.TestStandardRejectsEmptyNumber" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestPhoneIdService.TestStandardRejectsNullNumber" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestPhoneIdService.TestStandardRejectsNumberWithNoDigits" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="TestRawPhoneIdService" executed="True" result="Success" success="True" time="0.062" asserts="0">
+                        <results>
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestContactDoesNotRejectCleanableNumbers" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestContactRejectsEmptyNumber" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestContactRejectsNullNumber" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestContactRejectsNumberWithNoDigits" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestContactWebRequest" executed="True" result="Success" success="True" time="0.006" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestLiveDoesNotRejectCleanableNumbers" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestLiveRejectsEmptyNumber" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestLiveRejectsNullNumber" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestLiveRejectsNumberWithNoDigits" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestLiveWebRequest" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestScoreDoesNotRejectCleanableNumbers" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestScoreRejectsEmptyNumber" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestScoreRejectsNullNumber" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestScoreRejectsNumberWithNoDigits" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestScoreWebRequest" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestStandardDoesNotRejectCleanableNumbers" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestStandardRejectsEmptyNumber" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestStandardRejectsNullNumber" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestStandardRejectsNumberWithNoDigits" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawPhoneIdService.TestStandardWebRequest" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="TestRawVerifyService" executed="True" result="Success" success="True" time="2.700" asserts="0">
+                        <results>
+                          <test-case name="TeleSign.Services.UnitTests.TestRawVerifyService.TestCallAcceptsCleanableNumber" executed="True" result="Success" success="True" time="2.696" asserts="0" />
+                          <test-case name="TeleSign.Services.UnitTests.TestRawVerifyService.TestStandardWebRequest" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="TestTeleSignAuthentication" executed="True" result="Success" success="True" time="0.025" asserts="0">
+                        <results>
+                          <test-case name="TeleSign.Services.UnitTests.TestTeleSignAuthentication.TestAuthStringConstructionThrowsOnEmptyStringToSign" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestTeleSignAuthentication.TestAuthStringConstructionThrowsOnNullStringToSign" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestTeleSignAuthentication.TestBasicFormatOfAuthorizationString" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestTeleSignAuthentication.TestConstructorThrowsOnNullInput" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestTeleSignAuthentication.TestInvalidAuthMethodThrows" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestTeleSignAuthentication.TestSha1Hash" executed="True" result="Success" success="True" time="0.006" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestTeleSignAuthentication.TestSha256Hash" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="TestVerifyService" executed="True" result="Success" success="True" time="0.032" asserts="0">
+                        <results>
+                          <test-case name="TeleSign.Services.UnitTests.TestVerifyService.TestSmsDoesNotRejectCleanableNumbers" executed="True" result="Success" success="True" time="0.022" asserts="0" />
+                          <test-case name="TeleSign.Services.UnitTests.TestVerifyService.TestSmsRejectsEmptyNumber" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestVerifyService.TestSmsRejectsNullNumber" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="TeleSign.Services.UnitTests.TestVerifyService.TestSmsRejectsNumberWithNoDigits" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
