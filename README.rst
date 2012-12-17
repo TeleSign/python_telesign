@@ -4,7 +4,7 @@ TeleSign
 
 :Info:
     For more information, visit the `TeleSign web site <http://www.TeleSign.com>`_.
-    For the latest source code, visit the `TeleSign github repository <http://github.com/TeleSign/dotnet_telesign/tree>`_.
+    For the latest source code, visit the `TeleSign github repository <http://github.com/TeleSign/csharp_telesign/tree>`_.
 
 :Author:
     Telesign Corp.
