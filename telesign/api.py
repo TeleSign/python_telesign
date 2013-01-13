@@ -96,10 +96,10 @@ class PhoneId(servicebase):
             from telesign.api import PhoneId
             from telesign.exceptions import AuthorizationError, TelesignError
 
-            phone_number = "13107409700"
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
-            
+            phone_number = "13107409700"
+
             phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
 
             try:
@@ -168,16 +168,15 @@ class PhoneId(servicebase):
             from telesign.api import PhoneId
             from telesign.exceptions import AuthorizationError, TelesignError
 
-            phone_number = "13107409700"
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
-
-            use_case = "ATCK"
+            phone_number = "13107409700"
+            use_case_code = "ATCK"
 
             phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
             
             try:
-                score_info = phoneid.score(phone_number, use_case)
+                score_info = phoneid.score(phone_number, use_case_code)
             except AuthorizationError as ex:
                 ...
             except TelesignError as ex:
@@ -236,14 +235,15 @@ class PhoneId(servicebase):
             from telesign.api import PhoneId
             from telesign.exceptions import AuthorizationError, TelesignError
 
-            phone_number = "13107409700"
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
-            
+            phone_number = "13107409700"
+            use_case_code = "LEAD"
+
             phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
 
             try:
-                phone_info = phoneid.contact(phone_number) # The use-case code is optional.
+                phone_info = phoneid.contact(phone_number, use_case_code)
             except AuthorizationError as ex:
                 # API authorization failed, the API response should tell you the reason
                 ...
@@ -306,14 +306,15 @@ class PhoneId(servicebase):
             from telesign.api import PhoneId
             from telesign.exceptions import AuthorizationError, TelesignError
 
-            phone_number = "13107409700"
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
-            
+            phone_number = "13107409700"
+            use_case_code = "RXPF"
+
             phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
 
             try:
-                phone_info = phoneid.live(phone_number) # The use-case code is optional.
+                phone_info = phoneid.live(phone_number, use_case_code)
             except AuthorizationError as ex:
                 # API authorization failed, the API response should tell you the reason
                 ...
@@ -392,11 +393,10 @@ class Verify(servicebase):
 
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
-            
+            phone_number = "13107409700"
+
             verify = Verify(cust_id, secret_key) # Instantiate a Verify object.
 
-            phone_number = "13107409700"
-            
             try:
                 phone_info = verify.sms(phone_number)
             except AuthorizationError as ex:
@@ -465,10 +465,9 @@ class Verify(servicebase):
 
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
-            
-            verify = Verify(cust_id, secret_key) # Instantiate a Verify object.
-            
             phone_number = "13107409700"
+
+            verify = Verify(cust_id, secret_key) # Instantiate a Verify object.
 
             try:
                 phone_info = verify.call(phone_number)
@@ -534,10 +533,10 @@ class Verify(servicebase):
 
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
-            
+            phone_number = "13107409700"
+
             verify = Verify(cust_id, secret_key) # Instantiate a Verify object.
 
-            phone_number = "13107409700"
             phone_info = verify.sms(phone_number) # Send a text message that contains an auto-generated validation code, to the user.
 
             # When the user inputs the validation code, you can verify that it matches the one that you sent.
