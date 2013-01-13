@@ -34,8 +34,7 @@ project = u'TeleSign Python SDK'
 copyright = u'2012, TeleSign Corporation'
 
 # List of patterns, relative to source directory, that match files and directories to ignore when looking for source files.
-# We're not exposing the Account class publically.
-exclude_patterns = ['api/generated/telesign.api.Account.rst']
+exclude_patterns = []
 
 # html_add_permalinks = ''
 
