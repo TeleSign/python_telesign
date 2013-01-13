@@ -209,6 +209,27 @@ class PhoneId(servicebase):
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
            * - `use_case_code`
              - A four letter code used to specify a particular usage scenario for the web service.
+
+        .. rubric:: Use-case Codes
+
+        The following table list the available use-case codes, and includes a description of each.        
+        
+        ========  =====================================
+        Code      Description
+        ========  =====================================
+        **BACS**  Prevent bulk account creation + spam.
+        **BACF**  Prevent bulk account creation + fraud.
+        **CHBK**  Prevent chargebacks.
+        **ATCK**  Prevent account takeover/compromise.
+        **LEAD**  Prevent false lead entry.
+        **RESV**  Prevent fake/missed reservations.
+        **PWRT**  Password reset.
+        **THEF**  Prevent identity theft.
+        **TELF**  Prevent telecom fraud.
+        **RXPF**  Prevent prescription fraud.
+        **OTHR**  Other.
+        **UNKN**  Unknown/prefer not to say.
+        ========  =====================================
                 
         **Example**::
         
@@ -233,6 +254,76 @@ class PhoneId(servicebase):
                 
         """
         resource = "/v1/phoneid/contact/%s" % phone_number
+        headers = generate_auth_headers(
+            self._customer_id,
+            self._secret_key,
+            resource,
+            "GET")
+
+        req = self._pool.request('GET', resource, headers=headers, fields={'ucid':use_case_code})
+
+
+        return Response(self._validate_response(req), req)
+
+    def live(self, phone_number, use_case_code):
+        """ 
+        In addition to the information retrieved by **standard**, this service provides actionable data associated with the specified phone number.
+        
+        .. list-table::
+           :widths: 5 30
+           :header-rows: 1
+        
+           * - Parameters
+             - 
+           * - `phone_number`
+             - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
+           * - `use_case_code`
+             - A four letter code used to specify a particular usage scenario for the web service.
+
+        .. rubric:: Use-case Codes
+
+        The following table list the available use-case codes, and includes a description of each.        
+        
+        ========  =====================================
+        Code      Description
+        ========  =====================================
+        **BACS**  Prevent bulk account creation + spam.
+        **BACF**  Prevent bulk account creation + fraud.
+        **CHBK**  Prevent chargebacks.
+        **ATCK**  Prevent account takeover/compromise.
+        **LEAD**  Prevent false lead entry.
+        **RESV**  Prevent fake/missed reservations.
+        **PWRT**  Password reset.
+        **THEF**  Prevent identity theft.
+        **TELF**  Prevent telecom fraud.
+        **RXPF**  Prevent prescription fraud.
+        **OTHR**  Other.
+        **UNKN**  Unknown/prefer not to say.
+        ========  =====================================
+                
+        **Example**::
+        
+            from telesign.api import PhoneId
+            from telesign.exceptions import AuthorizationError, TelesignError
+
+            phone_number = "13107409700"
+            cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+            secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+            
+            phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
+
+            try:
+                phone_info = phoneid.live(phone_number) # The use-case code is optional.
+            except AuthorizationError as ex:
+                # API authorization failed, the API response should tell you the reason
+                ...
+            except TelesignError as ex:
+                # failed to completely execute the PhoneID service, check the API response 
+                #    for details; data returned may be incomplete or not be valid
+                ...
+                
+        """
+        resource = "/v1/phoneid/live/%s" % phone_number
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,

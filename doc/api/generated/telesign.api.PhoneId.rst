@@ -15,3 +15,4 @@
         standard
         score
         contact
+        live

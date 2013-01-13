@@ -37,6 +37,7 @@ The **telesign.api** module contains Python classes and methods that allow you t
     standard
     score
     contact
+    live
 
 
 :mod:`telesign.exceptions`
