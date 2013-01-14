@@ -41,7 +41,11 @@ With just two classes, **telesign.api** abstracts much of the complexity of the 
 |                      |     In addition to the information retrieved by *standard*, this service | 
 |                      |     provides the Name & Address associated with the specified phone      | 
 |                      |     number.                                                              | 
-|                      |                                                                          | 
+|                      | *live*                                                                   |
+|                      |     In addition to the information retrieved by *standard*, this         |
+|                      |     service provides actionable data associated with the specified phone |
+|                      |     number.                                                              |
+|                      |                                                                          |
 +----------------------+--------------------------------------------------------------------------+ 
 | telesign.api.Verify  | The **Verify** class exposes two services for sending users a            | 
 |                      | verification token (a three to five-digit number). You can use this      | 

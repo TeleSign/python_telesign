@@ -11,7 +11,7 @@ class PhoneIdTest(unittest.TestCase):
         self.expected_secret_key = "8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M=="
         self.expected_phone_no = "12343455678"
         self.expected_data = "{ \"a\": \"AA\", \"b\":\"BB\" }"
-        self.expected_resource = "/v1/phoneid/standard/%s" % self.expected_phone_no
+        self.expected_resource = "/v1/phoneid/%s/%s"
         
     def tearDown(self):
         pass
@@ -30,7 +30,7 @@ class PhoneIdTest(unittest.TestCase):
         self.assertTrue(req_mock.called)
         args = req_mock.call_args
         self.assertEqual(args[0][0], "GET", "Expected GET")
-        self.assertEqual(args[0][1], self.expected_resource, "Phone ID resource name is incorrect")
+        self.assertEqual(args[0][1], self.expected_resource % ('standard', self.expected_phone_no), "Phone ID resource name is incorrect")
 
     @mock.patch.object(urllib3.HTTPConnectionPool, "request")
     def test_standard_phoneid_unauthorized(self, req_mock):
@@ -48,7 +48,7 @@ class PhoneIdTest(unittest.TestCase):
         self.assertTrue(req_mock.called)
         args = req_mock.call_args
         self.assertEqual(args[0][0], "GET", "Expected GET")
-        self.assertEqual(args[0][1], self.expected_resource, "Phone ID resource name is incorrect")
+        self.assertEqual(args[0][1], self.expected_resource % ('standard', self.expected_phone_no), "Phone ID resource name is incorrect")
 
     @mock.patch.object(urllib3.HTTPConnectionPool, "request")
     def test_standard_phoneid_other_error(self, req_mock):
@@ -66,5 +66,52 @@ class PhoneIdTest(unittest.TestCase):
         self.assertTrue(req_mock.called)
         args = req_mock.call_args
         self.assertEqual(args[0][0], "GET", "Expected GET")
-        self.assertEqual(args[0][1], self.expected_resource, "Phone ID resource name is incorrect")
+        self.assertEqual(args[0][1], self.expected_resource % ('standard', self.expected_phone_no), "Phone ID resource name is incorrect")
 
+    @mock.patch.object(urllib3.HTTPConnectionPool, "request")
+    def test_score_phoneid(self, req_mock):
+        response = mock.Mock()
+        response.reason = ""
+        response.status = 200
+        response.data = self.expected_data
+        req_mock.return_value = response
+
+        p = telesign.api.PhoneId(self.expected_cid, self.expected_secret_key)
+        r = p.score(self.expected_phone_no, 'OTHR')
+
+        self.assertTrue(req_mock.called)
+        args = req_mock.call_args
+        self.assertEqual(args[0][0], "GET", "Expected GET")
+        self.assertEqual(args[0][1], self.expected_resource % ('score', self.expected_phone_no), "Phone ID resource name is incorrect")
+
+    @mock.patch.object(urllib3.HTTPConnectionPool, "request")
+    def test_contact_phoneid(self, req_mock):
+        response = mock.Mock()
+        response.reason = ""
+        response.status = 200
+        response.data = self.expected_data
+        req_mock.return_value = response
+
+        p = telesign.api.PhoneId(self.expected_cid, self.expected_secret_key)
+        r = p.contact(self.expected_phone_no, 'OTHR')
+
+        self.assertTrue(req_mock.called)
+        args = req_mock.call_args
+        self.assertEqual(args[0][0], "GET", "Expected GET")
+        self.assertEqual(args[0][1], self.expected_resource % ('contact', self.expected_phone_no), "Phone ID resource name is incorrect")
+
+    @mock.patch.object(urllib3.HTTPConnectionPool, "request")
+    def test_live_phoneid(self, req_mock):
+        response = mock.Mock()
+        response.reason = ""
+        response.status = 200
+        response.data = self.expected_data
+        req_mock.return_value = response
+
+        p = telesign.api.PhoneId(self.expected_cid, self.expected_secret_key)
+        r = p.live(self.expected_phone_no, 'OTHR')
+
+        self.assertTrue(req_mock.called)
+        args = req_mock.call_args
+        self.assertEqual(args[0][0], "GET", "Expected GET")
+        self.assertEqual(args[0][1], self.expected_resource % ('live', self.expected_phone_no), "Phone ID resource name is incorrect")
