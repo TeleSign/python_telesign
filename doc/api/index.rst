@@ -1,6 +1,6 @@
 :mod:`telesign.api`
 ===================
-The **telesign.api** module contains Python classes and methods that allow you to use the Python programming language to programmatically access the **Verify** and the **PhoneId** TeleSign web services, and the TeleSign **Account** key management service.
+The **telesign.api** module contains Python classes and methods that allow you to use the Python programming language to programmatically access the **Verify** and the **PhoneId** TeleSign web services.
 
 .. currentmodule:: telesign.api
 
@@ -10,7 +10,6 @@ The **telesign.api** module contains Python classes and methods that allow you t
 
     Verify
     PhoneId
-    Account
 
 
 :mod:`telesign.api.Verify`
@@ -37,6 +36,7 @@ The **telesign.api** module contains Python classes and methods that allow you t
     standard
     score
     contact
+    live
 
 
 :mod:`telesign.exceptions`
