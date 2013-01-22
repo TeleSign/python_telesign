@@ -13,7 +13,7 @@ from telesign.exceptions import TelesignError, AuthorizationError
 
 __author__ = "Jeremy Cunningham, Michael Fox, and Radu Maierean"
 __copyright__ = "Copyright 2012, TeleSign Corp."
-__credits__ = ["Jeremy Cunningham", "Radu Maierean", "Michael Fox", "Nancy Vitug"]
+__credits__ = ["Jeremy Cunningham", "Radu Maierean", "Michael Fox", "Nancy Vitug", "Humberto Morales"]
 __license__ = "MIT"
 __maintainer__ = "Jeremy Cunningham"
 __email__ = "support@telesign.com"
