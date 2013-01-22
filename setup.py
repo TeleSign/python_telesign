@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 from distutils.cmd import Command
 
 
-version = "1.0.5"
+version = "1.0.6"
 
 f = open("README.rst")
 try:
