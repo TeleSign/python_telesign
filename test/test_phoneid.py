@@ -3,16 +3,17 @@ import mock
 import telesign.api
 import urllib3
 
+
 class PhoneIdTest(unittest.TestCase):
     '''Test for phone id telesign sdk'''
-    
+
     def setUp(self):
         self.expected_cid = "99999999-1F7E-11E1-B760-000000000000"
         self.expected_secret_key = "8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M=="
         self.expected_phone_no = "12343455678"
         self.expected_data = "{ \"a\": \"AA\", \"b\":\"BB\" }"
         self.expected_resource = "/v1/phoneid/%s/%s"
-        
+
     def tearDown(self):
         pass
 
@@ -25,7 +26,7 @@ class PhoneIdTest(unittest.TestCase):
         req_mock.return_value = response
 
         p = telesign.api.PhoneId(self.expected_cid, self.expected_secret_key)
-        r = p.standard(self.expected_phone_no)
+        p.standard(self.expected_phone_no)
 
         self.assertTrue(req_mock.called)
         args = req_mock.call_args
@@ -43,7 +44,7 @@ class PhoneIdTest(unittest.TestCase):
         p = telesign.api.PhoneId(self.expected_cid, self.expected_secret_key)
 
         with self.assertRaises(telesign.exceptions.AuthorizationError):
-            r = p.standard(self.expected_phone_no)
+            p.standard(self.expected_phone_no)
 
         self.assertTrue(req_mock.called)
         args = req_mock.call_args
@@ -61,7 +62,7 @@ class PhoneIdTest(unittest.TestCase):
         p = telesign.api.PhoneId(self.expected_cid, self.expected_secret_key)
 
         with self.assertRaises(telesign.exceptions.TelesignError):
-            r = p.standard(self.expected_phone_no)
+            p.standard(self.expected_phone_no)
 
         self.assertTrue(req_mock.called)
         args = req_mock.call_args
@@ -77,7 +78,7 @@ class PhoneIdTest(unittest.TestCase):
         req_mock.return_value = response
 
         p = telesign.api.PhoneId(self.expected_cid, self.expected_secret_key)
-        r = p.score(self.expected_phone_no, 'OTHR')
+        p.score(self.expected_phone_no, 'OTHR')
 
         self.assertTrue(req_mock.called)
         args = req_mock.call_args
@@ -93,7 +94,7 @@ class PhoneIdTest(unittest.TestCase):
         req_mock.return_value = response
 
         p = telesign.api.PhoneId(self.expected_cid, self.expected_secret_key)
-        r = p.contact(self.expected_phone_no, 'OTHR')
+        p.contact(self.expected_phone_no, 'OTHR')
 
         self.assertTrue(req_mock.called)
         args = req_mock.call_args
@@ -109,7 +110,7 @@ class PhoneIdTest(unittest.TestCase):
         req_mock.return_value = response
 
         p = telesign.api.PhoneId(self.expected_cid, self.expected_secret_key)
-        r = p.live(self.expected_phone_no, 'OTHR')
+        p.live(self.expected_phone_no, 'OTHR')
 
         self.assertTrue(req_mock.called)
         args = req_mock.call_args

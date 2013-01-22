@@ -7,7 +7,7 @@
 
 __author__ = "Jeremy Cunningham, Michael Fox, and Radu Maierean"
 __copyright__ = "Copyright 2012, TeleSign Corp."
-__credits__ = ["Jeremy Cunningham", "Radu Maierean", "Michael Fox", "Nancy Vitug" ]
+__credits__ = ["Jeremy Cunningham", "Radu Maierean", "Michael Fox", "Nancy Vitug", "Humberto Morales"]
 __license__ = "MIT"
 __maintainer__ = "Jeremy Cunningham"
 __email__ = "support@telesign.com"
@@ -17,13 +17,13 @@ __status__ = "Production"
 class TelesignError(Exception):
     """
     The **exceptions** base class.
-    
+
     .. list-table::
        :widths: 5 30
        :header-rows: 1
-    
+
        * - Attributes
-         - 
+         -
        * - `data`
          - The data returned by the service, in a dictionary form.
        * - `http_response`
@@ -32,7 +32,7 @@ class TelesignError(Exception):
     """
 
     def __init__(self, data, http_response):
-        self.errors = data["errors"];
+        self.errors = data["errors"]
         self.headers = http_response.headers
         self.status = http_response.status
         self.data = http_response.data
@@ -40,7 +40,7 @@ class TelesignError(Exception):
 
     def __str__(self):
         result = ""
-        for x in xrange(0,len(self.errors)):
+        for x in xrange(0, len(self.errors)):
             result += "%s\n" % self.errors[x]["description"]
 
         return result
@@ -49,39 +49,40 @@ class TelesignError(Exception):
 class AuthorizationError(TelesignError):
     """
     Either the client failed to authenticate with the REST API server, or the service cannot be executed using the specified credentials.
-    
+
     .. list-table::
        :widths: 5 30
        :header-rows: 1
-    
+
        * - Attributes
-         - 
+         -
        * - `data`
          - The data returned by the service, in a dictionary form.
        * - `http_response`
          - The full HTTP Response object, including the HTTP status code, headers, and raw returned data.
 
     """
-    
+
     def __init__(self, data, http_response):
         TelesignError.__init__(self, data, http_response)
+
 
 class ValidationError(TelesignError):
     """
     The submitted data failed the intial validation, and the service was not executed.
-    
+
     .. list-table::
        :widths: 5 30
        :header-rows: 1
-    
+
        * - Attributes
-         - 
+         -
        * - `data`
          - The data returned by the service, in a dictionary form.
        * - `http_response`
          - The full HTTP Response object, including the HTTP status code, headers, and raw returned data.
 
     """
-    
+
     def __init__(self, data, http_response):
         TelesignError.__init__(self, data, http_response)

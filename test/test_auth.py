@@ -2,16 +2,16 @@ import unittest
 import mock
 import telesign.api
 import random
-import datetime
+
 
 class AuthTest(unittest.TestCase):
     '''Test for phone id telesign sdk'''
-    
+
     def setUp(self):
         self.expected_cid = "99999999-1F7E-11E1-B760-000000000000"
         self.expected_secret_key = "8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M8M=="
         self.expected_resource = "/foo/bar/baz/"
-        
+
     def tearDown(self):
         pass
 
@@ -32,7 +32,7 @@ class AuthTest(unittest.TestCase):
                 self.expected_resource,
                 "GET")
 
-        self.assertEqual(headers["x-ts-nonce"], expected_nonce, "Nonce header did not match")   
+        self.assertEqual(headers["x-ts-nonce"], expected_nonce, "Nonce header did not match")
 
     def test_date_is_set(self):
         headers = telesign.api.generate_auth_headers(
@@ -42,7 +42,7 @@ class AuthTest(unittest.TestCase):
                 "GET")
 
         # Can't mock datetime
-        self.assertIsNotNone(headers["x-ts-date"])          
+        self.assertIsNotNone(headers["x-ts-date"])
 
     def test_sha1__default_auth_method(self):
         expected_auth_method = "HMAC-SHA1"
@@ -53,7 +53,7 @@ class AuthTest(unittest.TestCase):
                 self.expected_resource,
                 "GET")
 
-        self.assertEqual(headers["x-ts-auth-method"], expected_auth_method, "Auth method did not match")         
+        self.assertEqual(headers["x-ts-auth-method"], expected_auth_method, "Auth method did not match")
 
     def test_sha256_auth_method(self):
         expected_auth_method = "HMAC-SHA256"
@@ -65,7 +65,7 @@ class AuthTest(unittest.TestCase):
                 "",
                 "sha256")
 
-        self.assertEqual(headers["x-ts-auth-method"], expected_auth_method, "Auth method did not match")             
+        self.assertEqual(headers["x-ts-auth-method"], expected_auth_method, "Auth method did not match")
 
     def test_customer_id_in_auth(self):
         expected_auth_start = "TSA %s:" % self.expected_cid
@@ -75,5 +75,4 @@ class AuthTest(unittest.TestCase):
                 self.expected_resource,
                 "GET")
 
-        self.assertTrue(headers["Authorization"].startswith(expected_auth_start), "Authorization did not start with TSA and customer ID")           
-
+        self.assertTrue(headers["Authorization"].startswith(expected_auth_start), "Authorization did not start with TSA and customer ID")
