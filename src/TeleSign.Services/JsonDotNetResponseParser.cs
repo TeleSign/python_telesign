@@ -26,7 +26,7 @@ namespace TeleSign.Services
         /// <returns>An empty string or the value cast to a string.</returns>
         protected static string EmptyStringIfNull(JToken value)
         {
-            if (value == null)
+            if (value.Type == JTokenType.Null)
             {
                 return string.Empty;
             }
@@ -35,19 +35,35 @@ namespace TeleSign.Services
         }
 
         /// <summary>
-        /// Returns an empty string if the input is null. Otherwise
-        /// casts the value to a string and returns that.
+        /// Returns 0 if the input is null or has no values. Otherwise
+        /// casts the value to a int and returns that.
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns>An empty string or the value cast to a string.</returns>
         protected static int ZeroIfNull(JToken value)
         {
-            if (value == null)
+            if (value.Type == JTokenType.Null)
             {
                 return 0;
             }
 
-            return int.Parse((string)value);
+            return int.Parse(value.ToString());
+        }
+
+        /// <summary>
+        /// Returns 0 if the input is null or has no values. Otherwise
+        /// casts the value to a double and returns that.
+        /// </summary>
+        /// <param name="value">The value to check.</param>
+        /// <returns>An empty string or the value cast to a string.</returns>
+        protected static double ZeroDoubleIfNull(JToken value)
+        {
+            if (value.Type == JTokenType.Null)
+            {
+                return 0.0;
+            }
+
+            return double.Parse(value.ToString());
         }
 
         /// <summary>
