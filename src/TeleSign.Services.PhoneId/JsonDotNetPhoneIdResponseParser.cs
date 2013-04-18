@@ -121,8 +121,10 @@ namespace TeleSign.Services.PhoneId
             else
             {
                 response.OriginalNumber = this.ParseNumberingInfo((JObject)numberingNode["original"]);
-                response.CallCleansedNumber = this.ParseCleansingInfo((JObject)numberingNode["cleansing"]["call"]);
-                response.SmsCleansedNumber = this.ParseCleansingInfo((JObject)node["numbering"]["cleansing"]["sms"]);
+
+                JObject cleansingNode = (JObject)numberingNode["cleansing"];
+                response.CallCleansedNumber = this.ParseCleansingInfo((JObject)cleansingNode["call"]);
+                response.SmsCleansedNumber = this.ParseCleansingInfo((JObject)cleansingNode["sms"]);
             }
         }
 
@@ -250,11 +252,10 @@ namespace TeleSign.Services.PhoneId
         /// <returns>A new populated Coordinates object.</returns>
         private Coordinates ParseCoordinates(JObject node)
         {
-            // TODO: Can be null or empty strings?
             return new Coordinates()
             {
-                Latitude = (double)node["latitude"],
-                Longitude = (double)node["longitude"],
+                Latitude = ZeroDoubleIfNull(node["latitude"]),
+                Longitude = ZeroDoubleIfNull(node["longitude"]),
             };
         }
 
@@ -443,8 +444,8 @@ namespace TeleSign.Services.PhoneId
                 CleanseCode = this.ParseCleanseCode((int)node["cleansed_code"]),
                 CountryCode = EmptyStringIfNull(node["country_code"]),
                 PhoneNumber = EmptyStringIfNull(node["phone_number"]),
-                MinLength = (int)node["min_length"],
-                MaxLength = (int)node["max_length"],
+                MinLength = ZeroIfNull(node["min_length"]),
+                MaxLength = ZeroIfNull(node["max_length"]),
             };
         }
 
