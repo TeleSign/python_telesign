@@ -1,2 +1,3 @@
 test/config_test.php
 .DS_Store
+docs/*
