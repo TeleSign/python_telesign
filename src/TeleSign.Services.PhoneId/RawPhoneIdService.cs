@@ -60,6 +60,24 @@ namespace TeleSign.Services.PhoneId
         /// Initializes a new instance of the RawPhoneIdService class with a supplied credential and uri.
         /// </summary>
         /// <param name="configuration">The configuration information for the service.</param>
+        public RawPhoneIdService()
+            : this("default")
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the RawPhoneIdService class with a supplied credential and uri.
+        /// </summary>
+        /// <param name="configuration">The configuration information for the service.</param>
+        public RawPhoneIdService(string accountName)
+            : base(null, null, accountName)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the RawPhoneIdService class with a supplied credential and uri.
+        /// </summary>
+        /// <param name="configuration">The configuration information for the service.</param>
         public RawPhoneIdService(TeleSignServiceConfiguration configuration)
             : this(configuration, null)
         {

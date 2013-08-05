@@ -44,10 +44,11 @@ namespace TeleSign.Services
         /// <param name="webRequester">The web requester to use to perform web requests. If null will use the default.</param>
         protected TeleSignService(
                     TeleSignServiceConfiguration configuration,
-                    IWebRequester webRequester)
+                    IWebRequester webRequester,
+                    string accountName = "default")
         {
             this.configuration = (configuration == null)
-                        ? TeleSignServiceConfiguration.ReadConfigurationFile()
+                        ? TeleSignServiceConfiguration.ReadConfigurationFile(accountName)
                         : configuration;
 
             this.WebRequester = (webRequester == null)
