@@ -18,7 +18,7 @@ namespace TeleSign.Services.PhoneId
     /// of the transaction.
     /// </para>
     /// </summary>
-    public class PhoneIdScoreResponse : CommonPhoneIdResponse
+    public class PhoneIdScoreResponse : PhoneIdStandardResponse
     {
         /// <summary>
         /// Initializes a new instance of the PhoneIdScoreResponse class.
