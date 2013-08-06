@@ -13,7 +13,7 @@
          Studio adds them anyway -->
     <AssemblyName>Documentation</AssemblyName>
     <RootNamespace>Documentation</RootNamespace>
-    <Name>Documentation</Name>
+    <Name>TeleSignSdkDocumentation</Name>
     <!-- SHFB properties -->
     <OutputPath>.\SandcastleHtml\</OutputPath>
     <HtmlHelpName>TeleSign</HtmlHelpName>

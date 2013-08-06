@@ -123,6 +123,8 @@ namespace TeleSign.Services.PhoneId
                 { "ucid", useCaseId },
             };
 
+            this.CustomizeParameters(additionalFields);
+
             WebRequest request = this.ConstructWebRequest(
                         resourceName,
                         "GET",
@@ -155,6 +157,8 @@ namespace TeleSign.Services.PhoneId
             { 
                 { "ucid", useCaseId } 
             };
+
+            this.CustomizeParameters(additionalFields);
 
             WebRequest request = this.ConstructWebRequest(
                         resourceName,
@@ -189,6 +193,8 @@ namespace TeleSign.Services.PhoneId
                 { "ucid", useCaseId } 
             };
 
+            this.CustomizeParameters(additionalFields);
+
             WebRequest request = this.ConstructWebRequest(
                         resourceName,
                         "GET",
@@ -222,12 +228,22 @@ namespace TeleSign.Services.PhoneId
                 { "ucid", useCaseId } 
             };
 
+            this.CustomizeParameters(additionalFields);
+
             WebRequest request = this.ConstructWebRequest(
                         resourceName,
                         "GET",
                         additionalFields);
 
             return this.WebRequester.ReadResponseAsString(request);
+        }
+
+        /// <summary>
+        /// Allows you to override and add custom fields.
+        /// </summary>
+        /// <param name="additionalFields">A dictionary of additional parameters.</param>
+        public virtual void CustomizeParameters(Dictionary<string, string> additionalFields)
+        {
         }
     }
 }
