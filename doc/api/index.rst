@@ -23,6 +23,9 @@ The **telesign.api** module contains Python classes and methods that allow you t
     call
     sms
     status
+    push
+    soft_token
+    two_way_sms
 
 
 :mod:`telesign.api.PhoneId`

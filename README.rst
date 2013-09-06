@@ -68,7 +68,18 @@ With just two classes, **telesign.api** abstracts much of the complexity of the 
 |                      | *status*                                                                 | 
 |                      |     Retrieves the verification result. You make this call in your web    | 
 |                      |     application after users complete the authentication transaction      | 
-|                      |     (using either a *call* or *sms*).                                    | 
+|                      |     (using either a *call* or *sms*).                                    |
+|                      | *push*                                                                   |
+|                      |     Delivery authorization requests to your users via Push               |
+|                      |     Notification, and then by receiving their permission responses via   |
+|                      |     their mobile device’s wireless Internet connection.                  |
+|                      | *soft_token*                                                             |
+|                      |     Authenticate your end users when they use the TeleSign AuthID        |
+|                      |     application on their mobile device to generate a Time-based          |
+|                      |     One-time Password (TOTP) verification code                           |
+|                      | *two_way_sms*                                                            |
+|                      |     Authenticate your users and verify user transactions via             |
+|                      |     two-way Short Message Service (SMS) wireless communication           |
 |                      |                                                                          | 
 +----------------------+--------------------------------------------------------------------------+ 
 
