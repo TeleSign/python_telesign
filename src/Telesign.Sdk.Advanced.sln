@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleSign.Services", "TeleSi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleSign.TeleSignCmd", "TeleSign.TeleSignCmd\TeleSign.TeleSignCmd.csproj", "{B4D62801-9B06-4AC9-A026-ABA38056F9DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleSign.Services.UnitTests", "TeleSign.Services.UnitTests\TeleSign.Services.UnitTests.csproj", "{F5101F1E-8A2A-41B0-BF7F-39D7CF72E442}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleSign.Services.Verify", "TeleSign.Services.Verify\TeleSign.Services.Verify.csproj", "{808AE334-F601-4EA1-9676-CEDD8AA8FDFD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleSign.Services.PhoneId", "TeleSign.Services.PhoneId\TeleSign.Services.PhoneId.csproj", "{5C03303E-4FA0-4168-A103-2CFB3135BAC7}"
@@ -13,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		..\docs\Telesign.Sdk.vsd = ..\docs\Telesign.Sdk.vsd
 	EndProjectSection
+EndProject
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "TeleSignSdkDocumentation", "..\docs\TeleSignSdkDocumentation.shfbproj", "{A16C6D0E-539A-4702-A862-86787F3875FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +48,16 @@ Global
 		{B4D62801-9B06-4AC9-A026-ABA38056F9DB}.Release|Mixed Platforms.Build.0 = Release|x86
 		{B4D62801-9B06-4AC9-A026-ABA38056F9DB}.Release|x86.ActiveCfg = Release|x86
 		{B4D62801-9B06-4AC9-A026-ABA38056F9DB}.Release|x86.Build.0 = Release|x86
+		{F5101F1E-8A2A-41B0-BF7F-39D7CF72E442}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5101F1E-8A2A-41B0-BF7F-39D7CF72E442}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5101F1E-8A2A-41B0-BF7F-39D7CF72E442}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F5101F1E-8A2A-41B0-BF7F-39D7CF72E442}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F5101F1E-8A2A-41B0-BF7F-39D7CF72E442}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F5101F1E-8A2A-41B0-BF7F-39D7CF72E442}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5101F1E-8A2A-41B0-BF7F-39D7CF72E442}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5101F1E-8A2A-41B0-BF7F-39D7CF72E442}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F5101F1E-8A2A-41B0-BF7F-39D7CF72E442}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F5101F1E-8A2A-41B0-BF7F-39D7CF72E442}.Release|x86.ActiveCfg = Release|Any CPU
 		{808AE334-F601-4EA1-9676-CEDD8AA8FDFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{808AE334-F601-4EA1-9676-CEDD8AA8FDFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{808AE334-F601-4EA1-9676-CEDD8AA8FDFD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -64,6 +78,16 @@ Global
 		{5C03303E-4FA0-4168-A103-2CFB3135BAC7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5C03303E-4FA0-4168-A103-2CFB3135BAC7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5C03303E-4FA0-4168-A103-2CFB3135BAC7}.Release|x86.ActiveCfg = Release|Any CPU
+		{A16C6D0E-539A-4702-A862-86787F3875FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A16C6D0E-539A-4702-A862-86787F3875FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A16C6D0E-539A-4702-A862-86787F3875FD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A16C6D0E-539A-4702-A862-86787F3875FD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A16C6D0E-539A-4702-A862-86787F3875FD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A16C6D0E-539A-4702-A862-86787F3875FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A16C6D0E-539A-4702-A862-86787F3875FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A16C6D0E-539A-4702-A862-86787F3875FD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A16C6D0E-539A-4702-A862-86787F3875FD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A16C6D0E-539A-4702-A862-86787F3875FD}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

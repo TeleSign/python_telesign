@@ -84,11 +84,35 @@ namespace TeleSign.Services
         /// the same directory as this dll.
         /// </summary>
         /// <returns>An instantiated TeleSignServiceConfiguration object containing configuration.</returns>
-        public static TeleSignServiceConfiguration ReadConfigurationFile()
+        public static TeleSignServiceConfiguration ReadConfigurationFile(string accountName = "default")
         {
             string configFilePath = TeleSignServiceConfiguration.GetDefaultConfigurationFilePath();
 
-            return TeleSignServiceConfiguration.ReadConfigurationFile(configFilePath);
+            return TeleSignServiceConfiguration.ReadConfigurationFile(configFilePath, accountName);
+        }
+
+        public static List<string> GetAccountNames()
+        {
+            string configFilePath = TeleSignServiceConfiguration.GetDefaultConfigurationFilePath();
+
+            return TeleSignServiceConfiguration.GetAccountNames(configFilePath);
+        }
+
+        public static List<string> GetAccountNames(string configFilePath)
+        {
+            XDocument doc = XDocument.Load(configFilePath);
+
+            XElement root = doc.Element("TeleSignConfig");
+            string serviceUri = (string)root.Element("ServiceUri");
+
+            List<string> names = new List<string>();
+
+            foreach (XElement account in root.Element("Accounts").Elements("Account"))
+            {
+                names.Add((string)account.Attribute("name"));
+            }
+
+            return names;
         }
 
         /// <summary>
@@ -96,9 +120,8 @@ namespace TeleSign.Services
         /// </summary>
         /// <param name="configFilePath">The path to the configuration file.</param>
         /// <returns>An instantiated TeleSignServiceConfiguration object containing configuration.</returns>
-        public static TeleSignServiceConfiguration ReadConfigurationFile(string configFilePath)
+        public static TeleSignServiceConfiguration ReadConfigurationFile(string configFilePath, string accountName = "default")
         {
-            string accountName = "default";
             XDocument doc = XDocument.Load(configFilePath);
 
             XElement root = doc.Element("TeleSignConfig");
@@ -106,7 +129,7 @@ namespace TeleSign.Services
 
             foreach (XElement account in root.Element("Accounts").Elements("Account"))
             {
-                if ((string)account.Attribute("name") == accountName)
+                if (((string)account.Attribute("name")).ToLowerInvariant() == accountName.ToLowerInvariant())
                 {
                     string overrideServiceUri = (string)account.Element("ServiceUri");
 

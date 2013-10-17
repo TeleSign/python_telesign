@@ -72,6 +72,7 @@ namespace TeleSign.Services.PhoneId
             PhoneIdScoreResponse response = new PhoneIdScoreResponse(json);
             this.PopulateCommonPhoneIdResponseFields(response, node);
             this.PopulateStatusResponseFields(response, node);
+            this.PopulatePhoneIdStandardResponseFields(response, node);
 
             response.Risk = this.ParseRisk(node["risk"]);
 
