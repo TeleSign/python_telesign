@@ -16,7 +16,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -53,6 +53,10 @@
     <ProjectReference Include="..\TeleSign.Services.PhoneId\TeleSign.Services.PhoneId.csproj">
       <Project>{5C03303E-4FA0-4168-A103-2CFB3135BAC7}</Project>
       <Name>TeleSign.Services.PhoneId</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TeleSign.Services.Verify\TeleSign.Services.Verify.csproj">
+      <Project>{808AE334-F601-4EA1-9676-CEDD8AA8FDFD}</Project>
+      <Name>TeleSign.Services.Verify</Name>
     </ProjectReference>
     <ProjectReference Include="..\TeleSign.Services\TeleSign.Services.csproj">
       <Project>{E4693BDE-4F71-4A89-870D-3117B820F531}</Project>
