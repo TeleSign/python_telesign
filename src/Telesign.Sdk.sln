@@ -10,9 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleSign.Services.PhoneId", "TeleSign.Services.PhoneId\TeleSign.Services.PhoneId.csproj", "{5C03303E-4FA0-4168-A103-2CFB3135BAC7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4EDD5D84-13D3-4728-BD8A-3C5BC76866C6}"
-	ProjectSection(SolutionItems) = preProject
-		..\docs\Telesign.Sdk.vsd = ..\docs\Telesign.Sdk.vsd
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
