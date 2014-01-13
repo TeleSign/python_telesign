@@ -198,6 +198,12 @@ namespace TeleSign.TeleSignCmd
         }
 
         [CliCommand(HelpString = "Help me")]
+        public static void VerifyPush(string[] args)
+        {
+            PerformVerify(args, VerificationMethod.Push);
+        }
+
+        [CliCommand(HelpString = "Help me")]
         public static void SendSms(string[] args)
         {
             CheckArgument.ArrayLengthAtLeast(args, 1, "args");
@@ -258,6 +264,10 @@ namespace TeleSign.TeleSignCmd
             {
                 verifyResponse = verify.InitiateCall(phoneNumber, code, language);
             }
+            else if (method == VerificationMethod.Push)
+            {
+                verifyResponse = verify.InitiatePush(phoneNumber, code);
+            }
             else
             {
                 throw new NotImplementedException("Invalid verification method");
@@ -291,9 +301,11 @@ namespace TeleSign.TeleSignCmd
                             "Transaction Status: {0} -- {1}\r\nCode State: {2}",
                             statusResponse.Status.Code,
                             statusResponse.Status.Description,
-                            statusResponse.VerifyInfo.CodeState);
+                            (statusResponse.VerifyInfo != null) 
+                                        ? statusResponse.VerifyInfo.CodeState.ToString()
+                                        : "Not Sent");
 
-                if (statusResponse.VerifyInfo.CodeState == CodeState.Valid)
+                if ((statusResponse.VerifyInfo != null) && (statusResponse.VerifyInfo.CodeState == CodeState.Valid))
                 {
                     Console.WriteLine("Code was valid. Exiting.");
                     break;

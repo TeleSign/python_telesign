@@ -299,7 +299,6 @@ namespace TeleSign.Services.Verify
         /// <param name="language">
         /// The language that the message should be in. This parameter is ignored if
         /// you supplied a message template.
-        /// TODO: Details about language string format.
         /// </param>
         /// <returns>
         /// A VerifyResponse object with the status and returned information
