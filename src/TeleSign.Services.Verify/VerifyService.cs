@@ -212,6 +212,44 @@ namespace TeleSign.Services.Verify
         }
 
         /// <summary>
+        /// Initiates a TeleSign Verify transaction via a voice call.
+        /// </summary>
+        /// <param name="phoneNumber">The phone number to call.</param>
+        /// <param name="verifyCode">
+        /// The code to send to the user. When null a code will
+        /// be generated for you.
+        /// </param>
+        /// <param name="language">
+        /// The language that the message should be in. This parameter is ignored if
+        /// you supplied a message template.
+        /// TODO: Details about language string format.
+        /// </param>
+        /// <returns>
+        /// A VerifyResponse object with the status and returned information
+        /// for the transaction.
+        /// </returns>
+        public VerifyResponse InitiatePush(
+                    string phoneNumber,
+                    string verifyCode = null)
+        {
+            string rawResponse = this.PushRaw(
+                        phoneNumber,
+                        verifyCode);
+
+            try
+            {
+                return this.parser.ParseVerifyResponse(rawResponse);
+            }
+            catch (Exception x)
+            {
+                throw new ResponseParseException(
+                            "Error parsing Verify call response",
+                            rawResponse,
+                            x);
+            }
+        }
+
+        /// <summary>
         /// Validates the code provided by the user. After the code has been
         /// sent to the user, they enter the code to your website/application
         /// and you pass the code here to verify.

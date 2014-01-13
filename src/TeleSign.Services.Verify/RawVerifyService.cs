@@ -121,6 +121,33 @@ namespace TeleSign.Services.Verify
         }
 
         /// <summary>
+        /// Initiates a PhoneId Push Mobile transaction returning the raw JSON response from
+        /// the REST API.
+        /// </summary>
+        /// <param name="phoneNumber">The phone number to call.</param>
+        /// <param name="verifyCode">
+        /// The code to send to the user. When null a code will
+        /// be generated for you.
+        /// </param>
+        /// <param name="language">
+        /// The language that the message should be in. This parameter is ignored if
+        /// you supplied a message template.
+        /// </param>
+        /// <returns>The raw JSON response from the REST API.</returns>
+        public string PushRaw(
+                    string phoneNumber,
+                    string verifyCode = null)
+        {
+            phoneNumber = this.CleanupPhoneNumber(phoneNumber);
+
+            return this.InternalVerify(
+                        VerificationMethod.Push,
+                        phoneNumber,
+                        verifyCode,
+                        "TS2FA");
+        }
+
+        /// <summary>
         /// Checks the status of a Verify transaction. When the code is
         /// supplied it verifies this code. The response also contains 
         /// status information about the progress of the call or sms.
@@ -242,10 +269,21 @@ namespace TeleSign.Services.Verify
 
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("phone_number", phoneNumber);
-            args.Add("verify_code", verifyCode.ToString());
+
+            if (verificationMethod == VerificationMethod.Push)
+            {
+                if (!string.IsNullOrEmpty(verifyCode))
+                {
+                    args.Add("notification_value", verifyCode.ToString());
+                }
+            }
+            else
+            {
+                args.Add("verify_code", verifyCode.ToString());
+            }
             args.Add("language", language);
 
-            if (verificationMethod == VerificationMethod.Sms)
+            if (verificationMethod == VerificationMethod.Sms || verificationMethod == VerificationMethod.Push)
             {
                 args.Add("template", messageTemplate);
             }
