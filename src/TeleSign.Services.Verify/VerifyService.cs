@@ -170,6 +170,83 @@ namespace TeleSign.Services.Verify
                             x);
             }
         }
+        
+        /////// <summary>
+        /////// The TeleSign Verify Soft Token web service is a server-side component of the TeleSign AuthID application, and it allows you to authenticate your end users when they use the TeleSign AuthID application on their mobile device to generate a Time-based One-time Password (TOTP) verification code
+        /////// </summary>
+        /////// <param name="phoneNumber">The phone number for the Verify Soft Token request, including country code</param>
+        /////// <param name="softTokenId">
+        /////// The alphanumeric string that uniquely identifies your TeleSign soft token subscription
+        /////// </param>
+        /////// <param name="verifyCode">
+        /////// The verification code received from the end user
+        /////// </param>
+        /////// <returns>The raw JSON response from the REST API.</returns>
+        ////public VerifyResponse SendSoftToken(
+        ////            string phoneNumber,
+        ////            string softTokenId = null,
+        ////            string verifyCode = null)
+        ////{
+        ////    phoneNumber = this.CleanupPhoneNumber(phoneNumber);
+
+        ////    string rawResponse = this.SoftTokenRaw(
+        ////                phoneNumber,
+        ////                softTokenId,
+        ////                verifyCode);
+
+        ////    try
+        ////    {
+        ////        return this.parser.ParseVerifyResponse(rawResponse);
+        ////    }
+        ////    catch (Exception x)
+        ////    {
+        ////        throw new ResponseParseException(
+        ////                    "Error parsing Verify SoftToken response",
+        ////                    rawResponse,
+        ////                    x);
+        ////    }
+        ////}
+        
+        /// <summary>
+        /// The TeleSign Verify 2-Way SMS web service allows you to authenticate your users and verify user transactions via two-way Short Message Service (SMS) wireless communication. Verification requests are sent to user’s in a text message, and users return their verification responses by replying to the text message.
+        /// </summary>
+        /// <param name="phoneNumber">The phone number for the Verify Soft Token request, including country code</param>
+        /// <param name="ucid">
+        /// A string specifying one of the Use Case Codes
+        /// </param>
+        /// <param name="message">
+        /// The text to display in the body of the text message. You must include the $$CODE$$ placeholder for the verification code somewhere in your message text. TeleSign automatically replaces it with a randomly-generated verification code
+        /// </param>
+        /// <param name="validityPeriod">
+        /// This parameter allows you to place a time-limit on the verification. This provides an extra level of security by restricting the amount of time your end user has to respond (after which, TeleSign automatically rejects their response). Values are expressed as a natural number followed by a lower-case letter that represents the unit of measure. You can use 's' for seconds, 'm' for minutes, 'h' for hours, and 'd' for days
+        /// </param>
+        /// <returns>The raw JSON response from the REST API.</returns>
+        public VerifyResponse SendTwoWaySms(
+        			string phoneNumber,
+                    string ucid,
+                    string message = null,
+            		string validityPeriod = null)
+        {
+            phoneNumber = this.CleanupPhoneNumber(phoneNumber);
+
+            string rawResponse = this.TwoWaySmsRaw(
+                        phoneNumber,
+                        ucid,
+                        message,
+            			validityPeriod);
+
+            try
+            {
+                return this.parser.ParseVerifyResponse(rawResponse);
+            }
+            catch (Exception x)
+            {
+                throw new ResponseParseException(
+                            "Error parsing Verify TwoWaySms response",
+                            rawResponse,
+                            x);
+            }
+        }
 
         /// <summary>
         /// Initiates a TeleSign Verify transaction via a voice call.

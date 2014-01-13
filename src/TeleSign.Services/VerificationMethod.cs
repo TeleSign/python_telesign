@@ -33,5 +33,15 @@ namespace TeleSign.Services
         /// Verify by mobile push.
         /// </summary>
         Push,
+       
+        /// <summary>
+        /// Verify by SoftToken.
+        /// </summary>
+        SoftToken,
+        	
+        /// <summary>
+        /// Verify by TwoWaySms.
+        /// </summary>
+        TwoWaySms,
     }
 }
