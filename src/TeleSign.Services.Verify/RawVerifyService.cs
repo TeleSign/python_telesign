@@ -119,6 +119,98 @@ namespace TeleSign.Services.Verify
                         null,
                         language);
         }
+        
+        /////// <summary>
+        /////// The TeleSign Verify Soft Token web service is a server-side component of the TeleSign AuthID application, and it allows you to authenticate your end users when they use the TeleSign AuthID application on their mobile device to generate a Time-based One-time Password (TOTP) verification code
+        /////// </summary>
+        /////// <param name="phoneNumber">The phone number for the Verify Soft Token request, including country code</param>
+        /////// <param name="softTokenId">
+        /////// The alphanumeric string that uniquely identifies your TeleSign soft token subscription
+        /////// </param>
+        /////// <param name="verifyCode">
+        /////// The verification code received from the end user
+        /////// </param>
+        /////// <returns>The raw JSON response from the REST API.</returns>
+        ////public string SoftTokenRaw(
+        ////            string phoneNumber,
+        ////            string softTokenId = null,
+        ////            string verifyCode = null)
+        ////{
+        ////    phoneNumber = this.CleanupPhoneNumber(phoneNumber);
+            
+        ////    if (softTokenId == null)
+        ////    {
+        ////        softTokenId = string.Empty;
+        ////    }
+            
+        ////    if (verifyCode == null)
+        ////    {
+        ////        verifyCode = string.Empty;
+        ////    }
+
+        ////    Dictionary<string, string> args = ConstructVerifyArgs(
+        ////                VerificationMethod.SoftToken,
+        ////                phoneNumber,
+        ////                softTokenId, 
+        ////                verifyCode);
+
+        ////    string resourceName = string.Format(
+        ////                RawVerifyService.VerifyResourceFormatString, 
+        ////                VerificationMethod.SoftToken.ToString().ToLowerInvariant());
+
+        ////    WebRequest request = this.ConstructWebMobileRequest(
+        ////                resourceName,
+        ////                "POST",
+        ////                args);
+
+        ////    return this.WebRequester.ReadResponseAsString(request);
+        ////}
+        
+        /// <summary>
+        /// The TeleSign Verify 2-Way SMS web service allows you to authenticate your users and verify user transactions via two-way Short Message Service (SMS) wireless communication. Verification requests are sent to user’s in a text message, and users return their verification responses by replying to the text message.
+        /// </summary>
+        /// <param name="phoneNumber">The phone number for the Verify Soft Token request, including country code</param>
+        /// <param name="ucid">
+        /// A string specifying one of the Use Case Codes
+        /// </param>
+        /// <param name="message">
+        /// The text to display in the body of the text message. You must include the $$CODE$$ placeholder for the verification code somewhere in your message text. TeleSign automatically replaces it with a randomly-generated verification code
+        /// </param>
+        /// <param name="validityPeriod">
+        /// This parameter allows you to place a time-limit on the verification. This provides an extra level of security by restricting the amount of time your end user has to respond (after which, TeleSign automatically rejects their response). Values are expressed as a natural number followed by a lower-case letter that represents the unit of measure. You can use 's' for seconds, 'm' for minutes, 'h' for hours, and 'd' for days
+        /// </param>
+        /// <returns>The raw JSON response from the REST API.</returns>
+        public string TwoWaySmsRaw(
+                    string phoneNumber,
+                    string message,
+            		string validityPeriod = "5m",
+                    string useCaseId = RawVerifyService.DefaultUseCaseId)
+        {
+            CheckArgument.NotEmpty(message, "message");
+            CheckArgument.NotNullOrEmpty(validityPeriod, "validityPeriod");
+
+            phoneNumber = this.CleanupPhoneNumber(phoneNumber);
+
+            Dictionary<string, string> args = ConstructVerifyArgs(
+                        VerificationMethod.TwoWaySms,
+                		phoneNumber,
+                		null,
+                        message,
+                        null,
+                        validityPeriod,
+                        useCaseId);
+
+            string resourceName = string.Format(
+                        RawVerifyService.VerifyResourceFormatString, 
+                        "two_way_sms");
+
+            WebRequest request = this.ConstructWebRequest(
+                        resourceName,
+                        "POST",
+                        args);
+
+            return this.WebRequester.ReadResponseAsString(request);
+        }
 
         /// <summary>
         /// Initiates a PhoneId Push Mobile transaction returning the raw JSON response from
@@ -256,13 +348,22 @@ namespace TeleSign.Services.Verify
                     string phoneNumber, 
                     string verifyCode, 
                     string messageTemplate, 
-                    string language)
+                    string language,
+                    string validityPeriod = null,
+                    string useCaseId = RawVerifyService.DefaultUseCaseId)
         {
             // TODO: Review code generation rules.
             if (verifyCode == null)
             {
                 Random r = new Random();
                 verifyCode = r.Next(100, 99999).ToString();
+            }
+            else
+            {
+                if (verificationMethod == VerificationMethod.TwoWaySms)
+                {
+                    throw new ArgumentException("Verify Code cannot be specified for Two-Way SMS", "verifyCode");
+                }
             }
 
             // TODO: Check code validity here?
@@ -277,15 +378,26 @@ namespace TeleSign.Services.Verify
                     args.Add("notification_value", verifyCode.ToString());
                 }
             }
+            else if (verificationMethod == VerificationMethod.TwoWaySms)
+            {
+                // Two way sms doesn't take a verify code. So nothing here.
+            }
             else
             {
                 args.Add("verify_code", verifyCode.ToString());
             }
+
             args.Add("language", language);
 
-            if (verificationMethod == VerificationMethod.Sms || verificationMethod == VerificationMethod.Push)
+            if (verificationMethod == VerificationMethod.Sms || verificationMethod == VerificationMethod.Push || verificationMethod == VerificationMethod.TwoWaySms)
             {
                 args.Add("template", messageTemplate);
+            }
+
+            if (verificationMethod == VerificationMethod.TwoWaySms)
+            {
+                args.Add("validity_period", validityPeriod);
+                args.Add("ucid", useCaseId);
             }
 
             return args;

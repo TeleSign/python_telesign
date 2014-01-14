@@ -27,6 +27,7 @@ namespace TeleSign.Services
         {
             try
             {
+                request.Timeout = 30000;
                 using (WebResponse response = request.GetResponse())
                 using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                 {

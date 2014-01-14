@@ -190,11 +190,23 @@ namespace TeleSign.TeleSignCmd
         {
             PerformVerify(args, VerificationMethod.Sms);
         }
+        
+        [CliCommand(HelpString = "Help me")]
+        public static void VerifyTwoWaySms(string[] args)
+        {
+            PerformVerify(args, VerificationMethod.TwoWaySms);
+        }
 
         [CliCommand(HelpString = "Help me")]
         public static void VerifyCall(string[] args)
         {
             PerformVerify(args, VerificationMethod.Call);
+        }
+
+        [CliCommand(HelpString = "Help me")]
+        public static void VerifyPush(string[] args)
+        {
+            PerformVerify(args, VerificationMethod.Push);
         }
 
         [CliCommand(HelpString = "Help me")]
@@ -258,6 +270,14 @@ namespace TeleSign.TeleSignCmd
             {
                 verifyResponse = verify.InitiateCall(phoneNumber, code, language);
             }
+            else if (method == VerificationMethod.Push)
+            {
+                verifyResponse = verify.InitiatePush(phoneNumber, code);
+            }
+            else if (method == VerificationMethod.TwoWaySms)
+            {
+                verifyResponse = verify.SendTwoWaySms(phoneNumber);
+            }
             else
             {
                 throw new NotImplementedException("Invalid verification method");
@@ -291,9 +311,11 @@ namespace TeleSign.TeleSignCmd
                             "Transaction Status: {0} -- {1}\r\nCode State: {2}",
                             statusResponse.Status.Code,
                             statusResponse.Status.Description,
-                            statusResponse.VerifyInfo.CodeState);
+                            (statusResponse.VerifyInfo != null) 
+                                        ? statusResponse.VerifyInfo.CodeState.ToString()
+                                        : "Not Sent");
 
-                if (statusResponse.VerifyInfo.CodeState == CodeState.Valid)
+                if ((statusResponse.VerifyInfo != null) && (statusResponse.VerifyInfo.CodeState == CodeState.Valid))
                 {
                     Console.WriteLine("Code was valid. Exiting.");
                     break;

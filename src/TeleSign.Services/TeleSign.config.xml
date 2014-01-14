@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TeleSignConfig>
   <ServiceUri>https://rest.telesign.com</ServiceUri>
+  <ServiceMobileUri>https://rest-mobile.telesign.com</ServiceMobileUri>
   <Accounts>
     <Account name="default">
       <!-- Enter your customer id and secret key here. -->

@@ -72,7 +72,14 @@ namespace TeleSign.Services.Verify
 
             if (!Enum.TryParse<CodeState>(codeStateString, true, out codeState))
             {
-                codeState = CodeState.Other;
+                if (codeStateString == "VALID_YES")
+                {
+                    codeState = CodeState.Valid;
+                }
+                else
+                {
+                    codeState = CodeState.Other;
+                }
             }
 
             return codeState;

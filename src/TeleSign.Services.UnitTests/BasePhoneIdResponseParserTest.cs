@@ -24,7 +24,7 @@ namespace TeleSign.Services.UnitTests
 
             Assert.AreEqual(response.Errors.Count, 0);
             Assert.AreEqual(response.ReferenceId, "013890676FB7010BE1D4494A0000000E");
-            Assert.AreEqual(response.ResourceUri, null);
+            Assert.AreEqual(response.ResourceUri, string.Empty);
             Assert.AreNotEqual(response.RawResponse, null);
             Assert.AreEqual(response.SubResource, "score");
 
@@ -62,7 +62,7 @@ namespace TeleSign.Services.UnitTests
 
             Assert.AreEqual(response.Errors.Count, 0);
             Assert.AreEqual(response.ReferenceId, "01389064DBCE010BE1D449490000000E");
-            Assert.AreEqual(response.ResourceUri, null);
+            Assert.AreEqual(response.ResourceUri, string.Empty);
             Assert.AreNotEqual(response.RawResponse, null);
             Assert.AreEqual(response.SubResource, "standard");
 
@@ -115,7 +115,7 @@ namespace TeleSign.Services.UnitTests
             PhoneIdContactResponse response = this.CreateParser().ParsePhoneIdContactResponse(json);
 
             Assert.AreEqual(response.ReferenceId, "013890689D26010BE1D4494700000010");
-            Assert.AreEqual(response.ResourceUri, null);
+            Assert.AreEqual(response.ResourceUri, string.Empty);
             Assert.AreNotEqual(response.RawResponse, null);
             Assert.AreEqual(response.SubResource, "contact");
 
@@ -173,7 +173,7 @@ namespace TeleSign.Services.UnitTests
 
             Assert.AreEqual(response.Errors.Count, 0);
             Assert.AreEqual(response.ReferenceId, "0138906A9011010BE1D4494B0000000E");
-            Assert.AreEqual(response.ResourceUri, null);
+            Assert.AreEqual(response.ResourceUri, string.Empty);
             Assert.AreNotEqual(response.RawResponse, null);
             Assert.AreEqual(response.SubResource, "contact");
 
@@ -236,7 +236,7 @@ namespace TeleSign.Services.UnitTests
             PhoneIdLiveResponse response = this.CreateParser().ParsePhoneIdLiveResponse(json);
 
             Assert.AreEqual(response.ReferenceId, "013B23ED8EC2010BE4D40E410000006B");
-            Assert.AreEqual(response.ResourceUri, null);
+            Assert.AreEqual(response.ResourceUri, string.Empty);
             Assert.AreNotEqual(response.RawResponse, null);
             Assert.AreEqual(response.SubResource, "live");
 
@@ -293,7 +293,7 @@ namespace TeleSign.Services.UnitTests
             PhoneIdLiveResponse response = this.CreateParser().ParsePhoneIdLiveResponse(json);
 
             Assert.AreEqual(response.ReferenceId, "013B23B1FCCB010BE4D40D4D0000005F");
-            Assert.AreEqual(response.ResourceUri, null);
+            Assert.AreEqual(response.ResourceUri, string.Empty);
             Assert.AreNotEqual(response.RawResponse, null);
             Assert.AreEqual(response.SubResource, "live");
 

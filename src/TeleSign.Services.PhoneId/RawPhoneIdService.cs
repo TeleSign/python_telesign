@@ -52,11 +52,6 @@ namespace TeleSign.Services.PhoneId
         private const string LiveResourceFormatString = "/v1/phoneid/live/{0}";
 
         /// <summary>
-        /// The default value for a use case id if not specified.
-        /// </summary>
-        private const string DefaultUseCaseId = "othr";
-
-        /// <summary>
         /// Initializes a new instance of the RawPhoneIdService class with a supplied credential and uri.
         /// </summary>
         /// <param name="configuration">The configuration information for the service.</param>
