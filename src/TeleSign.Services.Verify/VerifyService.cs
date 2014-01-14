@@ -223,15 +223,13 @@ namespace TeleSign.Services.Verify
         /// <returns>The raw JSON response from the REST API.</returns>
         public VerifyResponse SendTwoWaySms(
         			string phoneNumber,
-                    string ucid,
                     string message = null,
-            		string validityPeriod = null)
+            		string validityPeriod = "5m")
         {
             phoneNumber = this.CleanupPhoneNumber(phoneNumber);
 
             string rawResponse = this.TwoWaySmsRaw(
                         phoneNumber,
-                        ucid,
                         message,
             			validityPeriod);
 
@@ -409,16 +407,6 @@ namespace TeleSign.Services.Verify
 
             // Empty code is never valid
             CheckArgument.NotEmpty(verifyCode, "verifyCode");
-
-            // Leading zeros are not allowed.
-            if (verifyCode[0] == '0')
-            {
-                string message = string.Format(
-                            "Verify code '{0}' must not have leading zeroes.",
-                            verifyCode);
-
-                throw new ArgumentException(message);
-            }
 
             foreach (char c in verifyCode)
             {

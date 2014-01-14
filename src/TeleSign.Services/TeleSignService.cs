@@ -22,6 +22,11 @@ namespace TeleSign.Services
     public class TeleSignService
     {
         /// <summary>
+        /// The default value for a use case id if not specified.
+        /// </summary>
+        protected const string DefaultUseCaseId = "othr";
+
+        /// <summary>
         /// The configuration information for the service.
         /// </summary>
         private TeleSignServiceConfiguration configuration;

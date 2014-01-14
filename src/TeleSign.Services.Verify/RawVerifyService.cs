@@ -182,32 +182,27 @@ namespace TeleSign.Services.Verify
         /// <returns>The raw JSON response from the REST API.</returns>
         public string TwoWaySmsRaw(
                     string phoneNumber,
-                    string ucid,
-                    string message = null,
-            		string validityPeriod = null)
+                    string message,
+            		string validityPeriod = "5m",
+                    string useCaseId = RawVerifyService.DefaultUseCaseId)
         {
+            CheckArgument.NotEmpty(message, "message");
+            CheckArgument.NotNullOrEmpty(validityPeriod, "validityPeriod");
+
             phoneNumber = this.CleanupPhoneNumber(phoneNumber);
-            
-            if (message == null)
-            {
-                message = string.Empty;
-            }
-            
-            if (validityPeriod == null)
-            {
-                validityPeriod = string.Empty;
-            }
 
             Dictionary<string, string> args = ConstructVerifyArgs(
                         VerificationMethod.TwoWaySms,
                 		phoneNumber,
-                		ucid,
+                		null,
                         message,
-                        validityPeriod);
+                        null,
+                        validityPeriod,
+                        useCaseId);
 
             string resourceName = string.Format(
                         RawVerifyService.VerifyResourceFormatString, 
-                        VerificationMethod.TwoWaySms.ToString().ToLowerInvariant());
+                        "two_way_sms");
 
             WebRequest request = this.ConstructWebRequest(
                         resourceName,
@@ -353,13 +348,22 @@ namespace TeleSign.Services.Verify
                     string phoneNumber, 
                     string verifyCode, 
                     string messageTemplate, 
-                    string language)
+                    string language,
+                    string validityPeriod = null,
+                    string useCaseId = RawVerifyService.DefaultUseCaseId)
         {
             // TODO: Review code generation rules.
             if (verifyCode == null)
             {
                 Random r = new Random();
                 verifyCode = r.Next(100, 99999).ToString();
+            }
+            else
+            {
+                if (verificationMethod == VerificationMethod.TwoWaySms)
+                {
+                    throw new ArgumentException("Verify Code cannot be specified for Two-Way SMS", "verifyCode");
+                }
             }
 
             // TODO: Check code validity here?
@@ -374,15 +378,26 @@ namespace TeleSign.Services.Verify
                     args.Add("notification_value", verifyCode.ToString());
                 }
             }
+            else if (verificationMethod == VerificationMethod.TwoWaySms)
+            {
+                // Two way sms doesn't take a verify code. So nothing here.
+            }
             else
             {
                 args.Add("verify_code", verifyCode.ToString());
             }
+
             args.Add("language", language);
 
-            if (verificationMethod == VerificationMethod.Sms || verificationMethod == VerificationMethod.Push)
+            if (verificationMethod == VerificationMethod.Sms || verificationMethod == VerificationMethod.Push || verificationMethod == VerificationMethod.TwoWaySms)
             {
                 args.Add("template", messageTemplate);
+            }
+
+            if (verificationMethod == VerificationMethod.TwoWaySms)
+            {
+                args.Add("validity_period", validityPeriod);
+                args.Add("ucid", useCaseId);
             }
 
             return args;

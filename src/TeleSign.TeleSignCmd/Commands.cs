@@ -190,6 +190,12 @@ namespace TeleSign.TeleSignCmd
         {
             PerformVerify(args, VerificationMethod.Sms);
         }
+        
+        [CliCommand(HelpString = "Help me")]
+        public static void VerifyTwoWaySms(string[] args)
+        {
+            PerformVerify(args, VerificationMethod.TwoWaySms);
+        }
 
         [CliCommand(HelpString = "Help me")]
         public static void VerifyCall(string[] args)
@@ -267,6 +273,10 @@ namespace TeleSign.TeleSignCmd
             else if (method == VerificationMethod.Push)
             {
                 verifyResponse = verify.InitiatePush(phoneNumber, code);
+            }
+            else if (method == VerificationMethod.TwoWaySms)
+            {
+                verifyResponse = verify.SendTwoWaySms(phoneNumber);
             }
             else
             {

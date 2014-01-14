@@ -187,6 +187,16 @@ namespace TeleSign.Services
         /// </summary>
         StatusNotAvailable = 599,
 
+        // TODO: Mobile...
+
+        TwoWayAccepted = 1301,
+        TwoWayRejected = 1302,
+        TwoWayPending = 1310,
+        TwoWayTimeout = 1311,
+        TwoWayInvalidMessage = 1320,
+        TwoWayInvalidResponseCode = 1321,
+        TwoWayInvalidResponseAction = 1322,
+
         /// <summary>
         /// An unknown status code was returned. This could be a mismatch between
         /// the version of the SDK and the REST API. You can check the raw
