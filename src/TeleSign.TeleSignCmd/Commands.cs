@@ -241,6 +241,32 @@ namespace TeleSign.TeleSignCmd
             }
         }
 
+        [CliCommand(HelpString = "Help me")]
+        public static void SendTwoWaySms(string[] args)
+        {
+            CheckArgument.ArrayLengthAtLeast(args, 1, "args");
+
+            string phoneNumber = args[0];
+            string message = string.Empty;
+
+            if (args.Length >= 2)
+            {
+                message = args[1];
+            }
+
+            try
+            {
+                VerifyService verify = new VerifyService(GetConfiguration());
+                VerifyResponse verifyResponse = null;
+                verifyResponse = verify.SendTwoWaySms(phoneNumber, message);
+                Console.WriteLine("Sent two way sms");
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine("Error: " + x.ToString());
+            }
+        }
+
         private static void PerformVerify(string[] args, VerificationMethod method)
         {
             CheckArgument.ArrayLengthAtLeast(args, 1, "args");

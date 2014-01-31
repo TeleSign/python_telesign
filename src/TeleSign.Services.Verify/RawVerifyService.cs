@@ -387,15 +387,19 @@ namespace TeleSign.Services.Verify
                 args.Add("verify_code", verifyCode.ToString());
             }
 
-            args.Add("language", language);
+            if (!string.IsNullOrEmpty(language))
+            {
+                args.Add("language", language);
+            }
 
-            if (verificationMethod == VerificationMethod.Sms || verificationMethod == VerificationMethod.Push || verificationMethod == VerificationMethod.TwoWaySms)
+            if (verificationMethod == VerificationMethod.Sms || verificationMethod == VerificationMethod.Push)
             {
                 args.Add("template", messageTemplate);
             }
 
             if (verificationMethod == VerificationMethod.TwoWaySms)
             {
+                args.Add("message", messageTemplate);
                 args.Add("validity_period", validityPeriod);
                 args.Add("ucid", useCaseId);
             }
