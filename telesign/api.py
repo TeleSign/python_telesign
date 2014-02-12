@@ -36,13 +36,15 @@ class Response(object):
 
 
 class ServiceBase(object):
-    def __init__(self, api_host, customer_id, secret_key, ssl=True):
+    def __init__(self, api_host, api_mobile_host, customer_id, secret_key, ssl=True):
         self._customer_id = customer_id
         self._secret_key = secret_key
         self._api_host = api_host
+        self._api_mobile_host = api_mobile_host
 
         http_root = "https://" if ssl else "http://"
         self._pool = urllib3.connection_from_url(http_root + api_host)
+        self._pool_mobile = urllib3.connection_from_url(http_root + api_mobile_host)
 
     def _validate_response(self, response):
         resp_obj = json.loads(response.data)
@@ -79,8 +81,8 @@ class PhoneId(ServiceBase):
        You can obtain both your Customer ID and Secret Key from the `TeleSign Customer Portal <https://portal.telesign.com/account_profile_api_auth.php>`_.
     """
 
-    def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com"):
-        super(PhoneId, self).__init__(api_host, customer_id, secret_key, ssl)
+    def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com", api_mobile_host="rest-mobile.telesign.com"):
+        super(PhoneId, self).__init__(api_host, api_mobile_host, customer_id, secret_key, ssl)
 
     def standard(self, phone_number):
         """
@@ -365,8 +367,8 @@ class Verify(ServiceBase):
 
     """
 
-    def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com"):
-        super(Verify, self).__init__(api_host, customer_id, secret_key, ssl)
+    def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com", api_mobile_host="rest-mobile.telesign.com"):
+        super(Verify, self).__init__(api_host, api_mobile_host, customer_id, secret_key, ssl)
 
     def sms(self, phone_number, verify_code=None, language="en", template=""):
         """
@@ -440,6 +442,222 @@ class Verify(ServiceBase):
         req = self._pool.request_encode_body(method, resource, headers=headers, fields=fields, encode_multipart=False)
 
         return Response(self._validate_response(req), req, verify_code=verify_code)
+
+    def push(self, phone_number, notification_type="", notification_value="", template="", message=""):
+        """
+        The TeleSign Verify Push web service is a server-side component of the TeleSign AuthID application, and it allows you to provide on-device transaction authorization for your users. It works by delivering authorization requests to your users via Push Notification, and then by receiving their permission responses via their mobile device's wireless Internet connection. The service provides two levels of security to support two types of transactions.
+
+        .. list-table::
+           :widths: 5 30
+           :header-rows: 1
+
+           * - Parameters
+             -
+           * - `phone_number`
+             - The phone number to receive the text message. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
+           * - `notification_type`
+             - (optional) Indicates the security measure to use for transaction authorization. The following types are currently supported: CODE, SIMPLE
+           * - `notification_value`
+             - (optional) Applies when notification_type=CODE. The verification code used for the code challenge. This is a randomly generated numeric value that you display in your web page for your user. After reading this value, the user then types it into the AuthID application on their mobile device
+           * - `template`
+             - (optional) Specifies a custom banner and icon for the TeleSign AuthID application to use for this notification. This allows you to brand your notifications with your corporate logo and/or your service-specific branding.
+           * - `message`
+             - (optional) The message to display to the end user, in the body of the notification. You normally leave this parameter empty (or set to null), and the default message is displayed.
+
+        **Example**::
+
+            from telesign.api import Verify
+            from telesign.exceptions import AuthorizationError, TelesignError
+
+            cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+            secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+            phone_number = "13107409700"
+
+            verify = Verify(cust_id, secret_key) # Instantiate a Verify object.
+
+            try:
+                phone_info = verify.push(phone_number, "", "", "Outlook-2FA", "Test Message")
+            except AuthorizationError as ex:
+                # API authorization failed, the API response should tell you the reason
+                ...
+            except TelesignError as ex:
+                # failed to execute the Verify service, check the API response for details
+                ...
+
+            # When the user inputs the validation code, you can verify that it matches the one that you sent.
+            if (phone_info != None):
+                try:
+                    status_info = verify.status(phone_info.data["reference_id"], verify_code=phone_info.verify_code)
+                except AuthorizationError as ex:
+                    ...
+                except TelesignError as ex:
+                    ...
+
+        """
+
+        resource = "/v1/verify/push"
+        method = "POST"
+
+        fields = {
+            "phone_number": phone_number,
+            "notification_type": notification_type,
+            "notification_value": notification_value,
+            "template": template,
+            "message": message
+        }
+
+        headers = generate_auth_headers(
+            self._customer_id,
+            self._secret_key,
+            resource,
+            method,
+            fields=fields)
+
+        req = self._pool_mobile.request_encode_body(method, resource, headers=headers, fields=fields, encode_multipart=False)
+
+        return Response(self._validate_response(req), req)
+
+    def soft_token(self, phone_number, soft_token_id="", verify_code=None):
+        """
+        The TeleSign Verify Soft Token web service is a server-side component of the TeleSign AuthID application, and it allows you to authenticate your end users when they use the TeleSign AuthID application on their mobile device to generate a Time-based One-time Password (TOTP) verification code
+
+        .. list-table::
+           :widths: 5 30
+           :header-rows: 1
+
+           * - Parameters
+             -
+           * - `phone_number`
+             - The phone number to receive the text message. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
+           * - `soft_token_id`
+             - (optional) The alphanumeric string that uniquely identifies your TeleSign soft token subscription
+           * - `verify_code`
+             - (optional) The verification code received from the end user
+
+        **Example**::
+
+            from telesign.api import Verify
+            from telesign.exceptions import AuthorizationError, TelesignError
+
+            cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+            secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+            phone_number = "13107409700"
+
+            verify = Verify(cust_id, secret_key) # Instantiate a Verify object.
+
+            try:
+                phone_info = verify.soft_token(phone_number)
+            except AuthorizationError as ex:
+                # API authorization failed, the API response should tell you the reason
+                ...
+            except TelesignError as ex:
+                # failed to execute the Verify service, check the API response for details
+                ...
+
+            # When the user inputs the validation code, you can verify that it matches the one that you sent.
+            if (phone_info != None):
+                try:
+                    status_info = verify.status(phone_info.data["reference_id"], verify_code=phone_info.verify_code)
+                except AuthorizationError as ex:
+                    ...
+                except TelesignError as ex:
+                    ...
+
+        """
+
+        if(verify_code == None):
+            verify_code = random_with_N_digits(5)
+
+        resource = "/v1/verify/soft_token"
+        method = "POST"
+
+        fields = {
+            "phone_number": phone_number,
+            "verify_code": verify_code,
+            "soft_token_id": soft_token_id
+        }
+
+        headers = generate_auth_headers(
+            self._customer_id,
+            self._secret_key,
+            resource,
+            method,
+            fields=fields)
+
+        req = self._pool_mobile.request_encode_body(method, resource, headers=headers, fields=fields, encode_multipart=False)
+
+        return Response(self._validate_response(req), req)
+
+    def two_way_sms(self, phone_number, ucid, message="", validity_period=""):
+        """
+        The TeleSign Verify Soft Token web service is a server-side component of the TeleSign AuthID application, and it allows you to authenticate your end users when they use the TeleSign AuthID application on their mobile device to generate a Time-based One-time Password (TOTP) verification code
+
+        .. list-table::
+           :widths: 5 30
+           :header-rows: 1
+
+           * - Parameters
+             -
+           * - `phone_number`
+             - The phone number to receive the text message. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
+           * - `ucid`
+             - A string specifying one of the Use Case Codes
+           * - `message`
+             - (optional) The text to display in the body of the text message. You must include the $$CODE$$ placeholder for the verification code somewhere in your message text. TeleSign automatically replaces it with a randomly-generated verification code
+           * - `validity_period`
+             - (optional) This parameter allows you to place a time-limit on the verification. This provides an extra level of security by restricting the amount of time your end user has to respond (after which, TeleSign automatically rejects their response). Values are expressed as a natural number followed by a lower-case letter that represents the unit of measure. You can use 's' for seconds, 'm' for minutes, 'h' for hours, and 'd' for days
+
+        **Example**::
+
+            from telesign.api import Verify
+            from telesign.exceptions import AuthorizationError, TelesignError
+
+            cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+            secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+            phone_number = "13107409700"
+
+            verify = Verify(cust_id, secret_key) # Instantiate a Verify object.
+
+            try:
+                phone_info = verify.two_way_sms(phone_number, "BACS")
+            except AuthorizationError as ex:
+                # API authorization failed, the API response should tell you the reason
+                ...
+            except TelesignError as ex:
+                # failed to execute the Verify service, check the API response for details
+                ...
+
+            # When the user inputs the validation code, you can verify that it matches the one that you sent.
+            if (phone_info != None):
+                try:
+                    status_info = verify.status(phone_info.data["reference_id"], verify_code=phone_info.verify_code)
+                except AuthorizationError as ex:
+                    ...
+                except TelesignError as ex:
+                    ...
+
+        """
+
+        resource = "/v1/verify/two_way_sms"
+        method = "POST"
+
+        fields = {
+            "phone_number": phone_number,
+            "ucid": ucid,
+            "message": message,
+            "validity_period": validity_period
+        }
+
+        headers = generate_auth_headers(
+            self._customer_id,
+            self._secret_key,
+            resource,
+            method,
+            fields=fields)
+
+        req = self._pool_mobile.request_encode_body(method, resource, headers=headers, fields=fields, encode_multipart=False)
+
+        return Response(self._validate_response(req), req)
 
     def call(self, phone_number, verify_code=None, language="en"):
         """

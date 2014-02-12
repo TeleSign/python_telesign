@@ -16,6 +16,9 @@ class VerifyTest(unittest.TestCase):
         self.expected_ref_id = "99999999999999999"
         self.expected_data = "{ \"a\": \"AA\", \"b\":\"BB\" }"
         self.expected_sms_resource = "/v1/verify/sms"
+        self.expected_push_resource = "/v1/verify/push"
+        self.expected_soft_token_resource = "/v1/verify/soft_token"
+        self.expected_two_way_sms_resource = "/v1/verify/two_way_sms"
         self.expected_call_resource = "/v1/verify/call"
         self.expected_status_resource = "/v1/verify/%s" % self.expected_ref_id
 
@@ -130,3 +133,51 @@ class VerifyTest(unittest.TestCase):
         self.assertEqual(args[0][0], "GET", "Expected GET")
         self.assertEqual(args[0][1], self.expected_status_resource, "Status resource was incorrect")
         self.assertEqual(args[1]["fields"]["verify_code"], self.expected_verify_code, "Verify code did not match")
+
+    @mock.patch.object(urllib3.HTTPConnectionPool, "request_encode_body")
+    def test_verify_push(self, req_mock):
+        response = mock.Mock()
+        response.reason = ""
+        response.status = 200
+        response.data = self.expected_data
+        req_mock.return_value = response
+
+        p = telesign.api.Verify(self.expected_cid, self.expected_secret_key)
+        p.push(self.expected_phone_no, "", "", "Outlook-2FA", "Test Message")
+
+        self.assertTrue(req_mock.called)
+        args = req_mock.call_args
+        self.assertEqual(args[0][0], "POST", "Expected POST")
+        self.assertEqual(args[0][1], self.expected_push_resource, "Push verify resource was incorrect")
+
+    @mock.patch.object(urllib3.HTTPConnectionPool, "request_encode_body")
+    def test_verify_soft_token(self, req_mock):
+        response = mock.Mock()
+        response.reason = ""
+        response.status = 200
+        response.data = self.expected_data
+        req_mock.return_value = response
+
+        p = telesign.api.Verify(self.expected_cid, self.expected_secret_key)
+        p.soft_token(self.expected_phone_no)
+
+        self.assertTrue(req_mock.called)
+        args = req_mock.call_args
+        self.assertEqual(args[0][0], "POST", "Expected POST")
+        self.assertEqual(args[0][1], self.expected_soft_token_resource, "Soft Token verify resource was incorrect")
+
+    @mock.patch.object(urllib3.HTTPConnectionPool, "request_encode_body")
+    def test_verify_two_way_sms(self, req_mock):
+        response = mock.Mock()
+        response.reason = ""
+        response.status = 200
+        response.data = self.expected_data
+        req_mock.return_value = response
+
+        p = telesign.api.Verify(self.expected_cid, self.expected_secret_key)
+        p.two_way_sms(self.expected_phone_no, "BACS")
+
+        self.assertTrue(req_mock.called)
+        args = req_mock.call_args
+        self.assertEqual(args[0][0], "POST", "Expected POST")
+        self.assertEqual(args[0][1], self.expected_two_way_sms_resource, "Two Way SMS resource was incorrect")

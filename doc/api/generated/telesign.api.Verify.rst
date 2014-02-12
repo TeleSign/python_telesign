@@ -15,3 +15,6 @@
         sms
         call
         status
+        push
+        soft_token
+        two_way_sms
