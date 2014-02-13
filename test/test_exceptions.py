@@ -13,9 +13,9 @@ class ExceptionTestTest(unittest.TestCase):
         self.expected_status = "200"
         self.expected_data = "abcdefg"
         self.expected_http_response = mock.Mock()
-        self.expected_http_response .headers = self.expected_headers
-        self.expected_http_response .status = self.expected_status
-        self.expected_http_response .data = self.expected_data
+        self.expected_http_response.headers = self.expected_headers
+        self.expected_http_response.status_code = self.expected_status
+        self.expected_http_response.text = self.expected_data
 
     def tearDown(self):
         pass
