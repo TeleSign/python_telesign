@@ -1,7 +1,7 @@
 import unittest
 import mock
 import telesign.api
-import urllib3
+import requests
 
 
 class VerifyTest(unittest.TestCase):
@@ -15,118 +15,192 @@ class VerifyTest(unittest.TestCase):
         self.expected_verify_code = 54321
         self.expected_ref_id = "99999999999999999"
         self.expected_data = "{ \"a\": \"AA\", \"b\":\"BB\" }"
-        self.expected_sms_resource = "/v1/verify/sms"
-        self.expected_call_resource = "/v1/verify/call"
-        self.expected_status_resource = "/v1/verify/%s" % self.expected_ref_id
+        self.expected_sms_resource = "https://rest.telesign.com/v1/verify/sms"
+        self.expected_call_resource = "https://rest.telesign.com/v1/verify/call"
+        self.expected_status_resource = "https://rest.telesign.com/v1/verify/%s" % self.expected_ref_id
+        self.proxy = "localhost:8080"
+        self.expected_proxy = "https://localhost:8080"
 
     def tearDown(self):
         pass
 
-    @mock.patch.object(urllib3.HTTPConnectionPool, "request_encode_body")
+    @mock.patch.object(requests, "post")
     def test_verify_sms(self, req_mock):
         response = mock.Mock()
         response.reason = ""
-        response.status = 200
-        response.data = self.expected_data
+        response.status_code = 200
+        response.text = self.expected_data
         req_mock.return_value = response
 
         p = telesign.api.Verify(self.expected_cid, self.expected_secret_key)
         p.sms(self.expected_phone_no, self.expected_verify_code, self.expected_language)
 
         self.assertTrue(req_mock.called)
-        args = req_mock.call_args
-        self.assertEqual(args[0][0], "POST", "Expected POST")
-        self.assertEqual(args[0][1], self.expected_sms_resource, "Sms verify resource was incorrect")
-        self.assertEqual(args[1]["fields"]["phone_number"], self.expected_phone_no, "Phone number field did not match")
-        self.assertEqual(args[1]["fields"]["language"], self.expected_language, "Language field did not match")
-        self.assertEqual(args[1]["fields"]["verify_code"], self.expected_verify_code, "Verify code field did not match")
+        _, kwargs = req_mock.call_args
+        self.assertEqual(kwargs['url'], self.expected_sms_resource, "Sms verify resource was incorrect")
+        self.assertEqual(kwargs["data"]["phone_number"], self.expected_phone_no, "Phone number field did not match")
+        self.assertEqual(kwargs["data"]["language"], self.expected_language, "Language field did not match")
+        self.assertEqual(kwargs["data"]["verify_code"], self.expected_verify_code, "Verify code field did not match")
+        self.assertFalse(kwargs['proxies'])
 
-    @mock.patch.object(urllib3.HTTPConnectionPool, "request_encode_body")
+    @mock.patch.object(requests, "post")
     def test_verify_call(self, req_mock):
         response = mock.Mock()
         response.reason = ""
-        response.status = 200
-        response.data = self.expected_data
+        response.status_code = 200
+        response.text = self.expected_data
         req_mock.return_value = response
 
         p = telesign.api.Verify(self.expected_cid, self.expected_secret_key)
         p.call(self.expected_phone_no, self.expected_verify_code, self.expected_language)
 
         self.assertTrue(req_mock.called)
-        args = req_mock.call_args
-        self.assertEqual(args[0][0], "POST", "Expected POST")
-        self.assertEqual(args[0][1], self.expected_call_resource, "Call verify resource was incorrect")
-        self.assertEqual(args[1]["fields"]["phone_number"], self.expected_phone_no, "Phone number field did not match")
-        self.assertEqual(args[1]["fields"]["language"], self.expected_language, "Language field did not match")
-        self.assertEqual(args[1]["fields"]["verify_code"], self.expected_verify_code, "Verify code field did not match")
+        _, kwargs = req_mock.call_args
+        self.assertEqual(kwargs['url'], self.expected_call_resource, "Call verify resource was incorrect")
+        self.assertEqual(kwargs["data"]["phone_number"], self.expected_phone_no, "Phone number field did not match")
+        self.assertEqual(kwargs["data"]["language"], self.expected_language, "Language field did not match")
+        self.assertEqual(kwargs["data"]["verify_code"], self.expected_verify_code, "Verify code field did not match")
+        self.assertFalse(kwargs['proxies'])
 
-    @mock.patch.object(urllib3.HTTPConnectionPool, "request_encode_body")
+    @mock.patch.object(requests, "post")
     def test_verify_sms_default_code(self, req_mock):
         response = mock.Mock()
         response.reason = ""
-        response.status = 200
-        response.data = self.expected_data
+        response.status_code = 200
+        response.text = self.expected_data
         req_mock.return_value = response
 
         p = telesign.api.Verify(self.expected_cid, self.expected_secret_key)
         p.sms(self.expected_phone_no, language=self.expected_language)
 
         self.assertTrue(req_mock.called)
-        args = req_mock.call_args
-        self.assertEqual(args[0][0], "POST", "Expected POST")
-        self.assertEqual(args[0][1], self.expected_sms_resource, "Sms verify resource was incorrect")
-        self.assertEqual(args[1]["fields"]["phone_number"], self.expected_phone_no, "Phone number field did not match")
-        self.assertEqual(args[1]["fields"]["language"], self.expected_language, "Language field did not match")
-        self.assertEqual(len("%s" % args[1]["fields"]["verify_code"]), 5, "Expected default verify code to be 5 digits")
+        _, kwargs = req_mock.call_args
+        self.assertEqual(kwargs["url"], self.expected_sms_resource, "Sms verify resource was incorrect")
+        self.assertEqual(kwargs["data"]["phone_number"], self.expected_phone_no, "Phone number field did not match")
+        self.assertEqual(kwargs["data"]["language"], self.expected_language, "Language field did not match")
+        self.assertEqual(len("%s" % kwargs["data"]["verify_code"]), 5, "Expected default verify code to be 5 digits")
+        self.assertFalse(kwargs['proxies'])
 
-    @mock.patch.object(urllib3.HTTPConnectionPool, "request_encode_body")
+    @mock.patch.object(requests, "post")
     def test_verify_call_default_code(self, req_mock):
         response = mock.Mock()
         response.reason = ""
-        response.status = 200
-        response.data = self.expected_data
+        response.status_code = 200
+        response.text = self.expected_data
         req_mock.return_value = response
 
         p = telesign.api.Verify(self.expected_cid, self.expected_secret_key)
         p.call(self.expected_phone_no, language=self.expected_language)
 
         self.assertTrue(req_mock.called)
-        args = req_mock.call_args
-        self.assertEqual(args[0][0], "POST", "Expected POST")
-        self.assertEqual(args[0][1], self.expected_call_resource, "Call verify resource was incorrect")
-        self.assertEqual(args[1]["fields"]["phone_number"], self.expected_phone_no, "Phone number field did not match")
-        self.assertEqual(args[1]["fields"]["language"], self.expected_language, "Language field did not match")
-        self.assertEqual(len("%s" % args[1]["fields"]["verify_code"]), 5, "Expected default verify code to be 5 digits")
+        _, kwargs = req_mock.call_args
+        self.assertEqual(kwargs["url"], self.expected_call_resource, "Call verify resource was incorrect")
+        self.assertEqual(kwargs["data"]["phone_number"], self.expected_phone_no, "Phone number field did not match")
+        self.assertEqual(kwargs["data"]["language"], self.expected_language, "Language field did not match")
+        self.assertEqual(len("%s" % kwargs["data"]["verify_code"]), 5, "Expected default verify code to be 5 digits")
+        self.assertFalse(kwargs['proxies'])
 
-    @mock.patch.object(urllib3.HTTPConnectionPool, "request")
+    @mock.patch.object(requests, "get")
     def test_status_check(self, req_mock):
         response = mock.Mock()
         response.reason = ""
-        response.status = 200
-        response.data = self.expected_data
+        response.status_code = 200
+        response.text = self.expected_data
         req_mock.return_value = response
 
         p = telesign.api.Verify(self.expected_cid, self.expected_secret_key)
         p.status(self.expected_ref_id)
 
         self.assertTrue(req_mock.called)
-        args = req_mock.call_args
-        self.assertEqual(args[0][0], "GET", "Expected GET")
-        self.assertEqual(args[0][1], self.expected_status_resource, "Status resource was incorrect")
+        _, kwargs = req_mock.call_args
+        self.assertEqual(kwargs["url"], self.expected_status_resource, "Status resource was incorrect")
+        self.assertFalse(kwargs['proxies'])
 
-    @mock.patch.object(urllib3.HTTPConnectionPool, "request")
+    @mock.patch.object(requests, "get")
     def test_report_code(self, req_mock):
         response = mock.Mock()
         response.reason = ""
-        response.status = 200
-        response.data = self.expected_data
+        response.status_code = 200
+        response.text = self.expected_data
         req_mock.return_value = response
 
         p = telesign.api.Verify(self.expected_cid, self.expected_secret_key)
         p.status(self.expected_ref_id, self.expected_verify_code)
 
         self.assertTrue(req_mock.called)
-        args = req_mock.call_args
-        self.assertEqual(args[0][0], "GET", "Expected GET")
-        self.assertEqual(args[0][1], self.expected_status_resource, "Status resource was incorrect")
-        self.assertEqual(args[1]["fields"]["verify_code"], self.expected_verify_code, "Verify code did not match")
+        _, kwargs = req_mock.call_args
+        self.assertEqual(kwargs["url"], self.expected_status_resource, "Status resource was incorrect")
+        self.assertEqual(kwargs["params"]["verify_code"], self.expected_verify_code, "Verify code did not match")
+        self.assertFalse(kwargs['proxies'])
+
+    @mock.patch.object(requests, "post")
+    def test_verify_sms_with_proxy(self, req_mock):
+        response = mock.Mock()
+        response.reason = ""
+        response.status_code = 200
+        response.text = self.expected_data
+        req_mock.return_value = response
+
+        p = telesign.api.Verify(self.expected_cid, self.expected_secret_key, proxy_host="localhost:8080")
+        p.sms(self.expected_phone_no, self.expected_verify_code, self.expected_language)
+
+        self.assertTrue(req_mock.called)
+        _, kwargs = req_mock.call_args
+        self.assertEqual(kwargs['url'], self.expected_sms_resource, "Sms verify resource was incorrect")
+        self.assertEqual(kwargs["data"]["phone_number"], self.expected_phone_no, "Phone number field did not match")
+        self.assertEqual(kwargs["data"]["language"], self.expected_language, "Language field did not match")
+        self.assertEqual(kwargs["data"]["verify_code"], self.expected_verify_code, "Verify code field did not match")
+        self.assertEqual(kwargs["proxies"]["https"], self.expected_proxy, "Proxy did not match")
+
+    @mock.patch.object(requests, "post")
+    def test_verify_call_with_proxy(self, req_mock):
+        response = mock.Mock()
+        response.reason = ""
+        response.status_code = 200
+        response.text = self.expected_data
+        req_mock.return_value = response
+
+        p = telesign.api.Verify(self.expected_cid, self.expected_secret_key, proxy_host=self.proxy)
+        p.call(self.expected_phone_no, self.expected_verify_code, self.expected_language)
+
+        self.assertTrue(req_mock.called)
+        _, kwargs = req_mock.call_args
+        self.assertEqual(kwargs['url'], self.expected_call_resource, "Call verify resource was incorrect")
+        self.assertEqual(kwargs["data"]["phone_number"], self.expected_phone_no, "Phone number field did not match")
+        self.assertEqual(kwargs["data"]["language"], self.expected_language, "Language field did not match")
+        self.assertEqual(kwargs["data"]["verify_code"], self.expected_verify_code, "Verify code field did not match")
+        self.assertEqual(kwargs["proxies"]["https"], self.expected_proxy, "Proxy did not match")
+
+    @mock.patch.object(requests, "get")
+    def test_status_check_with_proxy(self, req_mock):
+        response = mock.Mock()
+        response.reason = ""
+        response.status_code = 200
+        response.text = self.expected_data
+        req_mock.return_value = response
+
+        p = telesign.api.Verify(self.expected_cid, self.expected_secret_key, proxy_host=self.proxy)
+        p.status(self.expected_ref_id)
+
+        self.assertTrue(req_mock.called)
+        _, kwargs = req_mock.call_args
+        self.assertEqual(kwargs["url"], self.expected_status_resource, "Status resource was incorrect")
+        self.assertEqual(kwargs["proxies"]["https"], self.expected_proxy, "Proxy did not match")
+
+    @mock.patch.object(requests, "get")
+    def test_report_code_with_proxy(self, req_mock):
+        response = mock.Mock()
+        response.reason = ""
+        response.status_code = 200
+        response.text = self.expected_data
+        req_mock.return_value = response
+
+        p = telesign.api.Verify(self.expected_cid, self.expected_secret_key, proxy_host=self.proxy)
+        p.status(self.expected_ref_id, self.expected_verify_code)
+
+        self.assertTrue(req_mock.called)
+        _, kwargs = req_mock.call_args
+        self.assertEqual(kwargs["url"], self.expected_status_resource, "Status resource was incorrect")
+        self.assertEqual(kwargs["params"]["verify_code"], self.expected_verify_code, "Verify code did not match")
+        self.assertEqual(kwargs["proxies"]["https"], self.expected_proxy, "Proxy did not match")
+

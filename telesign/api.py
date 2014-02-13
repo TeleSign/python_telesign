@@ -4,9 +4,9 @@
     :synopsis: The **api** module contains Python classes and methods that allow you to use the Python programming language to programmatically access the **Verify** and **PhoneId** TeleSign web services.
 
 """
-import urllib3
 import json
 from random import randint
+import requests
 
 from telesign.auth import generate_auth_headers
 from telesign.exceptions import TelesignError, AuthorizationError
@@ -30,27 +30,27 @@ class Response(object):
     def __init__(self, data, http_response, verify_code=None):
         self.data = data
         self.headers = http_response.headers
-        self.status = http_response.status
-        self.raw_data = http_response.data
+        self.status = http_response.status_code
+        self.raw_data = http_response.text
         self.verify_code = verify_code
 
 
 class ServiceBase(object):
-    def __init__(self, api_host, customer_id, secret_key, ssl=True):
+    def __init__(self, api_host, customer_id, secret_key, ssl=True, proxy_host=None):
         self._customer_id = customer_id
         self._secret_key = secret_key
         self._api_host = api_host
 
-        http_root = "https://" if ssl else "http://"
-        self._pool = urllib3.connection_from_url(http_root + api_host)
+        http_root = "https" if ssl else "http"
+        self._proxy = {"{}".format(http_root): "{}{}{}".format(http_root, '://', proxy_host)} if proxy_host else None
+        self._url = "{}{}{}".format(http_root, '://', api_host)
 
     def _validate_response(self, response):
-        resp_obj = json.loads(response.data)
-        if(response.status != 200):
-            if(response.status == 401):
+        resp_obj = json.loads(response.text)
+        if(response.status_code != 200):
+            if(response.status_code == 401):
                 raise AuthorizationError(resp_obj, response)
             else:
-                print "%s|%s" % (response.status, response.data)
                 raise TelesignError(resp_obj, response)
 
         return resp_obj
@@ -74,13 +74,15 @@ class PhoneId(ServiceBase):
          - Specifies whether to use a secure connection with the TeleSign server. Defaults to *True*.
        * - `api_host`
          - The Internet host used in the base URI for REST web services. The default is *rest.telesign.com* (and the base URI is https://rest.telesign.com/).
+       * - `proxy_host`
+         - The host and port when going through a proxy server. ex: "localhost:8080. The default to no proxy.
 
     .. note::
        You can obtain both your Customer ID and Secret Key from the `TeleSign Customer Portal <https://portal.telesign.com/account_profile_api_auth.php>`_.
     """
 
-    def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com"):
-        super(PhoneId, self).__init__(api_host, customer_id, secret_key, ssl)
+    def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com", proxy_host=None):
+        super(PhoneId, self).__init__(api_host, customer_id, secret_key, ssl, proxy_host)
 
     def standard(self, phone_number):
         """
@@ -120,13 +122,15 @@ class PhoneId(ServiceBase):
 
         """
         resource = "/v1/phoneid/standard/%s" % phone_number
+        method = "GET"
+
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
             resource,
-            "GET")
+            method)
 
-        req = self._pool.request('GET', resource, headers=headers)
+        req = requests.get(url="{}{}".format(self._url, resource), headers=headers, proxies=self._proxy)
 
         return Response(self._validate_response(req), req)
 
@@ -187,12 +191,15 @@ class PhoneId(ServiceBase):
 
         """
         resource = "/v1/phoneid/score/%s" % phone_number
+        method = "GET"
+
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
             resource,
-            "GET")
-        req = self._pool.request('GET', resource, headers=headers, fields={'ucid': use_case_code})
+            method)
+
+        req = requests.get(url="{}{}".format(self._url, resource), params={'ucid': use_case_code}, headers=headers, proxies=self._proxy)
 
         return Response(self._validate_response(req), req)
 
@@ -256,13 +263,15 @@ class PhoneId(ServiceBase):
 
         """
         resource = "/v1/phoneid/contact/%s" % phone_number
+        method = "GET"
+
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
             resource,
-            "GET")
+            method)
 
-        req = self._pool.request('GET', resource, headers=headers, fields={'ucid': use_case_code})
+        req = requests.get(url="{}{}".format(self._url, resource), params={'ucid': use_case_code}, headers=headers, proxies=self._proxy)
 
         return Response(self._validate_response(req), req)
 
@@ -326,13 +335,15 @@ class PhoneId(ServiceBase):
 
         """
         resource = "/v1/phoneid/live/%s" % phone_number
+        method = "GET"
+
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
             resource,
-            "GET")
+            method)
 
-        req = self._pool.request('GET', resource, headers=headers, fields={'ucid': use_case_code})
+        req = requests.get(url="{}{}".format(self._url, resource), params={'ucid': use_case_code}, headers=headers, proxies=self._proxy)
 
         return Response(self._validate_response(req), req)
 
@@ -359,14 +370,16 @@ class Verify(ServiceBase):
          - Specifies whether to use a secure connection with the TeleSign server. Defaults to *True*.
        * - `api_host`
          - The Internet host used in the base URI for REST web services. The default is *rest.telesign.com* (and the base URI is https://rest.telesign.com/).
+       * - `proxy_host`
+         - The host and port when going through a proxy server. ex: "localhost:8080. The default to no proxy.
 
     .. note::
        You can obtain both your Customer ID and Secret Key from the `TeleSign Customer Portal <https://portal.telesign.com/account_profile_api_auth.php>`_.
 
     """
 
-    def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com"):
-        super(Verify, self).__init__(api_host, customer_id, secret_key, ssl)
+    def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com", proxy_host=None):
+        super(Verify, self).__init__(api_host, customer_id, secret_key, ssl, proxy_host)
 
     def sms(self, phone_number, verify_code=None, language="en", template=""):
         """
@@ -437,7 +450,7 @@ class Verify(ServiceBase):
             method,
             fields=fields)
 
-        req = self._pool.request_encode_body(method, resource, headers=headers, fields=fields, encode_multipart=False)
+        req = requests.post(url="{}{}".format(self._url, resource), data=fields, headers=headers, proxies=self._proxy)
 
         return Response(self._validate_response(req), req, verify_code=verify_code)
 
@@ -508,7 +521,7 @@ class Verify(ServiceBase):
             method,
             fields=fields)
 
-        req = self._pool.request_encode_body(method, resource, headers=headers, fields=fields, encode_multipart=False)
+        req = requests.post(url="{}{}".format(self._url, resource), data=fields, headers=headers, proxies=self._proxy)
 
         return Response(self._validate_response(req), req, verify_code=verify_code)
 
@@ -552,15 +565,17 @@ class Verify(ServiceBase):
         """
 
         resource = "/v1/verify/%s" % ref_id
+        method = "GET"
+
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
             resource,
-            "GET")
+            method)
         fields = None
         if(verify_code != None):
             fields = {"verify_code": verify_code}
 
-        req = self._pool.request('GET', resource, headers=headers, fields=fields)
+        req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
 
         return Response(self._validate_response(req), req)
