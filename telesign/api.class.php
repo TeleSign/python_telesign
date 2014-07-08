@@ -284,8 +284,7 @@ class Verify extends Telesign {
 	 * 
 	 * @return string The fully formed response object repersentation of the JSON reply
 	 */
-	public function call($phone_number, $verify_code = "", $language = "", $verify_method = "", $extension_type = "", $extension_template = "", $redial = "") {
-		$more = array();
+	public function call($phone_number, $verify_code = "", $language = "", $verify_method = "", $extension_type = "", $extension_template = "", $redial = "", $more = array()) {
 		if (!empty($language)) {
 			$more['language'] = $language;
 		}
