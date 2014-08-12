@@ -350,7 +350,7 @@ class PhoneId(ServiceBase):
 
 class Verify(ServiceBase):
     """
-    The **Verify** class exposes two services for sending users a verification token (a three to five-digit number). You can use this mechanism to simply test whether you can reach users at the phone number they supplied, or you can have them use the token to authenticate themselves with your web application.
+    The **Verify** class exposes two services for sending users a verification token. You can use this mechanism to simply test whether you can reach users at the phone number they supplied, or you can have them use the token to authenticate themselves with your web application.
 
     This class also exposes a service that is used in conjunction with the first two services, in that it allows you to confirm the result of the authentication.
 
