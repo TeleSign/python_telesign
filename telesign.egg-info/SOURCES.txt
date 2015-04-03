@@ -1,0 +1,17 @@
+LICENSE.txt
+MANIFEST.in
+README.rst
+setup.py
+telesign/__init__.py
+telesign/api.py
+telesign/auth.py
+telesign/exceptions.py
+telesign.egg-info/PKG-INFO
+telesign.egg-info/SOURCES.txt
+telesign.egg-info/dependency_links.txt
+telesign.egg-info/requires.txt
+telesign.egg-info/top_level.txt
+test/test_auth.py
+test/test_exceptions.py
+test/test_phoneid.py
+test/test_verify.py
