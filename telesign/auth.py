@@ -1,5 +1,7 @@
 """ Authorization header definitions """
 
+from __future__ import print_function 
+
 from hashlib import sha1, sha256
 from base64 import b64encode, b64decode
 from email.utils import formatdate
@@ -34,7 +36,10 @@ def generate_auth_headers(
         resource,
         method,
         content_type="",
-        auth_method="sha256", fields=None):
+        auth_method="sha256",
+        fields=None, 
+        use_nonce=True,
+        hashcash=None ):
 
     now = datetime.datetime.now()
     stamp = mktime(now.timetuple())
@@ -43,19 +48,21 @@ def generate_auth_headers(
             localtime=False,
             usegmt=True
         )
-    nonce = str(uuid.uuid4())
 
     if(method in ("POST", "PUT")):
         content_type = "application/x-www-form-urlencoded"
 
     print('content type={}'.format(content_type)) 
 
-    string_to_sign = "%s\n%s\n\nx-ts-auth-method:%s\nx-ts-date:%s\nx-ts-nonce:%s" % (
+    string_to_sign = "%s\n%s\n\nx-ts-auth-method:%s\nx-ts-date:%s" % (
         method,
         content_type, 
         AUTH_METHOD[auth_method]["name"],
-        currDate, 
-        nonce )
+        currDate) 
+
+    if use_nonce :
+        nonce = str(uuid.uuid4()) 
+        string_to_sign += "\nx-ts-nonce:" + nonce 
 
     if(fields):
         string_to_sign = string_to_sign + "\n%s" % urlencode(fields)
@@ -69,7 +76,12 @@ def generate_auth_headers(
         "Authorization": "TSA %s:%s" % (customer_id, signature),
         "x-ts-date": currDate,
         "x-ts-auth-method": AUTH_METHOD[auth_method]["name"],
-        "x-ts-nonce": nonce
     }
+
+    if hashcash :
+        headers['X-Hashcash'] = hashcash 
+
+    if use_nonce : 
+        headers["x-ts-nonce"] = nonce 
 
     return headers
