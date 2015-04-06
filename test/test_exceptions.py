@@ -12,10 +12,13 @@ class ExceptionTestTest(unittest.TestCase):
         self.expected_headers = {"a": "AA", "b": "BB"}
         self.expected_status = "200"
         self.expected_data = "abcdefg"
+        self.expected_raw = "oh foo"
+        
         self.expected_http_response = mock.Mock()
         self.expected_http_response.headers = self.expected_headers
         self.expected_http_response.status_code = self.expected_status
-        self.expected_http_response.text = self.expected_data
+        self.expected_http_response.data = self.expected_data
+        self.expected_http_response.raw = self.expected_raw 
 
     def tearDown(self):
         pass
@@ -25,7 +28,7 @@ class ExceptionTestTest(unittest.TestCase):
             self.assertEqual(x.headers, self.expected_headers, "Headers property was not set on exception")
             self.assertEqual(x.status, self.expected_status, "Status property was not set on exception")
             self.assertEqual(x.data, self.expected_data, "Data property was not set on exception")
-            self.assertEqual(x.raw_data, self.expected_data, "RawData property was not set on exception")
+            self.assertEqual(x.raw, self.expected_raw, "RawData property was not set on exception")
 
             msg = x.__str__()
             for err in self.expected_errors:
