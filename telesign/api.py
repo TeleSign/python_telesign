@@ -4,6 +4,8 @@
     :synopsis: The **api** module contains Python classes and methods that allow you to use the Python programming language to programmatically access the **Verify** and **PhoneId** TeleSign web services.
 
 """
+from __future__ import print_function 
+
 import json
 from random import SystemRandom
 import requests
@@ -42,8 +44,8 @@ class ServiceBase(object):
         self._api_host = api_host
 
         http_root = "https" if ssl else "http"
-        self._proxy = {"{}".format(http_root): "{}{}{}".format(http_root, '://', proxy_host)} if proxy_host else None
-        self._url = "{}{}{}".format(http_root, '://', api_host)
+        self._proxy = {"{}".format(http_root): "{}://{}".format(http_root, proxy_host)} if proxy_host else None
+        self._url = "{}://{}".format(http_root, api_host)
 
     def _validate_response(self, response):
         resp_obj = json.loads(response.text)
@@ -74,17 +76,24 @@ class PhoneId(ServiceBase):
          - Specifies whether to use a secure connection with the TeleSign server. Defaults to *True*.
        * - `api_host`
          - The Internet host used in the base URI for REST web services. The default is *rest.telesign.com* (and the base URI is https://rest.telesign.com/).
-       * - `proxy_host`
-         - The host and port when going through a proxy server. ex: "localhost:8080. The default to no proxy.
 
     .. note::
        You can obtain both your Customer ID and Secret Key from the `TeleSign Customer Portal <https://portal.telesign.com/account_profile_api_auth.php>`_.
+
+    .. rubric:: Methods
+
+    .. autosummary::
+       :nosignatures:
+
+       standard
+       score
+       contact
     """
 
     def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com", proxy_host=None):
         super(PhoneId, self).__init__(api_host, customer_id, secret_key, ssl, proxy_host)
 
-    def standard(self, phone_number):
+    def standard(self, phone_number, use_case_code=None, session_id=None, fields={}):
         """
         Retrieves the standard set of details about the specified phone number. This includes the type of phone (e.g., land line or mobile), and it's approximate geographic location.
 
@@ -96,6 +105,27 @@ class PhoneId(ServiceBase):
              -
            * - `phone_number`
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
+
+        .. rubric:: Use-case Codes
+
+        The following table list the available use-case codes, and includes a description of each.
+
+        ========  =====================================
+        Code      Description
+        ========  =====================================
+        **BACS**  Prevent bulk account creation + spam.
+        **BACF**  Prevent bulk account creation + fraud.
+        **CHBK**  Prevent chargebacks.
+        **ATCK**  Prevent account takeover/compromise.
+        **LEAD**  Prevent false lead entry.
+        **RESV**  Prevent fake/missed reservations.
+        **PWRT**  Password reset.
+        **THEF**  Prevent identity theft.
+        **TELF**  Prevent telecom fraud.
+        **RXPF**  Prevent prescription fraud.
+        **OTHR**  Other.
+        **UNKN**  Unknown/prefer not to say.
+        ========  =====================================
 
         **Example**::
 
@@ -109,7 +139,7 @@ class PhoneId(ServiceBase):
             phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
 
             try:
-                phone_info = phoneid.standard(phone_number)
+                phone_info = phoneid.standard(phone_number, use_case_code="ATCK")
 
             except AuthorizationError as ex:
                 # API authorization failed. Check the API response for details.
@@ -124,17 +154,21 @@ class PhoneId(ServiceBase):
         resource = "/v1/phoneid/standard/%s" % phone_number
         method = "GET"
 
+        if use_case_code :
+            fields['ucid'] = use_case_code 
+
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
             resource,
-            method)
+            method,
+            fields = fields)
 
-        req = requests.get(url="{}{}".format(self._url, resource), headers=headers, proxies=self._proxy)
+        req = requests.get(url="{}{}".format(self._url, resource), headers=headers, proxies=self._proxy, params=fields)
 
         return Response(self._validate_response(req), req)
 
-    def score(self, phone_number, use_case_code):
+    def score(self, phone_number, use_case_code, originating_ip=None, fields={}) :
         """
         Retrieves a score for the specified phone number. This ranks the phone number's "risk level" on a scale from 0 to 1000, so you can code your web application to handle particular use cases (e.g., to stop things like chargebacks, identity theft, fraud, and spam).
 
@@ -148,6 +182,8 @@ class PhoneId(ServiceBase):
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
            * - `use_case_code`
              - A four letter code used to specify a particular usage scenario for the web service.
+           * - `originating_ip`
+             - (Optional) The IP address of the end user who's phone number you are looking up.
 
         .. rubric:: Use-case Codes
 
@@ -197,13 +233,14 @@ class PhoneId(ServiceBase):
             self._customer_id,
             self._secret_key,
             resource,
-            method)
+            method,
+            fields=fields) 
 
-        req = requests.get(url="{}{}".format(self._url, resource), params={'ucid': use_case_code}, headers=headers, proxies=self._proxy)
+        req = requests.get(url="{}{}".format(self._url, resource), headers=headers, proxies=self._proxy, params=fields)
 
         return Response(self._validate_response(req), req)
 
-    def contact(self, phone_number, use_case_code):
+    def contact(self, phone_number, use_case_code, fields={}):
         """
         In addition to the information retrieved by **standard**, this service provides the Name & Address associated with the specified phone number.
 
@@ -265,17 +302,19 @@ class PhoneId(ServiceBase):
         resource = "/v1/phoneid/contact/%s" % phone_number
         method = "GET"
 
+        fields['ucid'] = use_case_code 
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
             resource,
-            method)
+            method,
+            fields=fields)
 
-        req = requests.get(url="{}{}".format(self._url, resource), params={'ucid': use_case_code}, headers=headers, proxies=self._proxy)
+        req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
 
         return Response(self._validate_response(req), req)
 
-    def live(self, phone_number, use_case_code):
+    def live(self, phone_number, use_case_code, fields={}) : 
         """
         In addition to the information retrieved by **standard**, this service provides actionable data associated with the specified phone number.
 
@@ -337,13 +376,16 @@ class PhoneId(ServiceBase):
         resource = "/v1/phoneid/live/%s" % phone_number
         method = "GET"
 
+        fields['ucid'] = use_case_code 
+
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
             resource,
-            method)
+            method, 
+            fields = fields)
 
-        req = requests.get(url="{}{}".format(self._url, resource), params={'ucid': use_case_code}, headers=headers, proxies=self._proxy)
+        req = requests.get(url="{}{}".format(self._url, resource), headers=headers, proxies=self._proxy, params=fields)
 
         return Response(self._validate_response(req), req)
 
@@ -381,7 +423,8 @@ class Verify(ServiceBase):
     def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com", proxy_host=None):
         super(Verify, self).__init__(api_host, customer_id, secret_key, ssl, proxy_host)
 
-    def sms(self, phone_number, verify_code=None, language="en", template=""):
+    def sms(self, phone_number, verify_code=None, language="en", template="",
+            ucid=None, originating_ip=None, extra={}):
         """
         Sends a text message containing the verification code, to the specified phone number (supported for mobile phones only).
 
@@ -399,6 +442,33 @@ class Verify(ServiceBase):
              - (optional) The written language used in the message. The default is English.
            * - `template`
              - (optional) A standard form for the text message. It must contain the token ``$$CODE$$``, which TeleSign auto-populates with the verification code.
+           * - `ucid`
+             - (optional, recommended) A four letter code (use case code) used to specify a particular usage scenario for the web service.
+           * - `originating_ip`
+             - (optional) An IP (v4 or v6) address, possibly detected by the customer's website, that is considered related to the user verification request
+             - `extra
+             - (optional) dict - any extra params such as tst-provider, tst-route. e.g. {'tst-provider' : 'FakeConditionalDomestic'}
+
+        .. rubric:: Use-case Codes
+
+        The following table list the available use-case codes, and includes a description of each.
+
+        ========  =====================================
+        Code      Description
+        ========  =====================================
+        **BACS**  Prevent bulk account creation + spam.
+        **BACF**  Prevent bulk account creation + fraud.
+        **CHBK**  Prevent chargebacks.
+        **ATCK**  Prevent account takeover/compromise.
+        **LEAD**  Prevent false lead entry.
+        **RESV**  Prevent fake/missed reservations.
+        **PWRT**  Password reset.
+        **THEF**  Prevent identity theft.
+        **TELF**  Prevent telecom fraud.
+        **RXPF**  Prevent prescription fraud.
+        **OTHR**  Other.
+        **UNKN**  Unknown/prefer not to say.
+        ========  =====================================
 
         **Example**::
 
@@ -412,7 +482,7 @@ class Verify(ServiceBase):
             verify = Verify(cust_id, secret_key) # Instantiate a Verify object.
 
             try:
-                phone_info = verify.sms(phone_number)
+                phone_info = verify.sms(phone_number, ucid="ATCK")
             except AuthorizationError as ex:
                 # API authorization failed, the API response should tell you the reason
                 ...
@@ -441,7 +511,14 @@ class Verify(ServiceBase):
             "phone_number": phone_number,
             "language": language,
             "verify_code": verify_code,
-            "template": template}
+            "template": template,
+        }
+        if ucid:
+            fields['ucid'] = ucid
+        if originating_ip is not None:
+            fields['originating_ip'] = originating_ip
+        if extra is not None:
+            fields.update(extra)
 
         headers = generate_auth_headers(
             self._customer_id,
@@ -454,7 +531,9 @@ class Verify(ServiceBase):
 
         return Response(self._validate_response(req), req, verify_code=verify_code)
 
-    def call(self, phone_number, verify_code=None, language="en"):
+    def call(self, phone_number, verify_code=None, ucid="", 
+             verify_method="", language="en",  extension_type="",
+             redial="", originating_ip = None, pressx=None, extra={}):
         """
         Calls the specified phone number, and using speech synthesis, speaks the verification code to the user.
 
@@ -470,7 +549,37 @@ class Verify(ServiceBase):
              - (optional) The verification code to send to the user. If omitted, TeleSign will automatically generate a random value for you.
            * - `language`
              - (optional) The written language used in the message. The default is English.
+           * - `verify_method`
+             - (optional)
+           * - `extension_type`
+             - (optional)
+           * - `redial`
+             - (optional)
+           * - `ucid`
+             - (optional, recommended) A four letter code (use case code) used to specify a particular usage scenario for the web service.
+           * - `originating_ip`
+             - (optional) An IP (v4 or v6) address, possibly detected by the customer's website, that is considered related to the user verification request
 
+        .. rubric:: Use-case Codes
+
+        The following table list the available use-case codes, and includes a description of each.
+
+        ========  =====================================
+        Code      Description
+        ========  =====================================
+        **BACS**  Prevent bulk account creation + spam.
+        **BACF**  Prevent bulk account creation + fraud.
+        **CHBK**  Prevent chargebacks.
+        **ATCK**  Prevent account takeover/compromise.
+        **LEAD**  Prevent false lead entry.
+        **RESV**  Prevent fake/missed reservations.
+        **PWRT**  Password reset.
+        **THEF**  Prevent identity theft.
+        **TELF**  Prevent telecom fraud.
+        **RXPF**  Prevent prescription fraud.
+        **OTHR**  Other.
+        **UNKN**  Unknown/prefer not to say.
+        ========  =====================================
 
         **Example**::
 
@@ -479,12 +588,13 @@ class Verify(ServiceBase):
 
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
-            phone_number = "13107409700"
 
             verify = Verify(cust_id, secret_key) # Instantiate a Verify object.
 
+            phone_number = "13107409700"
+
             try:
-                phone_info = verify.call(phone_number)
+                phone_info = verify.call(phone_number, ucid="ATCK")
             except AuthorizationError as ex:
                 # API authorization failed, the API response should tell you the reason
                 ...
@@ -500,7 +610,6 @@ class Verify(ServiceBase):
                     ...
                 except TelesignError as ex:
                     ...
-
         """
 
         if(verify_code == None):
@@ -510,9 +619,22 @@ class Verify(ServiceBase):
         method = "POST"
 
         fields = {
-            "phone_number": phone_number,
-            "language": language,
-            "verify_code": verify_code}
+            "phone_number":phone_number,
+            "language":language,
+            "verify_code":verify_code,
+            "verify_method":verify_method,
+            "extension_type":extension_type,
+            "redial":redial,
+        }
+
+        if pressx:
+            fields['pressx'] = pressx
+        if ucid:
+            fields['ucid'] = ucid
+        if originating_ip is not None:
+            fields['originating_ip'] = originating_ip
+        if extra is not None:
+            fields.update(extra)
 
         headers = generate_auth_headers(
             self._customer_id,
@@ -525,9 +647,9 @@ class Verify(ServiceBase):
 
         return Response(self._validate_response(req), req, verify_code=verify_code)
 
-    def status(self, ref_id, verify_code=None):
+    def status(self, ref_id, verify_code=None, fields={}):
         """
-        Retrieves the verification result. You make this call in your web application after users complete the authentication transaction (using either a call or sms).
+           Retrieves the verification result. You make this call in your web application after users complete the authentication transaction (using either a call or sms).
 
         .. list-table::
            :widths: 5 30
@@ -572,9 +694,9 @@ class Verify(ServiceBase):
             self._secret_key,
             resource,
             method)
-        fields = None
+
         if(verify_code != None):
-            fields = {"verify_code": verify_code}
+            fields["verify_code"] = verify_code
 
         req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
 
