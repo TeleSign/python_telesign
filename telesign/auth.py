@@ -60,6 +60,10 @@ def generate_auth_headers(
         AUTH_METHOD[auth_method]["name"],
         currDate) 
 
+    if auth_method not in AUTH_METHOD :
+        # what to do ?
+        auth_method = 'sha256'    
+
     if use_nonce :
         nonce = str(uuid.uuid4()) 
         string_to_sign += "\nx-ts-nonce:" + nonce 
