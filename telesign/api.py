@@ -513,6 +513,7 @@ class Verify(ServiceBase):
             "verify_code": verify_code,
             "template": template,
         }
+
         if ucid:
             fields['ucid'] = ucid
         if originating_ip is not None:
