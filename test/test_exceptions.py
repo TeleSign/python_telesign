@@ -17,7 +17,7 @@ class ExceptionTestTest(unittest.TestCase):
         self.expected_http_response = mock.Mock()
         self.expected_http_response.headers = self.expected_headers
         self.expected_http_response.status_code = self.expected_status
-        self.expected_http_response.data = self.expected_data
+        self.expected_http_response.text = self.expected_data
         self.expected_http_response.raw = self.expected_raw 
 
     def tearDown(self):
