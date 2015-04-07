@@ -35,7 +35,7 @@ class TelesignError(Exception):
         self.errors = data["errors"]
         self.headers = http_response.headers
         self.status = http_response.status_code
-        self.data = http_response.data
+        self.data = http_response.text 
         self.raw = http_response.raw 
 
     def __str__(self):
