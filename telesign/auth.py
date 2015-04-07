@@ -52,8 +52,6 @@ def generate_auth_headers(
     if(method in ("POST", "PUT")):
         content_type = "application/x-www-form-urlencoded"
 
-    print('content type={}'.format(content_type)) 
-
     string_to_sign = "%s\n%s\n\nx-ts-auth-method:%s\nx-ts-date:%s" % (
         method,
         content_type, 
