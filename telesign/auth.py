@@ -52,15 +52,15 @@ def generate_auth_headers(
     if(method in ("POST", "PUT")):
         content_type = "application/x-www-form-urlencoded"
 
+    if auth_method not in AUTH_METHOD :
+        # what to do ?
+        auth_method = 'sha256'    
+
     string_to_sign = "%s\n%s\n\nx-ts-auth-method:%s\nx-ts-date:%s" % (
         method,
         content_type, 
         AUTH_METHOD[auth_method]["name"],
         currDate) 
-
-    if auth_method not in AUTH_METHOD :
-        # what to do ?
-        auth_method = 'sha256'    
 
     if use_nonce :
         nonce = str(uuid.uuid4()) 
@@ -70,6 +70,7 @@ def generate_auth_headers(
         string_to_sign = string_to_sign + "\n%s" % urlencode(fields)
 
     string_to_sign = string_to_sign + "\n%s" % resource
+
     signer = hmac.new(b64decode(secret_key), string_to_sign.encode('utf-8'), AUTH_METHOD[auth_method]["hash"])
 
     signature = b64encode(signer.digest()).decode('utf-8') 
