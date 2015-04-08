@@ -78,6 +78,7 @@ setup(name='telesign',
                         ],
 
       packages=find_packages(exclude=['test', 'test.*']),
+      namespace_packages=["telesign"], 
       cmdclass={"doc": doc},
      )
 
