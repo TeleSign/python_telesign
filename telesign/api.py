@@ -57,7 +57,6 @@ class ServiceBase(object):
 
         return resp_obj
 
-
 class PhoneId(ServiceBase):
     """
     The **PhoneId** class exposes three services that each provide detailed information about a specified phone number.
@@ -91,6 +90,7 @@ class PhoneId(ServiceBase):
     """
 
     def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com", proxy_host=None):
+        # note - service base init takes args in a different order than phoneid init 
         super(PhoneId, self).__init__(api_host, customer_id, secret_key, ssl, proxy_host)
 
     def standard(self, phone_number, use_case_code=None, session_id=None, fields={}):
@@ -157,14 +157,17 @@ class PhoneId(ServiceBase):
         if use_case_code :
             fields['ucid'] = use_case_code 
 
+        if session_id is not None:
+            fields['session_id'] = session_id
+
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
             resource,
-            method,
-            fields = fields)
+            method )
+        # fields = fields)
 
-        req = requests.get(url="{}{}".format(self._url, resource), headers=headers, proxies=self._proxy, params=fields)
+        req = requests.get(url="{}{}".format(self._url, resource), headers=headers, params=fields)
 
         return Response(self._validate_response(req), req)
 
@@ -229,12 +232,15 @@ class PhoneId(ServiceBase):
         resource = "/v1/phoneid/score/%s" % phone_number
         method = "GET"
 
+        if use_case_code :
+            fields['ucid'] = use_case_code 
+
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
             resource,
-            method,
-            fields=fields) 
+            method )
+            #  fields=fields) 
 
         req = requests.get(url="{}{}".format(self._url, resource), headers=headers, proxies=self._proxy, params=fields)
 
@@ -307,8 +313,8 @@ class PhoneId(ServiceBase):
             self._customer_id,
             self._secret_key,
             resource,
-            method,
-            fields=fields)
+            method )
+        # , fields=fields)  
 
         req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
 
@@ -382,8 +388,8 @@ class PhoneId(ServiceBase):
             self._customer_id,
             self._secret_key,
             resource,
-            method, 
-            fields = fields)
+            method )
+        # fields = fields)
 
         req = requests.get(url="{}{}".format(self._url, resource), headers=headers, proxies=self._proxy, params=fields)
 
@@ -447,7 +453,7 @@ class Verify(ServiceBase):
            * - `originating_ip`
              - (optional) An IP (v4 or v6) address, possibly detected by the customer's website, that is considered related to the user verification request
              - `extra
-             - (optional) dict - any extra params such as tst-provider, tst-route. e.g. {'tst-provider' : 'FakeConditionalDomestic'}
+             - (optional) dict - extra parameters.   For possible expansion and TeleSign internal use. 
 
         .. rubric:: Use-case Codes
 
@@ -560,6 +566,8 @@ class Verify(ServiceBase):
              - (optional, recommended) A four letter code (use case code) used to specify a particular usage scenario for the web service.
            * - `originating_ip`
              - (optional) An IP (v4 or v6) address, possibly detected by the customer's website, that is considered related to the user verification request
+           * - `extra`
+             - (optional) For possible expansion and TeleSign internal use. 
 
         .. rubric:: Use-case Codes
 
