@@ -74,7 +74,6 @@ setup(name='telesign',
       author_email='support@telesign.com',
       url="http://github.com/telesign/python_telesign",
       install_requires=['requests',
-                        'urllib3'
                         ],
 
       packages=find_packages(exclude=['test', 'test.*']),
