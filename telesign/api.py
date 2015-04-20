@@ -14,7 +14,7 @@ from telesign.auth import generate_auth_headers
 from telesign.exceptions import TelesignError, AuthorizationError
 
 __author__ = "Jeremy Cunningham, Michael Fox, and Radu Maierean"
-__copyright__ = "Copyright 2012, TeleSign Corp."
+__copyright__ = "Copyright 2015, TeleSign Corp."
 __credits__ = ["Jeremy Cunningham", "Radu Maierean", "Michael Fox", "Nancy Vitug", "Humberto Morales"]
 __license__ = "MIT"
 __maintainer__ = "Jeremy Cunningham"
@@ -93,7 +93,7 @@ class PhoneId(ServiceBase):
         # note - service base init takes args in a different order than phoneid init 
         super(PhoneId, self).__init__(api_host, customer_id, secret_key, ssl, proxy_host)
 
-    def standard(self, phone_number, use_case_code=None, session_id=None, fields={}):
+    def standard(self, phone_number, ucid="UNKN", session_id=None, fields=None):
         """
         Retrieves the standard set of details about the specified phone number. This includes the type of phone (e.g., land line or mobile), and it's approximate geographic location.
 
@@ -139,7 +139,7 @@ class PhoneId(ServiceBase):
             phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
 
             try:
-                phone_info = phoneid.standard(phone_number, use_case_code="ATCK")
+                phone_info = phoneid.standard(phone_number, ucid="ATCK")
 
             except AuthorizationError as ex:
                 # API authorization failed. Check the API response for details.
@@ -154,8 +154,11 @@ class PhoneId(ServiceBase):
         resource = "/v1/phoneid/standard/%s" % phone_number
         method = "GET"
 
-        if use_case_code :
-            fields['ucid'] = use_case_code 
+        if fields == None :
+            fields = {} 
+
+        if ucid : 
+            fields['ucid'] = ucid  
 
         if session_id is not None:
             fields['session_id'] = session_id
@@ -171,7 +174,7 @@ class PhoneId(ServiceBase):
 
         return Response(self._validate_response(req), req)
 
-    def score(self, phone_number, use_case_code, originating_ip=None, fields={}) :
+    def score(self, phone_number, ucid="UNKN", originating_ip=None, fields=None) :
         """
         Retrieves a score for the specified phone number. This ranks the phone number's "risk level" on a scale from 0 to 1000, so you can code your web application to handle particular use cases (e.g., to stop things like chargebacks, identity theft, fraud, and spam).
 
@@ -183,14 +186,14 @@ class PhoneId(ServiceBase):
              -
            * - `phone_number`
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
-           * - `use_case_code`
+           * - `ucid`
              - A four letter code used to specify a particular usage scenario for the web service.
            * - `originating_ip`
              - (Optional) The IP address of the end user who's phone number you are looking up.
 
         .. rubric:: Use-case Codes
 
-        The following table list the available use-case codes, and includes a description of each.
+        The following table list the available use-case codes (ucid), and includes a description of each.
 
         ========  =====================================
         Code      Description
@@ -217,12 +220,12 @@ class PhoneId(ServiceBase):
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
             phone_number = "13107409700"
-            use_case_code = "ATCK"
+            ucid = "ATCK"
 
             phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
 
             try:
-                score_info = phoneid.score(phone_number, use_case_code)
+                score_info = phoneid.score(phone_number, ucid)
             except AuthorizationError as ex:
                 ...
             except TelesignError as ex:
@@ -232,8 +235,11 @@ class PhoneId(ServiceBase):
         resource = "/v1/phoneid/score/%s" % phone_number
         method = "GET"
 
-        if use_case_code :
-            fields['ucid'] = use_case_code 
+        if fields == None :
+            fields = {} 
+
+        if ucid :
+            fields['ucid'] = ucid 
 
         headers = generate_auth_headers(
             self._customer_id,
@@ -246,7 +252,7 @@ class PhoneId(ServiceBase):
 
         return Response(self._validate_response(req), req)
 
-    def contact(self, phone_number, use_case_code, fields={}):
+    def contact(self, phone_number, ucid="UNKN", fields=None):
         """
         In addition to the information retrieved by **standard**, this service provides the Name & Address associated with the specified phone number.
 
@@ -258,12 +264,12 @@ class PhoneId(ServiceBase):
              -
            * - `phone_number`
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
-           * - `use_case_code`
-             - A four letter code used to specify a particular usage scenario for the web service.
+           * - `ucid`
+             - A four letter use case code used to specify a particular usage scenario for the web service.
 
         .. rubric:: Use-case Codes
 
-        The following table list the available use-case codes, and includes a description of each.
+        The following table list the available use-case codes (ucid), and includes a description of each.
 
         ========  =====================================
         Code      Description
@@ -290,12 +296,12 @@ class PhoneId(ServiceBase):
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
             phone_number = "13107409700"
-            use_case_code = "LEAD"
+            ucid = "LEAD"
 
             phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
 
             try:
-                phone_info = phoneid.contact(phone_number, use_case_code)
+                phone_info = phoneid.contact(phone_number, ucid)
             except AuthorizationError as ex:
                 # API authorization failed, the API response should tell you the reason
                 ...
@@ -308,7 +314,10 @@ class PhoneId(ServiceBase):
         resource = "/v1/phoneid/contact/%s" % phone_number
         method = "GET"
 
-        fields['ucid'] = use_case_code 
+        if fields == None :
+            fields = {} 
+
+        fields['ucid'] = ucid 
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
@@ -320,7 +329,7 @@ class PhoneId(ServiceBase):
 
         return Response(self._validate_response(req), req)
 
-    def live(self, phone_number, use_case_code, fields={}) : 
+    def live(self, phone_number, ucid, fields=None) : 
         """
         In addition to the information retrieved by **standard**, this service provides actionable data associated with the specified phone number.
 
@@ -332,8 +341,8 @@ class PhoneId(ServiceBase):
              -
            * - `phone_number`
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
-           * - `use_case_code`
-             - A four letter code used to specify a particular usage scenario for the web service.
+           * - `ucid`
+             - A four letter use case code used to specify a particular usage scenario for the web service.
 
         .. rubric:: Use-case Codes
 
@@ -364,12 +373,12 @@ class PhoneId(ServiceBase):
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
             phone_number = "13107409700"
-            use_case_code = "RXPF"
+            ucid = "RXPF"
 
             phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
 
             try:
-                phone_info = phoneid.live(phone_number, use_case_code)
+                phone_info = phoneid.live(phone_number, ucid)
             except AuthorizationError as ex:
                 # API authorization failed, the API response should tell you the reason
                 ...
@@ -382,7 +391,10 @@ class PhoneId(ServiceBase):
         resource = "/v1/phoneid/live/%s" % phone_number
         method = "GET"
 
-        fields['ucid'] = use_case_code 
+        if fields == None :
+            fields = {} 
+
+        fields['ucid'] = ucid 
 
         headers = generate_auth_headers(
             self._customer_id,
@@ -430,7 +442,7 @@ class Verify(ServiceBase):
         super(Verify, self).__init__(api_host, customer_id, secret_key, ssl, proxy_host)
 
     def sms(self, phone_number, verify_code=None, language="en", template="",
-            ucid=None, originating_ip=None, extra={}):
+            ucid="UNKN", originating_ip=None, extra=None):
         """
         Sends a text message containing the verification code, to the specified phone number (supported for mobile phones only).
 
@@ -540,7 +552,7 @@ class Verify(ServiceBase):
 
     def call(self, phone_number, verify_code=None, ucid="", 
              verify_method="", language="en",  extension_type="",
-             redial="", originating_ip = None, pressx=None, extra={}):
+             redial="", originating_ip = None, pressx=None, extra=None):
         """
         Calls the specified phone number, and using speech synthesis, speaks the verification code to the user.
 
@@ -656,7 +668,7 @@ class Verify(ServiceBase):
 
         return Response(self._validate_response(req), req, verify_code=verify_code)
 
-    def status(self, ref_id, verify_code=None, fields={}):
+    def status(self, ref_id, verify_code=None, fields=None):
         """
            Retrieves the verification result. You make this call in your web application after users complete the authentication transaction (using either a call or sms).
 
@@ -703,6 +715,9 @@ class Verify(ServiceBase):
             self._secret_key,
             resource,
             method)
+
+        if fields == None :
+            fields = {} 
 
         if(verify_code != None):
             fields["verify_code"] = verify_code
