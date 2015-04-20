@@ -31,7 +31,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'TeleSign Python SDK'
-copyright = u'2012, TeleSign Corporation'
+copyright = u'2015, TeleSign Corporation'
 
 # List of patterns, relative to source directory, that match files and directories to ignore when looking for source files.
 exclude_patterns = []

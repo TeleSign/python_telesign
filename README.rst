@@ -92,7 +92,7 @@ Here's a basic code example.
     >>> result = verify.call(phone_number, verify_code=1234)  # and use it to call the "call" method.
     >>> print result.data
     
-    {u'status': {u'updated_on': u'2012-04-23T21:28:06.837153', u'code': 103, u'description': u'Call in progress'}, u'errors': [], u'verify': {u'code_state': u'UNKNOWN', u'code_entered': u''}, u'sub_resource': u'call', u'reference_id': u'DGFDF6E11AB86303ASDFD425BE00000657', u'resource_uri': u'/v1/verify/DGFDF6E11AB86303ASDFD425BE00000657'}
+    {u'status': {u'updated_on': u'2015-04-23T21:28:06.837153', u'code': 103, u'description': u'Call in progress'}, u'errors': [], u'verify': {u'code_state': u'UNKNOWN', u'code_entered': u''}, u'sub_resource': u'call', u'reference_id': u'DGFDF6E11AB86303ASDFD425BE00000657', u'resource_uri': u'/v1/verify/DGFDF6E11AB86303ASDFD425BE00000657'}
 
 For more examples, see the Documentation section below.
 
