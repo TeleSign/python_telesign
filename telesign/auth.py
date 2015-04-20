@@ -66,7 +66,7 @@ def generate_auth_headers(
         nonce = str(uuid.uuid4()) 
         string_to_sign += "\nx-ts-nonce:" + nonce 
 
-    if method != 'GET' and fields:
+    if method in ('POST', 'PUT')  and fields:
         string_to_sign = string_to_sign + "\n%s" % urlencode(fields)
 
     string_to_sign = string_to_sign + "\n%s" % resource
