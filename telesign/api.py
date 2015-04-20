@@ -163,18 +163,20 @@ class PhoneId(ServiceBase):
         if session_id is not None:
             fields['session_id'] = session_id
 
+        # in posts, fields should be passed in to generate_auth_headers
+        # in gets, not.   
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
             resource,
-            method )
-        # fields = fields)
+            method )   
+        
 
         req = requests.get(url="{}{}".format(self._url, resource), headers=headers, params=fields)
 
         return Response(self._validate_response(req), req)
 
-    def score(self, phone_number, ucid="UNKN", originating_ip=None, fields=None) :
+    def score(self, phone_number, ucid, originating_ip=None, fields=None) :
         """
         Retrieves a score for the specified phone number. This ranks the phone number's "risk level" on a scale from 0 to 1000, so you can code your web application to handle particular use cases (e.g., to stop things like chargebacks, identity theft, fraud, and spam).
 
@@ -246,13 +248,12 @@ class PhoneId(ServiceBase):
             self._secret_key,
             resource,
             method )
-            #  fields=fields) 
 
         req = requests.get(url="{}{}".format(self._url, resource), headers=headers, proxies=self._proxy, params=fields)
 
         return Response(self._validate_response(req), req)
 
-    def contact(self, phone_number, ucid="UNKN", fields=None):
+    def contact(self, phone_number, ucid, fields=None):
         """
         In addition to the information retrieved by **standard**, this service provides the Name & Address associated with the specified phone number.
 
@@ -323,7 +324,6 @@ class PhoneId(ServiceBase):
             self._secret_key,
             resource,
             method )
-        # , fields=fields)  
 
         req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
 
@@ -401,7 +401,6 @@ class PhoneId(ServiceBase):
             self._secret_key,
             resource,
             method )
-        # fields = fields)
 
         req = requests.get(url="{}{}".format(self._url, resource), headers=headers, proxies=self._proxy, params=fields)
 
@@ -550,7 +549,7 @@ class Verify(ServiceBase):
 
         return Response(self._validate_response(req), req, verify_code=verify_code)
 
-    def call(self, phone_number, verify_code=None, ucid="", 
+    def call(self, phone_number, verify_code=None, ucid="UNKN", 
              verify_method="", language="en",  extension_type="",
              redial="", originating_ip = None, pressx=None, extra=None):
         """
