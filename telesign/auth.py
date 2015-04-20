@@ -49,7 +49,7 @@ def generate_auth_headers(
             usegmt=True
         )
 
-    if(method in ("POST", "PUT")):
+    if method in ("POST", "PUT"):
         content_type = "application/x-www-form-urlencoded"
 
     if auth_method not in AUTH_METHOD :
@@ -62,11 +62,11 @@ def generate_auth_headers(
         AUTH_METHOD[auth_method]["name"],
         currDate) 
 
-    if use_nonce :
+    if use_nonce:
         nonce = str(uuid.uuid4()) 
         string_to_sign += "\nx-ts-nonce:" + nonce 
 
-    if(fields):
+    if method != 'GET' and fields:
         string_to_sign = string_to_sign + "\n%s" % urlencode(fields)
 
     string_to_sign = string_to_sign + "\n%s" % resource
