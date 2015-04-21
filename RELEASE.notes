@@ -1,0 +1,6 @@
+-- 
+use_case_id has been renamed as a parameter uniformly to ucid.   The same values apply, but some functions (in particular
+the PhoneID ones used use_case_id) and others used ucid.
+
+originating_ip is not used in PhoneID products and has been removed as a parameter.
+
