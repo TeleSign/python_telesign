@@ -1,6 +1,19 @@
--- 
-use_case_id has been renamed as a parameter uniformly to ucid.   The same values apply, but some functions (in particular
-the PhoneID ones used use_case_id) and others used ucid.
+Some cleanups and small changes.   
 
-originating_ip is not used in PhoneID products and has been removed as a parameter.
+This module should now work with python3.4+ (and has been tested with python3.4) as well as python2.7. 
+
+use_case_id has been renamed as a parameter uniformly to ucid.   The same values apply, but some functions (in particular
+the PhoneID ones used use_case_id) and others used ucid.  This may be a BREAKING CHANGE. 
+
+originating_ip is not used in PhoneID products and has been removed as a parameter.   This may be a BREAKING CHANGE. 
+
+Calls to generate a random verify code in call and sms have been removed.   Customers should generate their
+own codes (perhaps using random_with_N_digits) and pass them in to call and to sms.  This may be a BREAKING CHANGE. 
+
+auth_method now defaults to sha256 instead of sha1.   This may not be necessary for security, but it should not hurt.
+(However, sha256 is slightly slower than sha1).  sha1 as a cryptographic has is still supported, but is not the default.
+
+
+
+
 
