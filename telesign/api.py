@@ -516,9 +516,6 @@ class Verify(ServiceBase):
 
         """
 
-        if(verify_code == None):
-            verify_code = random_with_N_digits(5)
-
         resource = "/v1/verify/sms"
         method = "POST"
 
@@ -629,9 +626,6 @@ class Verify(ServiceBase):
                 except TelesignError as ex:
                     ...
         """
-
-        if(verify_code == None):
-            verify_code = random_with_N_digits(5)
 
         resource = "/v1/verify/call"
         method = "POST"
