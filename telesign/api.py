@@ -176,7 +176,7 @@ class PhoneId(ServiceBase):
 
         return Response(self._validate_response(req), req)
 
-    def score(self, phone_number, ucid, originating_ip=None, fields=None) :
+    def score(self, phone_number, ucid, fields=None) :
         """
         Retrieves a score for the specified phone number. This ranks the phone number's "risk level" on a scale from 0 to 1000, so you can code your web application to handle particular use cases (e.g., to stop things like chargebacks, identity theft, fraud, and spam).
 
@@ -190,8 +190,6 @@ class PhoneId(ServiceBase):
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
            * - `ucid`
              - A four letter code used to specify a particular usage scenario for the web service.
-           * - `originating_ip`
-             - (Optional) The IP address of the end user who's phone number you are looking up.
 
         .. rubric:: Use-case Codes
 
