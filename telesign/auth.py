@@ -6,20 +6,27 @@ from hashlib import sha1, sha256
 from base64 import b64encode, b64decode
 from email.utils import formatdate
 from time import mktime
-try : 
+try:
     from urllib import urlencode 
-except :
+except ImportError:
     from urllib.parse import urlencode 
 import hmac
 import uuid 
 import datetime
 
 
-__author__ = "Jeremy Cunningham, Michael Fox, and Radu Maierean"
+__author__ = "Jeremy Cunningham"
 __copyright__ = "Copyright 2015, TeleSign Corp."
-__credits__ = ["Jeremy Cunningham", "Radu Maierean", "Michael Fox", "Nancy Vitug", "Humberto Morales"]
+__credits__ = [
+    "Jeremy Cunningham",
+    "Radu Maierean",
+    "Michael Fox",
+    "Nancy Vitug",
+    "Humberto Morales",
+    "Jeff Putnam",
+    "Jarrad Lee"]
 __license__ = "MIT"
-__maintainer__ = "Jeremy Cunningham"
+__maintainer__ = "TeleSign Corp."
 __email__ = "support@telesign.com"
 __status__ = "Production"
 
@@ -39,52 +46,74 @@ def generate_auth_headers(
         auth_method="sha256",
         fields=None, 
         use_nonce=True,
-        hashcash=None ):
+        hashcash=None):
+    """
+    Function to generate the REST API authentication headers. A signature is
+    computed based on the contents of the request and the client's secret key.
+
+    :param customer_id: A string value that identifies the TeleSign account.
+
+    :param secret_key: A base64-encoded string value that validates access to the TeleSign web services.
+
+    :param resource: The REST resource to invoke the request.
+
+    :param method: HTTP verb to perform in the request.
+
+    :param content_type: Content type to apply to the HTTP request headers.
+
+    :param auth_method: Hash function to use to generate the signature.
+
+    :param fields: Include additional fields to include in the signature.
+
+    :param use_nonce: Optionally disable nonce generation to simplify testing.
+
+    :param hashcash: Include a hashcash in the headers.
+
+    :return: headers to be applied to the HTTP request
+    """
 
     now = datetime.datetime.now()
     stamp = mktime(now.timetuple())
-    currDate = formatdate(
-            timeval=stamp,
-            localtime=False,
-            usegmt=True
-        )
+    current_date = formatdate(
+        timeval=stamp,
+        localtime=False,
+        usegmt=True)
 
     if method in ("POST", "PUT"):
         content_type = "application/x-www-form-urlencoded"
 
-    if auth_method not in AUTH_METHOD :
-        # what to do ?
-        auth_method = 'sha256'    
+    if auth_method not in AUTH_METHOD:
+        auth_method = "sha256"
 
     string_to_sign = "%s\n%s\n\nx-ts-auth-method:%s\nx-ts-date:%s" % (
         method,
         content_type, 
         AUTH_METHOD[auth_method]["name"],
-        currDate) 
+        current_date)
 
     if use_nonce:
         nonce = str(uuid.uuid4()) 
         string_to_sign += "\nx-ts-nonce:" + nonce 
 
-    if method in ('POST', 'PUT')  and fields:
-        string_to_sign = string_to_sign + "\n%s" % urlencode(fields)
+    if method in ("POST", "PUT") and fields:
+        string_to_sign += "\n%s" % urlencode(fields)
 
-    string_to_sign = string_to_sign + "\n%s" % resource
+    string_to_sign += "\n%s" % resource
 
-    signer = hmac.new(b64decode(secret_key), string_to_sign.encode('utf-8'), AUTH_METHOD[auth_method]["hash"])
+    signer = hmac.new(b64decode(secret_key), string_to_sign.encode("utf-8"), AUTH_METHOD[auth_method]["hash"])
 
-    signature = b64encode(signer.digest()).decode('utf-8') 
+    signature = b64encode(signer.digest()).decode("utf-8")
 
     headers = {
         "Authorization": "TSA %s:%s" % (customer_id, signature),
-        "x-ts-date": currDate,
+        "x-ts-date": current_date,
         "x-ts-auth-method": AUTH_METHOD[auth_method]["name"],
     }
 
-    if hashcash :
-        headers['X-Hashcash'] = hashcash 
+    if hashcash:
+        headers["X-Hashcash"] = hashcash
 
-    if use_nonce : 
+    if use_nonce:
         headers["x-ts-nonce"] = nonce 
 
     return headers

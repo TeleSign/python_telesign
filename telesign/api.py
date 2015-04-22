@@ -13,19 +13,33 @@ import requests
 from telesign.auth import generate_auth_headers
 from telesign.exceptions import TelesignError, AuthorizationError
 
-__author__ = "Jeremy Cunningham, Michael Fox, and Radu Maierean"
+__author__ = "Jeremy Cunningham"
 __copyright__ = "Copyright 2015, TeleSign Corp."
-__credits__ = ["Jeremy Cunningham", "Radu Maierean", "Michael Fox", "Nancy Vitug", "Humberto Morales"]
+__credits__ = [
+    "Jeremy Cunningham",
+    "Radu Maierean",
+    "Michael Fox",
+    "Nancy Vitug",
+    "Humberto Morales",
+    "Jeff Putnam",
+    "Jarrad Lee"]
 __license__ = "MIT"
-__maintainer__ = "Jeremy Cunningham"
+__maintainer__ = "TeleSign Corp."
 __email__ = "support@telesign.com"
 __status__ = "Production"
 
 
 rng = SystemRandom() 
 
-def random_with_N_digits(n):
-    return "".join([rng.choice('0123456789') for i in range(n)])
+
+def random_with_n_digits(n):
+    """
+    Generate a random number n digits in length using a system random.
+
+    :param n: n length digit code to generate
+    :return: a digit code of n length
+    """
+    return "".join(rng.choice('0123456789') for _ in range(n))
 
 
 class Response(object):
@@ -49,13 +63,14 @@ class ServiceBase(object):
 
     def _validate_response(self, response):
         resp_obj = json.loads(response.text)
-        if(response.status_code != 200):
-            if(response.status_code == 401):
+        if response.status_code != requests.codes.ok:
+            if response.status_code == requests.codes.unauthorized:
                 raise AuthorizationError(resp_obj, response)
             else:
                 raise TelesignError(resp_obj, response)
 
         return resp_obj
+
 
 class PhoneId(ServiceBase):
     """
@@ -72,9 +87,11 @@ class PhoneId(ServiceBase):
        * - `secret_key`
          - A base64-encoded string value that validates your access to the TeleSign web services.
        * - `ssl`
-         - Specifies whether to use a secure connection with the TeleSign server. Defaults to *True*.
+         - (optional) Specifies whether to use a secure connection with the TeleSign server. Defaults to *True*.
        * - `api_host`
-         - The Internet host used in the base URI for REST web services. The default is *rest.telesign.com* (and the base URI is https://rest.telesign.com/).
+         - (optional) The Internet host used in the base URI for REST web services. The default is *rest.telesign.com* (and the base URI is https://rest.telesign.com/).
+       * - `proxy_host`
+         - (optional) The host and port when going through a proxy server. ex: "localhost:8080. The default to no proxy.
 
     .. note::
        You can obtain both your Customer ID and Secret Key from the `TeleSign Customer Portal <https://portal.telesign.com/account_profile_api_auth.php>`_.
@@ -90,10 +107,9 @@ class PhoneId(ServiceBase):
     """
 
     def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com", proxy_host=None):
-        # note - service base init takes args in a different order than phoneid init 
         super(PhoneId, self).__init__(api_host, customer_id, secret_key, ssl, proxy_host)
 
-    def standard(self, phone_number, ucid="UNKN", session_id=None, fields=None):
+    def standard(self, phone_number, use_case_code=None, extra=None):
         """
         Retrieves the standard set of details about the specified phone number. This includes the type of phone (e.g., land line or mobile), and it's approximate geographic location.
 
@@ -105,6 +121,10 @@ class PhoneId(ServiceBase):
              -
            * - `phone_number`
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
+           * - `use_case_code`
+             - (optional, recommended) A four letter code (use case code) used to specify a particular usage scenario for the web service.
+           * - `extra`
+             - (optional) Key value mapping of additional parameters.
 
         .. rubric:: Use-case Codes
 
@@ -139,7 +159,7 @@ class PhoneId(ServiceBase):
             phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
 
             try:
-                phone_info = phoneid.standard(phone_number, ucid="ATCK")
+                phone_info = phoneid.standard(phone_number, use_case_code="ATCK")
 
             except AuthorizationError as ex:
                 # API authorization failed. Check the API response for details.
@@ -151,32 +171,29 @@ class PhoneId(ServiceBase):
                 ...
 
         """
+
         resource = "/v1/phoneid/standard/%s" % phone_number
         method = "GET"
 
-        if fields == None :
-            fields = {} 
+        fields = {}
 
-        if ucid : 
-            fields['ucid'] = ucid  
+        if use_case_code:
+            fields["ucid"] = use_case_code
 
-        if session_id is not None:
-            fields['session_id'] = session_id
+        if extra is not None:
+            fields.update(extra)
 
-        # in posts, fields should be passed in to generate_auth_headers
-        # in gets, not.   
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
             resource,
-            method )   
-        
+            method)
 
-        req = requests.get(url="{}{}".format(self._url, resource), headers=headers, params=fields)
+        req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
 
         return Response(self._validate_response(req), req)
 
-    def score(self, phone_number, ucid, fields=None) :
+    def score(self, phone_number, use_case_code, extra=None):
         """
         Retrieves a score for the specified phone number. This ranks the phone number's "risk level" on a scale from 0 to 1000, so you can code your web application to handle particular use cases (e.g., to stop things like chargebacks, identity theft, fraud, and spam).
 
@@ -188,12 +205,14 @@ class PhoneId(ServiceBase):
              -
            * - `phone_number`
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
-           * - `ucid`
+           * - `use_case_code`
              - A four letter code used to specify a particular usage scenario for the web service.
+           * - `extra`
+             - (optional) Key value mapping of additional parameters.
 
         .. rubric:: Use-case Codes
 
-        The following table list the available use-case codes (ucid), and includes a description of each.
+        The following table list the available use-case codes (use_case_code), and includes a description of each.
 
         ========  =====================================
         Code      Description
@@ -220,12 +239,12 @@ class PhoneId(ServiceBase):
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
             phone_number = "13107409700"
-            ucid = "ATCK"
+            use_case_code = "ATCK"
 
             phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
 
             try:
-                score_info = phoneid.score(phone_number, ucid)
+                score_info = phoneid.score(phone_number, use_case_code)
             except AuthorizationError as ex:
                 ...
             except TelesignError as ex:
@@ -235,23 +254,24 @@ class PhoneId(ServiceBase):
         resource = "/v1/phoneid/score/%s" % phone_number
         method = "GET"
 
-        if fields == None :
-            fields = {} 
+        fields = {
+            "ucid": use_case_code,
+        }
 
-        if ucid :
-            fields['ucid'] = ucid 
+        if extra is not None:
+            fields.update(extra)
 
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
             resource,
-            method )
+            method)
 
-        req = requests.get(url="{}{}".format(self._url, resource), headers=headers, proxies=self._proxy, params=fields)
+        req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
 
         return Response(self._validate_response(req), req)
 
-    def contact(self, phone_number, ucid, fields=None):
+    def contact(self, phone_number, use_case_code, extra=None):
         """
         In addition to the information retrieved by **standard**, this service provides the Name & Address associated with the specified phone number.
 
@@ -263,12 +283,14 @@ class PhoneId(ServiceBase):
              -
            * - `phone_number`
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
-           * - `ucid`
+           * - `use_case_code`
              - A four letter use case code used to specify a particular usage scenario for the web service.
+           * - `extra`
+             - (optional) Key value mapping of additional parameters.
 
         .. rubric:: Use-case Codes
 
-        The following table list the available use-case codes (ucid), and includes a description of each.
+        The following table list the available use-case codes (use_case_code), and includes a description of each.
 
         ========  =====================================
         Code      Description
@@ -295,12 +317,12 @@ class PhoneId(ServiceBase):
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
             phone_number = "13107409700"
-            ucid = "LEAD"
+            use_case_code = "LEAD"
 
             phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
 
             try:
-                phone_info = phoneid.contact(phone_number, ucid)
+                phone_info = phoneid.contact(phone_number, use_case_code)
             except AuthorizationError as ex:
                 # API authorization failed, the API response should tell you the reason
                 ...
@@ -313,21 +335,24 @@ class PhoneId(ServiceBase):
         resource = "/v1/phoneid/contact/%s" % phone_number
         method = "GET"
 
-        if fields == None :
-            fields = {} 
+        fields = {
+            "ucid": use_case_code,
+        }
 
-        fields['ucid'] = ucid 
+        if extra is not None:
+            fields.update(extra)
+
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
             resource,
-            method )
+            method)
 
         req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
 
         return Response(self._validate_response(req), req)
 
-    def live(self, phone_number, ucid, fields=None) : 
+    def live(self, phone_number, use_case_code, extra=None):
         """
         In addition to the information retrieved by **standard**, this service provides actionable data associated with the specified phone number.
 
@@ -339,8 +364,10 @@ class PhoneId(ServiceBase):
              -
            * - `phone_number`
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
-           * - `ucid`
+           * - `use_case_code`
              - A four letter use case code used to specify a particular usage scenario for the web service.
+           * - `extra`
+             - (optional) Key value mapping of additional parameters.
 
         .. rubric:: Use-case Codes
 
@@ -371,12 +398,12 @@ class PhoneId(ServiceBase):
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
             phone_number = "13107409700"
-            ucid = "RXPF"
+            use_case_code = "RXPF"
 
             phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
 
             try:
-                phone_info = phoneid.live(phone_number, ucid)
+                phone_info = phoneid.live(phone_number, use_case_code)
             except AuthorizationError as ex:
                 # API authorization failed, the API response should tell you the reason
                 ...
@@ -389,18 +416,20 @@ class PhoneId(ServiceBase):
         resource = "/v1/phoneid/live/%s" % phone_number
         method = "GET"
 
-        if fields == None :
-            fields = {} 
+        fields = {
+            "ucid": use_case_code,
+        }
 
-        fields['ucid'] = ucid 
+        if extra is not None:
+            fields.update(extra)
 
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
             resource,
-            method )
+            method)
 
-        req = requests.get(url="{}{}".format(self._url, resource), headers=headers, proxies=self._proxy, params=fields)
+        req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
 
         return Response(self._validate_response(req), req)
 
@@ -424,11 +453,11 @@ class Verify(ServiceBase):
        * - `secret_key`
          - A base64-encoded string value that validates your access to the TeleSign web services.
        * - `ssl`
-         - Specifies whether to use a secure connection with the TeleSign server. Defaults to *True*.
+         - (optional) Specifies whether to use a secure connection with the TeleSign server. Defaults to *True*.
        * - `api_host`
-         - The Internet host used in the base URI for REST web services. The default is *rest.telesign.com* (and the base URI is https://rest.telesign.com/).
+         - (optional) The Internet host used in the base URI for REST web services. The default is *rest.telesign.com* (and the base URI is https://rest.telesign.com/).
        * - `proxy_host`
-         - The host and port when going through a proxy server. ex: "localhost:8080. The default to no proxy.
+         - (optional) The host and port when going through a proxy server. ex: "localhost:8080. The default to no proxy.
 
     .. note::
        You can obtain both your Customer ID and Secret Key from the `TeleSign Customer Portal <https://portal.telesign.com/account_profile_api_auth.php>`_.
@@ -438,8 +467,14 @@ class Verify(ServiceBase):
     def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com", proxy_host=None):
         super(Verify, self).__init__(api_host, customer_id, secret_key, ssl, proxy_host)
 
-    def sms(self, phone_number, verify_code=None, language="en", template="",
-            ucid="UNKN", originating_ip=None, extra=None):
+    def sms(self,
+            phone_number,
+            verify_code=None,
+            language="en",
+            template="",
+            use_case_code=None,
+            originating_ip=None,
+            extra=None):
         """
         Sends a text message containing the verification code, to the specified phone number (supported for mobile phones only).
 
@@ -457,12 +492,12 @@ class Verify(ServiceBase):
              - (optional) The written language used in the message. The default is English.
            * - `template`
              - (optional) A standard form for the text message. It must contain the token ``$$CODE$$``, which TeleSign auto-populates with the verification code.
-           * - `ucid`
+           * - `use_case_code`
              - (optional, recommended) A four letter code (use case code) used to specify a particular usage scenario for the web service.
            * - `originating_ip`
              - (optional) An IP (v4 or v6) address, possibly detected by the customer's website, that is considered related to the user verification request
-             - `extra
-             - (optional) dict - extra parameters.   For possible expansion and TeleSign internal use. 
+           * - `extra`
+             - (optional) Key value mapping of additional parameters.
 
         .. rubric:: Use-case Codes
 
@@ -497,7 +532,7 @@ class Verify(ServiceBase):
             verify = Verify(cust_id, secret_key) # Instantiate a Verify object.
 
             try:
-                phone_info = verify.sms(phone_number, ucid="ATCK")
+                phone_info = verify.sms(phone_number, use_case_code="ATCK")
             except AuthorizationError as ex:
                 # API authorization failed, the API response should tell you the reason
                 ...
@@ -526,10 +561,12 @@ class Verify(ServiceBase):
             "template": template,
         }
 
-        if ucid:
-            fields['ucid'] = ucid
+        if use_case_code:
+            fields['ucid'] = use_case_code
+
         if originating_ip is not None:
             fields['originating_ip'] = originating_ip
+
         if extra is not None:
             fields.update(extra)
 
@@ -544,9 +581,17 @@ class Verify(ServiceBase):
 
         return Response(self._validate_response(req), req, verify_code=verify_code)
 
-    def call(self, phone_number, verify_code=None, ucid="UNKN", 
-             verify_method="", language="en",  extension_type="",
-             redial="", originating_ip = None, pressx=None, extra=None):
+    def call(self,
+             phone_number,
+             verify_code=None,
+             use_case_code=None,
+             verify_method="",
+             language="en",
+             extension_type="",
+             redial="",
+             originating_ip=None,
+             pressx=None,
+             extra=None):
         """
         Calls the specified phone number, and using speech synthesis, speaks the verification code to the user.
 
@@ -568,12 +613,12 @@ class Verify(ServiceBase):
              - (optional)
            * - `redial`
              - (optional)
-           * - `ucid`
+           * - `use_case_code`
              - (optional, recommended) A four letter code (use case code) used to specify a particular usage scenario for the web service.
            * - `originating_ip`
              - (optional) An IP (v4 or v6) address, possibly detected by the customer's website, that is considered related to the user verification request
            * - `extra`
-             - (optional) For possible expansion and TeleSign internal use. 
+             - (optional) Key value mapping of additional parameters.
 
         .. rubric:: Use-case Codes
 
@@ -609,7 +654,7 @@ class Verify(ServiceBase):
             phone_number = "13107409700"
 
             try:
-                phone_info = verify.call(phone_number, ucid="ATCK")
+                phone_info = verify.call(phone_number, use_case_code="ATCK")
             except AuthorizationError as ex:
                 # API authorization failed, the API response should tell you the reason
                 ...
@@ -631,20 +676,23 @@ class Verify(ServiceBase):
         method = "POST"
 
         fields = {
-            "phone_number":phone_number,
-            "language":language,
-            "verify_code":verify_code,
-            "verify_method":verify_method,
-            "extension_type":extension_type,
-            "redial":redial,
+            "phone_number": phone_number,
+            "language": language,
+            "verify_code": verify_code,
+            "verify_method": verify_method,
+            "extension_type": extension_type,
+            "redial": redial,
         }
 
         if pressx:
             fields['pressx'] = pressx
-        if ucid:
-            fields['ucid'] = ucid
+
+        if use_case_code:
+            fields['ucid'] = use_case_code
+
         if originating_ip is not None:
             fields['originating_ip'] = originating_ip
+
         if extra is not None:
             fields.update(extra)
 
@@ -659,7 +707,7 @@ class Verify(ServiceBase):
 
         return Response(self._validate_response(req), req, verify_code=verify_code)
 
-    def status(self, ref_id, verify_code=None, fields=None):
+    def status(self, ref_id, verify_code=None, extra=None):
         """
            Retrieves the verification result. You make this call in your web application after users complete the authentication transaction (using either a call or sms).
 
@@ -672,7 +720,9 @@ class Verify(ServiceBase):
            * - `ref_id`
              - The Reference ID returned in the response from the TeleSign server, after you called either **call** or **sms**.
            * - `verify_code`
-             - The verification code received from the user.
+             - (optional) The verification code received from the user.
+           * - `extra`
+             - (optional) Key value mapping of additional parameters.
 
         **Example**::
 
@@ -701,17 +751,19 @@ class Verify(ServiceBase):
         resource = "/v1/verify/%s" % ref_id
         method = "GET"
 
+        fields = {}
+
+        if verify_code is not None:
+            fields["verify_code"] = verify_code
+
+        if extra is not None:
+            fields.update(extra)
+
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
             resource,
             method)
-
-        if fields == None :
-            fields = {} 
-
-        if(verify_code != None):
-            fields["verify_code"] = verify_code
 
         req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
 
