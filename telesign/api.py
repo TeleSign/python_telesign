@@ -557,9 +557,11 @@ class Verify(ServiceBase):
         fields = {
             "phone_number": phone_number,
             "language": language,
-            "verify_code": verify_code,
             "template": template,
         }
+
+        if verify_code:
+            fields['verify_code'] = verify_code
 
         if use_case_code:
             fields['ucid'] = use_case_code
@@ -678,11 +680,13 @@ class Verify(ServiceBase):
         fields = {
             "phone_number": phone_number,
             "language": language,
-            "verify_code": verify_code,
             "verify_method": verify_method,
             "extension_type": extension_type,
             "redial": redial,
         }
+
+        if verify_code:
+            fields['verify_code'] = verify_code
 
         if pressx:
             fields['pressx'] = pressx
