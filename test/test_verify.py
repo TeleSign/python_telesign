@@ -78,7 +78,6 @@ class VerifyTest(unittest.TestCase):
         self.assertEqual(kwargs["url"], self.expected_sms_resource, "Sms verify resource was incorrect")
         self.assertEqual(kwargs["data"]["phone_number"], self.expected_phone_no, "Phone number field did not match")
         self.assertEqual(kwargs["data"]["language"], self.expected_language, "Language field did not match")
-        self.assertEqual(len("%s" % kwargs["data"]["verify_code"]), 5, "Expected default verify code to be 5 digits")
         self.assertFalse(kwargs['proxies'])
 
     @mock.patch.object(requests, "post")
@@ -97,7 +96,6 @@ class VerifyTest(unittest.TestCase):
         self.assertEqual(kwargs["url"], self.expected_call_resource, "Call verify resource was incorrect")
         self.assertEqual(kwargs["data"]["phone_number"], self.expected_phone_no, "Phone number field did not match")
         self.assertEqual(kwargs["data"]["language"], self.expected_language, "Language field did not match")
-        self.assertEqual(len("%s" % kwargs["data"]["verify_code"]), 5, "Expected default verify code to be 5 digits")
         self.assertFalse(kwargs['proxies'])
 
     @mock.patch.object(requests, "get")
