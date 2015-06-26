@@ -13,7 +13,6 @@ except ImportError:
 import hmac
 import uuid 
 import datetime
-import json
 
 
 __author__ = "Jeremy Cunningham"
@@ -97,10 +96,7 @@ def generate_auth_headers(
         string_to_sign += "\nx-ts-nonce:" + nonce 
 
     if method in ("POST", "PUT") and fields:
-        if isinstance(fields, str) and is_json(fields):
-            string_to_sign += "\n%s" % fields
-        else:
-            string_to_sign += "\n%s" % urlencode(fields)
+        string_to_sign += "\n%s" % urlencode(fields)
 
     string_to_sign += "\n%s" % resource
 
@@ -122,11 +118,3 @@ def generate_auth_headers(
         headers["x-ts-nonce"] = nonce 
 
     return headers
-
-
-def is_json(string):
-    try:
-        json.loads(string)
-        return True
-    except ValueError:
-        return False
