@@ -29,7 +29,7 @@ __email__ = "support@telesign.com"
 __status__ = "Production"
 
 
-rng = SystemRandom() 
+rng = SystemRandom()
 
 
 def random_with_n_digits(n):
@@ -52,7 +52,7 @@ class Response(object):
 
 
 class ServiceBase(object):
-    def __init__(self, api_host, customer_id, secret_key, ssl=True, proxy_host=None):
+    def __init__(self, api_host, customer_id, secret_key, ssl=True, proxy_host=None, timeout=None):
         self._customer_id = customer_id
         self._secret_key = secret_key
         self._api_host = api_host
@@ -60,6 +60,7 @@ class ServiceBase(object):
         http_root = "https" if ssl else "http"
         self._proxy = {"{}".format(http_root): "{}://{}".format(http_root, proxy_host)} if proxy_host else None
         self._url = "{}://{}".format(http_root, api_host)
+        self._timeout = timeout
 
     def _validate_response(self, response):
         resp_obj = json.loads(response.text)
@@ -92,6 +93,8 @@ class PhoneId(ServiceBase):
          - (optional) The Internet host used in the base URI for REST web services. The default is *rest.telesign.com* (and the base URI is https://rest.telesign.com/).
        * - `proxy_host`
          - (optional) The host and port when going through a proxy server. ex: "localhost:8080. The default to no proxy.
+       * - `timeout`
+         - (optional) A timeout value to use in requests - float or tuple (see requests documentation for details).  Defaults to None.
 
     .. note::
        You can obtain both your Customer ID and Secret Key from the `TeleSign Customer Portal <https://portal.telesign.com/account_profile_api_auth.php>`_.
@@ -106,10 +109,10 @@ class PhoneId(ServiceBase):
        contact
     """
 
-    def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com", proxy_host=None):
-        super(PhoneId, self).__init__(api_host, customer_id, secret_key, ssl, proxy_host)
+    def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com", proxy_host=None, timeout=None):
+        super(PhoneId, self).__init__(api_host, customer_id, secret_key, ssl, proxy_host, timeout)
 
-    def standard(self, phone_number, use_case_code=None, extra=None):
+    def standard(self, phone_number, use_case_code=None, extra=None, timeout=None):
         """
         Retrieves the standard set of details about the specified phone number. This includes the type of phone (e.g., land line or mobile), and it's approximate geographic location.
 
@@ -123,6 +126,8 @@ class PhoneId(ServiceBase):
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
            * - `use_case_code`
              - (optional, recommended) A four letter code (use case code) used to specify a particular usage scenario for the web service.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
            * - `extra`
              - (optional) Key value mapping of additional parameters.
 
@@ -189,11 +194,15 @@ class PhoneId(ServiceBase):
             resource,
             method)
 
-        req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
+        req = requests.get(url="{}{}".format(self._url, resource),
+                           params=fields,
+                           headers=headers,
+                           proxies=self._proxy,
+                           timeout=timeout or self._timeout)  # use timeout passed in or session timeout in that order
 
         return Response(self._validate_response(req), req)
 
-    def score(self, phone_number, use_case_code, extra=None):
+    def score(self, phone_number, use_case_code, extra=None, timeout=None):
         """
         Retrieves a score for the specified phone number. This ranks the phone number's "risk level" on a scale from 0 to 1000, so you can code your web application to handle particular use cases (e.g., to stop things like chargebacks, identity theft, fraud, and spam).
 
@@ -207,6 +216,8 @@ class PhoneId(ServiceBase):
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
            * - `use_case_code`
              - A four letter code used to specify a particular usage scenario for the web service.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
            * - `extra`
              - (optional) Key value mapping of additional parameters.
 
@@ -267,11 +278,15 @@ class PhoneId(ServiceBase):
             resource,
             method)
 
-        req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
+        req = requests.get(url="{}{}".format(self._url, resource),
+                           params=fields,
+                           headers=headers,
+                           proxies=self._proxy,
+                           timeout=timeout or self._timeout)
 
         return Response(self._validate_response(req), req)
 
-    def contact(self, phone_number, use_case_code, extra=None):
+    def contact(self, phone_number, use_case_code, extra=None, timeout=None):
         """
         In addition to the information retrieved by **standard**, this service provides the Name & Address associated with the specified phone number.
 
@@ -285,6 +300,8 @@ class PhoneId(ServiceBase):
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
            * - `use_case_code`
              - A four letter use case code used to specify a particular usage scenario for the web service.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
            * - `extra`
              - (optional) Key value mapping of additional parameters.
 
@@ -348,11 +365,15 @@ class PhoneId(ServiceBase):
             resource,
             method)
 
-        req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
+        req = requests.get(url="{}{}".format(self._url, resource),
+                           params=fields,
+                           headers=headers,
+                           proxies=self._proxy,
+                           timeout=timeout or self._timeout)
 
         return Response(self._validate_response(req), req)
 
-    def live(self, phone_number, use_case_code, extra=None):
+    def live(self, phone_number, use_case_code, extra=None, timeout=None):
         """
         In addition to the information retrieved by **standard**, this service provides actionable data associated with the specified phone number.
 
@@ -366,6 +387,8 @@ class PhoneId(ServiceBase):
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
            * - `use_case_code`
              - A four letter use case code used to specify a particular usage scenario for the web service.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
            * - `extra`
              - (optional) Key value mapping of additional parameters.
 
@@ -429,7 +452,11 @@ class PhoneId(ServiceBase):
             resource,
             method)
 
-        req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
+        req = requests.get(url="{}{}".format(self._url, resource),
+                           params=fields,
+                           headers=headers,
+                           proxies=self._proxy,
+                           timeout=timeout or self._timeout)
 
         return Response(self._validate_response(req), req)
 
@@ -458,14 +485,16 @@ class Verify(ServiceBase):
          - (optional) The Internet host used in the base URI for REST web services. The default is *rest.telesign.com* (and the base URI is https://rest.telesign.com/).
        * - `proxy_host`
          - (optional) The host and port when going through a proxy server. ex: "localhost:8080. The default to no proxy.
+       * - `timeout`
+         - (optional) A timeout value to use in requests - float or tuple (see requests documentation for details).  Defaults to None.
 
     .. note::
        You can obtain both your Customer ID and Secret Key from the `TeleSign Customer Portal <https://portal.telesign.com/account_profile_api_auth.php>`_.
 
     """
 
-    def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com", proxy_host=None):
-        super(Verify, self).__init__(api_host, customer_id, secret_key, ssl, proxy_host)
+    def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com", proxy_host=None, timeout=None):
+        super(Verify, self).__init__(api_host, customer_id, secret_key, ssl, proxy_host, timeout)
 
     def sms(self,
             phone_number,
@@ -474,7 +503,8 @@ class Verify(ServiceBase):
             template="",
             use_case_code=None,
             originating_ip=None,
-            extra=None):
+            extra=None,
+            timeout=None):
         """
         Sends a text message containing the verification code, to the specified phone number (supported for mobile phones only).
 
@@ -496,6 +526,8 @@ class Verify(ServiceBase):
              - (optional, recommended) A four letter code (use case code) used to specify a particular usage scenario for the web service.
            * - `originating_ip`
              - (optional) An IP (v4 or v6) address, possibly detected by the customer's website, that is considered related to the user verification request
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
            * - `extra`
              - (optional) Key value mapping of additional parameters.
 
@@ -579,7 +611,11 @@ class Verify(ServiceBase):
             method,
             fields=fields)
 
-        req = requests.post(url="{}{}".format(self._url, resource), data=fields, headers=headers, proxies=self._proxy)
+        req = requests.post(url="{}{}".format(self._url, resource),
+                            data=fields,
+                            headers=headers,
+                            proxies=self._proxy,
+                            timeout=timeout or self._timeout)
 
         return Response(self._validate_response(req), req, verify_code=verify_code)
 
@@ -593,7 +629,8 @@ class Verify(ServiceBase):
              redial="",
              originating_ip=None,
              pressx=None,
-             extra=None):
+             extra=None,
+             timeout=None):
         """
         Calls the specified phone number, and using speech synthesis, speaks the verification code to the user.
 
@@ -619,6 +656,8 @@ class Verify(ServiceBase):
              - (optional, recommended) A four letter code (use case code) used to specify a particular usage scenario for the web service.
            * - `originating_ip`
              - (optional) An IP (v4 or v6) address, possibly detected by the customer's website, that is considered related to the user verification request
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.  Note that this is not a timeout for the actual phone call, just for the http request. 
            * - `extra`
              - (optional) Key value mapping of additional parameters.
 
@@ -707,11 +746,15 @@ class Verify(ServiceBase):
             method,
             fields=fields)
 
-        req = requests.post(url="{}{}".format(self._url, resource), data=fields, headers=headers, proxies=self._proxy)
+        req = requests.post(url="{}{}".format(self._url, resource),
+                            data=fields,
+                            headers=headers,
+                            proxies=self._proxy,
+                            timeout=timeout or self._timeout)
 
         return Response(self._validate_response(req), req, verify_code=verify_code)
 
-    def status(self, ref_id, verify_code=None, extra=None):
+    def status(self, ref_id, verify_code=None, extra=None, timeout=None):
         """
            Retrieves the verification result. You make this call in your web application after users complete the authentication transaction (using either a call or sms).
 
@@ -725,6 +768,8 @@ class Verify(ServiceBase):
              - The Reference ID returned in the response from the TeleSign server, after you called either **call** or **sms**.
            * - `verify_code`
              - (optional) The verification code received from the user.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization. 
            * - `extra`
              - (optional) Key value mapping of additional parameters.
 
@@ -769,6 +814,10 @@ class Verify(ServiceBase):
             resource,
             method)
 
-        req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
+        req = requests.get(url="{}{}".format(self._url, resource),
+                           params=fields,
+                           headers=headers,
+                           proxies=self._proxy,
+                           timeout=timeout or self._timeout)
 
         return Response(self._validate_response(req), req)
