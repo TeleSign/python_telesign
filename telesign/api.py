@@ -711,6 +711,122 @@ class Verify(ServiceBase):
 
         return Response(self._validate_response(req), req, verify_code=verify_code)
 
+
+    def smart(self,
+              phone_number,
+              verify_code=None,
+              use_case_code=None,
+              language="en",
+              preference=None,
+              ignore_risk=False,
+              extra=None):
+        """
+        Calls the specified phone number, and using speech synthesis, speaks the verification code to the user.
+
+        .. list-table::
+           :widths: 5 30
+           :header-rows: 1
+
+           * - Parameters
+             -
+           * - `phone_number`
+             - The phone number to receive the text message. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
+           * - `verify_code`
+             - (optional) The verification code to send to the user. If omitted, TeleSign will automatically generate a random value for you.
+           * - `language`
+             - (optional) The written language used in the message. The default is English.
+           * - `use_case_code`
+             - (optional, recommended) A four letter code (use case code) used to specify a particular usage scenario for the web service.
+           * - `preference`
+             - (optional) Customer preference for delivery method.   One of 'call', 'sms', 'push'.  This may override TeleSign's determination of the method to use when possible (for instance, it is not possible to send an sms to all phones).
+           * - `ignore_risk`
+             - (optional) If true, TeleSign will ignore the evaluated risk for the phone and attempt delivery in all cases. 
+           * - `extra`
+             - (optional) Key value mapping of additional parameters.
+
+        .. rubric:: Use-case Codes
+
+        The following table list the available use-case codes, and includes a description of each.
+
+        ========  =====================================
+        Code      Description
+        ========  =====================================
+        **BACS**  Prevent bulk account creation + spam.
+        **BACF**  Prevent bulk account creation + fraud.
+        **CHBK**  Prevent chargebacks.
+        **ATCK**  Prevent account takeover/compromise.
+        **LEAD**  Prevent false lead entry.
+        **RESV**  Prevent fake/missed reservations.
+        **PWRT**  Password reset.
+        **THEF**  Prevent identity theft.
+        **TELF**  Prevent telecom fraud.
+        **RXPF**  Prevent prescription fraud.
+        **OTHR**  Other.
+        **UNKN**  Unknown/prefer not to say.
+        ========  =====================================
+
+        **Example**::
+
+            from telesign.api import Verify
+            from telesign.exceptions import AuthorizationError, TelesignError
+
+            cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+            secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+
+            verify = Verify(cust_id, secret_key) # Instantiate a Verify object.
+
+            phone_number = "13107409700"
+
+            try:
+                phone_info = verify.call(phone_number, use_case_code="ATCK")
+            except AuthorizationError as ex:
+                # API authorization failed, the API response should tell you the reason
+                ...
+            except TelesignError as ex:
+                # failed to execute the Verify service, check the API response for details
+                ...
+
+            # When the user inputs the validation code, you can verify that it matches the one that you sent.
+            if (phone_info != None):
+                try:
+                    status_info = verify.status(phone_info.data["reference_id"], verify_code=phone_info.verify_code)
+                except AuthorizationError as ex:
+                    ...
+                except TelesignError as ex:
+                    ...
+        """
+
+        resource = "/v1/verify/smart"
+        method = "POST"
+
+        fields = {
+            "phone_number": phone_number,
+            "language": language,
+        }
+
+        if preference:
+            fields['preference'] = preference
+
+        if use_case_code:
+            fields['ucid'] = use_case_code
+
+        if ignore_risk:
+            fields['ignore_risk'] = ignore_risk
+
+        if extra is not None:
+            fields.update(extra)
+
+        headers = generate_auth_headers(
+            self._customer_id,
+            self._secret_key,
+            resource,
+            method,
+            fields=fields)
+        print("generate_auth_headers returns {}".format(headers))
+        req = requests.post(url="{}{}".format(self._url, resource), data=fields, headers=headers, proxies=self._proxy)
+
+        return Response(self._validate_response(req), req, verify_code=verify_code)
+
     def status(self, ref_id, verify_code=None, extra=None):
         """
            Retrieves the verification result. You make this call in your web application after users complete the authentication transaction (using either a call or sms).
