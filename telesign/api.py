@@ -866,7 +866,7 @@ class Verify(ServiceBase):
             resource,
             method,
             fields=fields)
-        print("generate_auth_headers returns {}".format(headers))
+        
         req = requests.post(url="{}{}".format(self._url, resource),
                             data=fields,
                             headers=headers,
