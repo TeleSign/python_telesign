@@ -10,6 +10,9 @@ import json
 from random import SystemRandom
 import requests
 
+import pkg_resources  # need this to get version
+from telesign import __version__
+
 from telesign.auth import generate_auth_headers
 from telesign.exceptions import TelesignError, AuthorizationError
 
@@ -61,6 +64,9 @@ class ServiceBase(object):
         self._proxy = {"{}".format(http_root): "{}://{}".format(http_root, proxy_host)} if proxy_host else None
         self._url = "{}://{}".format(http_root, api_host)
         self._timeout = timeout
+
+        self._user_agent = "{} TeleSignSDK/python-{}".format(requests.utils.default_headers()['User-Agent'], __version__)
+
 
     def _validate_response(self, response):
         resp_obj = json.loads(response.text)
@@ -194,6 +200,8 @@ class PhoneId(ServiceBase):
             resource,
             method)
 
+        headers['User-Agent'] = self._user_agent
+
         req = requests.get(url="{}{}".format(self._url, resource),
                            params=fields,
                            headers=headers,
@@ -277,6 +285,8 @@ class PhoneId(ServiceBase):
             self._secret_key,
             resource,
             method)
+
+        headers['User-Agent'] = self._user_agent
 
         req = requests.get(url="{}{}".format(self._url, resource),
                            params=fields,
@@ -365,6 +375,8 @@ class PhoneId(ServiceBase):
             resource,
             method)
 
+        headers['User-Agent'] = self._user_agent
+
         req = requests.get(url="{}{}".format(self._url, resource),
                            params=fields,
                            headers=headers,
@@ -452,6 +464,8 @@ class PhoneId(ServiceBase):
             resource,
             method)
 
+        headers['User-Agent'] = self._user_agent
+
         req = requests.get(url="{}{}".format(self._url, resource),
                            params=fields,
                            headers=headers,
@@ -463,7 +477,7 @@ class PhoneId(ServiceBase):
 
 class Verify(ServiceBase):
     """
-    The **Verify** class exposes two services for sending users a verification token. You can use this mechanism to simply test whether you can reach users at the phone number they supplied, or you can have them use the token to authenticate themselves with your web application.
+    The **Verify** class exposes several services for sending users a verification token. You can use this mechanism to simply test whether you can reach users at the phone number they supplied, or you can have them use the token to authenticate themselves with your web application.
 
     This class also exposes a service that is used in conjunction with the first two services, in that it allows you to confirm the result of the authentication.
 
@@ -611,6 +625,8 @@ class Verify(ServiceBase):
             method,
             fields=fields)
 
+        headers['User-Agent'] = self._user_agent
+
         req = requests.post(url="{}{}".format(self._url, resource),
                             data=fields,
                             headers=headers,
@@ -746,6 +762,8 @@ class Verify(ServiceBase):
             method,
             fields=fields)
 
+        headers['User-Agent'] = self._user_agent
+
         req = requests.post(url="{}{}".format(self._url, resource),
                             data=fields,
                             headers=headers,
@@ -780,7 +798,7 @@ class Verify(ServiceBase):
            * - `language`
              - (optional) The written language used in the message. The default is English.
            * - `use_case_code`
-             - (optional, recommended) A four letter code (use case code) used to specify a particular usage scenario for the web service.
+             - A four letter code (use case code) used to specify a particular usage scenario for the web service.
            * - `preference`
              - (optional) Customer preference for delivery method.   One of 'call', 'sms', 'push'.  This may override TeleSign's determination of the method to use when possible (for instance, it is not possible to send an sms to all phones).
            * - `ignore_risk`
@@ -851,8 +869,7 @@ class Verify(ServiceBase):
         if preference:
             fields['preference'] = preference
 
-        if use_case_code:
-            fields['ucid'] = use_case_code
+        fields['ucid'] = use_case_code
 
         if ignore_risk:
             fields['ignore_risk'] = ignore_risk
@@ -866,7 +883,9 @@ class Verify(ServiceBase):
             resource,
             method,
             fields=fields)
-        
+       
+        headers['User-Agent'] = self._user_agent
+
         req = requests.post(url="{}{}".format(self._url, resource),
                             data=fields,
                             headers=headers,
@@ -875,7 +894,94 @@ class Verify(ServiceBase):
 
         return Response(self._validate_response(req), req, verify_code=verify_code)
 
-    def status(self, ref_id, verify_code=None, extra=None, timeout=None):
+
+    def push(self,
+             phone_number,
+             use_case_code=None,
+             extra={}):
+        """
+        The **push** method sends a push notification containing the verification code to the specified phone number (supported for mobile phones only).
+
+        .. list-table::
+           :widths: 5 30
+           :header-rows: 1
+
+           * - Parameters
+             -
+           * - `phone_number`
+             - The phone number to receive the text message. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
+           * - `notification_type`
+             - The notification type to sent to the user. It could have the following valid values: SIMPLE | CODE | GESTURE | QR
+           * - `notification_value`
+             - The notification value is sent to the user. This is a value ranging between 6-8 digits long. Default length 6.
+           * - `template`
+             - (optional) A standard form for the text message. It must contain the token ``$$CODE$$``, which TeleSign auto-populates with the verification code.
+           * - `message`
+             - (optional) Text message that the application displays when asking for the notification details information.
+
+        **Example**::
+
+            from telesign.api import Verify
+            from telesign.exceptions import AuthorizationError, TelesignError
+
+            cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+            secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+
+            verify = Verify(cust_id, secret_key) # Instantiate a Verify object.
+
+            phone_number = "13107409700"
+
+            try:
+                phone_info = verify.sms(phone_number)
+            except AuthorizationError as ex:
+                # API authorization failed, the API response should tell you the reason
+                ...
+            except TelesignError as ex:
+                # failed to execute the Verify service, check the API response for details
+                ...
+
+            # When the user inputs the validation code, you can verify that it matches the one that you sent.
+            if (phone_info != None):
+                try:
+                    status_info = verify.status(phone_info.data["reference_id"], verify_code=phone_info.verify_code)
+                except AuthorizationError as ex:
+                    ...
+                except TelesignError as ex:
+                    ...
+
+        """
+
+        resource = "/v2/verify/push"
+        method = "POST"
+
+        fields = {
+            "phone_number": phone_number,
+        }
+
+        fields.update(extra)
+
+        fields['ucid'] = use_case_code
+
+        headers = generate_auth_headers(
+            self._customer_id,
+            self._secret_key,
+            resource,
+            method,
+            fields=fields)
+
+        headers['User-Agent'] = self._user_agent
+
+        req = requests.post(url="{}{}".format(self._url, resource), headers=headers, data=fields)
+
+        return Response(self._validate_response(req), req)
+
+
+    def status(self,
+               ref_id,
+               resource_uri=None,
+               verify_code=None,
+               extra=None,
+               timeout=None):
         """
            Retrieves the verification result. You make this call in your web application after users complete the authentication transaction (using either a call or sms).
 
@@ -918,7 +1024,11 @@ class Verify(ServiceBase):
 
         """
 
-        resource = "/v1/verify/%s" % ref_id
+        if resource_uri:
+            resource = resource_uri
+        else:
+            resource = "/v1/verify/%s" % ref_id
+
         method = "GET"
 
         fields = {}
@@ -935,6 +1045,8 @@ class Verify(ServiceBase):
             resource,
             method)
 
+        headers['User-Agent'] = self._user_agent
+
         req = requests.get(url="{}{}".format(self._url, resource),
                            params=fields,
                            headers=headers,
@@ -942,3 +1054,4 @@ class Verify(ServiceBase):
                            timeout=timeout or self._timeout)
 
         return Response(self._validate_response(req), req)
+

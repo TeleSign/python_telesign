@@ -1,6 +1,6 @@
 """ Authorization header definitions """
 
-from __future__ import print_function 
+from __future__ import print_function
 
 from hashlib import sha1, sha256
 from base64 import b64encode, b64decode
@@ -11,7 +11,7 @@ try:
 except ImportError:
     from urllib.parse import urlencode
 import hmac
-import uuid 
+import uuid
 import datetime
 
 
@@ -44,7 +44,7 @@ def generate_auth_headers(
         method,
         content_type="",
         auth_method="sha256",
-        fields=None, 
+        fields=None,
         use_nonce=True,
         hashcash=None):
     """
@@ -85,15 +85,24 @@ def generate_auth_headers(
     if auth_method not in AUTH_METHOD:
         auth_method = "sha256"
 
+    # according to the documentation (authorization/canonicalization) this should be
+    # method, content type, date, then the x-ts- headers sorted lexicographically
+    # in this string the date is left blank (hence the double newline), then
+    # x-ts-auth-method and x-ts-date are given (in sorted order).   x-ts-date
+    # will override Date if both are given and used if no Date is given.  if x-ts-nonce
+    # is supplied below, it is (yay!) also in sorted order.  Finally if the request is a POST
+    # the request parameters are url-encoded and added after a newline
+    # content type may also be empty if the request is a GET.
+
     string_to_sign = "%s\n%s\n\nx-ts-auth-method:%s\nx-ts-date:%s" % (
         method,
-        content_type, 
+        content_type,
         AUTH_METHOD[auth_method]["name"],
         current_date)
 
     if use_nonce:
-        nonce = str(uuid.uuid4()) 
-        string_to_sign += "\nx-ts-nonce:" + nonce 
+        nonce = str(uuid.uuid4())
+        string_to_sign += "\nx-ts-nonce:" + nonce
 
     if method in ("POST", "PUT") and fields:
         string_to_sign += "\n%s" % urlencode(fields)
@@ -115,6 +124,6 @@ def generate_auth_headers(
         headers["X-Hashcash"] = hashcash
 
     if use_nonce:
-        headers["x-ts-nonce"] = nonce 
+        headers["x-ts-nonce"] = nonce
 
     return headers
