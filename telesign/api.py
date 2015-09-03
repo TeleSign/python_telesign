@@ -776,7 +776,7 @@ class Verify(ServiceBase):
     def smart(self,
               phone_number,
               verify_code=None,
-              use_case_code=None,
+              use_case_code,
               language="en",
               preference=None,
               ignore_risk=False,
@@ -864,12 +864,11 @@ class Verify(ServiceBase):
         fields = {
             "phone_number": phone_number,
             "language": language,
+            'ucid': use_case_code,
         }
 
         if preference:
             fields['preference'] = preference
-
-        fields['ucid'] = use_case_code
 
         if ignore_risk:
             fields['ignore_risk'] = ignore_risk
@@ -883,7 +882,7 @@ class Verify(ServiceBase):
             resource,
             method,
             fields=fields)
-       
+
         headers['User-Agent'] = self._user_agent
 
         req = requests.post(url="{}{}".format(self._url, resource),
