@@ -775,8 +775,8 @@ class Verify(ServiceBase):
 
     def smart(self,
               phone_number,
-              verify_code=None,
               use_case_code,
+              verify_code=None,
               language="en",
               preference=None,
               ignore_risk=False,
