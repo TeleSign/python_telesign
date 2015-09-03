@@ -897,7 +897,8 @@ class Verify(ServiceBase):
 
     def push(self,
              phone_number,
-             use_case_code=None,
+             use_case_code,
+             timeout=None,
              extra={}):
         """
         The **push** method sends a push notification containing the verification code to the specified phone number (supported for mobile phones only).
@@ -956,11 +957,10 @@ class Verify(ServiceBase):
 
         fields = {
             "phone_number": phone_number,
+            "ucid": use_case_code
         }
 
         fields.update(extra)
-
-        fields['ucid'] = use_case_code
 
         headers = generate_auth_headers(
             self._customer_id,
@@ -971,7 +971,11 @@ class Verify(ServiceBase):
 
         headers['User-Agent'] = self._user_agent
 
-        req = requests.post(url="{}{}".format(self._url, resource), headers=headers, data=fields)
+        req = requests.post(url="{}{}".format(self._url, resource),
+                            headers=headers,
+                            data=fields,
+                            timeout=timeout or self._timeout,
+                            proxies=self._proxy)
 
         return Response(self._validate_response(req), req)
 

@@ -109,6 +109,12 @@ def generate_auth_headers(
 
     string_to_sign += "\n%s" % resource
 
+    # leaving this in as it's sometimes helpful to be able to see what is actually
+    # happening here. 
+    if False:
+        print("string to sign is:\n")
+        print(string_to_sign)
+
     signer = hmac.new(b64decode(secret_key), string_to_sign.encode("utf-8"), AUTH_METHOD[auth_method]["hash"])
 
     signature = b64encode(signer.digest()).decode("utf-8")
