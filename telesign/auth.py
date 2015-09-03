@@ -85,14 +85,18 @@ def generate_auth_headers(
     if auth_method not in AUTH_METHOD:
         auth_method = "sha256"
 
-    # according to the documentation (authorization/canonicalization) this should be
-    # method, content type, date, then the x-ts- headers sorted lexicographically
-    # in this string the date is left blank (hence the double newline), then
-    # x-ts-auth-method and x-ts-date are given (in sorted order).   x-ts-date
-    # will override Date if both are given and used if no Date is given.  if x-ts-nonce
-    # is supplied below, it is (yay!) also in sorted order.  Finally if the request is a POST
-    # the request parameters are url-encoded and added after a newline
-    # content type may also be empty if the request is a GET.
+    # According to the documentation (authorization/canonicalization)
+    # this should be method, content type, date, then the x-ts-
+    # headers sorted lexicographically.
+    # In the string (as constructed here) the date is left blank
+    # (hence the double newline), then x-ts-auth-method and x-ts-date
+    # are given (in sorted order).  (x-ts-date will override Date if
+    # both are given or if no Date is given.)  If x-ts-nonce is
+    # supplied below, it is also appended to the string so that the
+    # headers remain in sorted order.
+    # Finally if the request is a POST the request parameters are
+    # url-encoded and added after a newline.  The Content-Type header
+    # may also be empty if the request is a GET.
 
     string_to_sign = "%s\n%s\n\nx-ts-auth-method:%s\nx-ts-date:%s" % (
         method,
@@ -108,12 +112,6 @@ def generate_auth_headers(
         string_to_sign += "\n%s" % urlencode(fields)
 
     string_to_sign += "\n%s" % resource
-
-    # leaving this in as it's sometimes helpful to be able to see what is actually
-    # happening here. 
-    if False:
-        print("string to sign is:\n")
-        print(string_to_sign)
 
     signer = hmac.new(b64decode(secret_key), string_to_sign.encode("utf-8"), AUTH_METHOD[auth_method]["hash"])
 
