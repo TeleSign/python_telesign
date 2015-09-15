@@ -15,7 +15,7 @@ TeleSign Web Services: Python SDK
 
 **TeleSign Web Services** conform to the `REST Web Service Design Model <http://en.wikipedia.org/wiki/Representational_state_transfer>`_. Services are exposed as URI-addressable resources through the set of *RESTful* procedures in our **TeleSign REST API**.
 
-The **TeleSign Python SDK** is a set of software development tools—a *Python Library* that wraps the TeleSign REST API, and it simplifies TeleSign application development in the `Python programming language <http://pypi.python.org/pypi/>`_. The SDK software is listed in the `Python Package Index (PyPI) <http://pypi.python.org>`_ , as the **telesign** Python package.
+The **TeleSign Python SDK** is a set of software development tools—a *Python Library* that wraps the TeleSign REST API, and it simplifies TeleSign application development in the `Python programming language <http://pypi.python.org/pypi/>`_. The SDK software is packaged as a Python module called **telesign.api**, and is distributed as a Python Software Package using the `Python Package Index (PyPI) <http://pypi.python.org/pypi/>`_.
 
 The Python Classes
 ------------------
@@ -41,11 +41,7 @@ With just two classes, **telesign.api** abstracts much of the complexity of the 
 |                      |     In addition to the information retrieved by *standard*, this service | 
 |                      |     provides the Name & Address associated with the specified phone      | 
 |                      |     number.                                                              | 
-|                      | *live*                                                                   |
-|                      |     In addition to the information retrieved by *standard*, this         |
-|                      |     service provides actionable data associated with the specified phone |
-|                      |     number.                                                              |
-|                      |                                                                          |
+|                      |                                                                          | 
 +----------------------+--------------------------------------------------------------------------+ 
 | telesign.api.Verify  | The **Verify** class exposes two services for sending users a            | 
 |                      | verification token (a three to five-digit number). You can use this      | 
@@ -96,14 +92,14 @@ Here's a basic code example.
     >>> result = verify.call(phone_number, verify_code=1234)  # and use it to call the "call" method.
     >>> print result.data
     
-    {u'status': {u'updated_on': u'2012-04-23T21:28:06.837153', u'code': 103, u'description': u'Call in progress'}, u'errors': [], u'verify': {u'code_state': u'UNKNOWN', u'code_entered': u''}, u'sub_resource': u'call', u'reference_id': u'DGFDF6E11AB86303ASDFD425BE00000657', u'resource_uri': u'/v1/verify/DGFDF6E11AB86303ASDFD425BE00000657'}
+    {u'status': {u'updated_on': u'2015-04-23T21:28:06.837153', u'code': 103, u'description': u'Call in progress'}, u'errors': [], u'verify': {u'code_state': u'UNKNOWN', u'code_entered': u''}, u'sub_resource': u'call', u'reference_id': u'DGFDF6E11AB86303ASDFD425BE00000657', u'resource_uri': u'/v1/verify/DGFDF6E11AB86303ASDFD425BE00000657'}
 
 For more examples, see the Documentation section below.
 
 Authentication
 --------------
 
-You will need a Customer ID and API Key in order to use TeleSign’s REST API.  If you are already a customer and need an API Key, you can generate one in the `Client Portal <https://teleportal.telesign.com>`_.  If you are not a customer and would like to get an API Key, please contact `support@telesign.com <mailto:support@telesign.com>`_
+You will need a Customer ID and API Key in order to use TeleSign’s REST API.  If you are already a customer and need an API Key, you can generate one in the `Client Portal <https://portal.telesign.com>`_.  If you are not a customer and would like to get an API Key, please contact `support@telesign.com <mailto:support@telesign.com>`_
 
 Documentation
 -------------
@@ -131,5 +127,7 @@ Support and Feedback
 For more information about the Phone Verify and PhoneID Standard services, please contact your TeleSign representative:
 
 Email: `support@telesign.com <mailto:support@telesign.com>`_
+
+Phone: +1 310 740 9700
 
 .. _sphinx: http://sphinx.pocoo.org/

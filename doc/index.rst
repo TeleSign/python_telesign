@@ -50,5 +50,6 @@ Documentation Map
     :maxdepth: -1
     
     installation
+    api/index
     api/telesign.api
     api/telesign.exceptions

@@ -100,6 +100,7 @@ class PhoneIdTest(unittest.TestCase):
 
         self.assertTrue(req_mock.called)
         _, kwargs = req_mock.call_args
+
         self.assertEqual(kwargs["url"], self.expected_resource % ('contact', self.expected_phone_no), "Phone ID resource name is incorrect")
         self.assertFalse(kwargs['proxies'])
 

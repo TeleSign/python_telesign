@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 from distutils.cmd import Command
 
 
-version = "1.0.7"
+version = "1.1.0"
 
 f = open("README.rst")
 try:
@@ -59,26 +59,25 @@ setup(name='telesign',
       description=("Telesign SDK"),
       license="MIT License",
       classifiers = [
-          "Development Status :: 4 - Beta",
+          "Development Status :: 5 - Production/Stable",
           "Intended Audience :: Developers",
           "License :: OSI Approved :: MIT License",
           "Operating System :: OS Independent",
-          "Programming Language :: Python",
-          "Programming Language :: Python :: 2.5",
           "Programming Language :: Python :: 2.6",
           "Programming Language :: Python :: 2.7",
-          "Topic :: Software Development :: Libraries :: Python Modules",
-          "Topic :: Communications :: Telephony",
+          "Programming Language :: Python :: 3.4",
+          "Topic :: TeleSign :: Libraries", 
       ], 
       long_description=readme_content,
-      keywords = 'telesign, sms',
+      keywords = 'telesign, sms, two factor authentication',
       author = 'TeleSign Corp.',
       author_email='support@telesign.com',
       url="http://github.com/telesign/python_telesign",
       install_requires=['requests',
                         ],
 
-      packages=find_packages(),
+      packages=find_packages(exclude=['test', 'test.*']),
+      namespace_packages=["telesign"], 
       cmdclass={"doc": doc},
      )
 

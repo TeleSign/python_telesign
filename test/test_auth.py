@@ -1,7 +1,7 @@
 import unittest
 import mock
 import telesign.api
-import random
+import uuid 
 
 
 class AuthTest(unittest.TestCase):
@@ -22,7 +22,7 @@ class AuthTest(unittest.TestCase):
             self.expected_resource,
             "GET")
 
-    @mock.patch.object(random, "random")
+    @mock.patch.object(uuid, "uuid4")
     def test_nonce_is_set(self, random_mock):
         expected_nonce = "1234"
         random_mock.return_value = expected_nonce
@@ -45,7 +45,7 @@ class AuthTest(unittest.TestCase):
         self.assertIsNotNone(headers["x-ts-date"])
 
     def test_sha1__default_auth_method(self):
-        expected_auth_method = "HMAC-SHA1"
+        expected_auth_method = "HMAC-SHA256"
 
         headers = telesign.api.generate_auth_headers(
                 self.expected_cid,

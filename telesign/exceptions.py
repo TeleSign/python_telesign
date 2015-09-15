@@ -6,7 +6,7 @@
 """
 
 __author__ = "Jeremy Cunningham, Michael Fox, and Radu Maierean"
-__copyright__ = "Copyright 2012, TeleSign Corp."
+__copyright__ = "Copyright 2015, TeleSign Corp."
 __credits__ = ["Jeremy Cunningham", "Radu Maierean", "Michael Fox", "Nancy Vitug", "Humberto Morales"]
 __license__ = "MIT"
 __maintainer__ = "Jeremy Cunningham"
@@ -35,12 +35,12 @@ class TelesignError(Exception):
         self.errors = data["errors"]
         self.headers = http_response.headers
         self.status = http_response.status_code
-        self.data = http_response.text
-        self.raw_data = http_response.text
+        self.data = http_response.text 
+        self.raw = http_response.raw 
 
     def __str__(self):
         result = ""
-        for x in xrange(0, len(self.errors)):
+        for x in range(0, len(self.errors)):
             result += "%s\n" % self.errors[x]["description"]
 
         return result
