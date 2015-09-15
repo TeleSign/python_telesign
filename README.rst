@@ -43,7 +43,7 @@ With just two classes, **telesign.api** abstracts much of the complexity of the 
 |                      |     number.                                                              |
 |                      | *live*                                                                   |
 |                      |     In addition to the information retrieved by standard, this service   |
-|                      |      provides actionable data associated with the specified phone number.|
+|                      |     provides actionable data associated with the specified phone number. |
 |                      |                                                                          | 
 +----------------------+--------------------------------------------------------------------------+ 
 | telesign.api.Verify  | The **Verify** class exposes two services for sending users a            | 
