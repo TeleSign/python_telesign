@@ -1,3 +1,7 @@
+Release 1.1.1
+
+- Fixed setup.py packages directive and added recursive-include to manifest.
+
 Release 1.1.0
 
 - This module should now work with Python3.4+ (and has been tested

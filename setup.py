@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 from distutils.cmd import Command
 
 
-version = "1.1.0"
+version = "1.1.1"
 
 f = open("README.rst")
 try:
@@ -72,10 +72,8 @@ setup(name='telesign',
       author = 'TeleSign Corp.',
       author_email='support@telesign.com',
       url="http://github.com/telesign/python_telesign",
-      install_requires=['requests',
-                        ],
-
-      packages=find_packages(exclude=['test', 'test.*']),
+      install_requires=['requests'],
+      packages=["telesign"],
       namespace_packages=["telesign"], 
       cmdclass={"doc": doc},
      )
