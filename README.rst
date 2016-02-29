@@ -25,7 +25,7 @@ With just two classes, **Telesign::API** abstracts much of the complexity of the
 +------------------------+--------------------------------------------------------------------------+
 | Python Class           | Description                                                              |
 +========================+==========================================================================+
-| Telesign::API::PhoneId | The **PhoneId** class exposes three services that each provide           |
+| Telesign::API::PhoneId | The **PhoneId** class exposes four services that each provide            |
 |                        | information about a specified phone number.                              |
 |                        |                                                                          |
 |                        | *standard*                                                               |
@@ -46,7 +46,7 @@ With just two classes, **Telesign::API** abstracts much of the complexity of the
 |                        |     provides actionable data associated with the specified phone number. |
 |                        |                                                                          |
 +------------------------+--------------------------------------------------------------------------+
-| Telesign::API::Verify  | The **Verify** class exposes two services for sending users a            |
+| Telesign::API::Verify  | The **Verify** class exposes four services for sending users a           |
 |                        | verification token (a three to five-digit number). You can use this      |
 |                        | mechanism to simply test whether you can reach users at the phone number |
 |                        | they supplied, or you can have them use the token to authenticate        |
