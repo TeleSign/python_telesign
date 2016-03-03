@@ -15,7 +15,7 @@ TeleSign Web Services: Ruby SDK
 
 **TeleSign Web Services** conform to the `REST Web Service Design Model <http://en.wikipedia.org/wiki/Representational_state_transfer>`_. Services are exposed as URI-addressable resources through the set of *RESTful* procedures in our **TeleSign REST API**.
 
-The **TeleSign Ruby SDK** is a set of software development tools—a *Ruby Library* that wraps the TeleSign REST API, and it simplifies TeleSign application development in the `Ruby programming language <https://www.ruby-lang.org/>`_. The SDK software is packaged as a Ruby gem called **telesign**, and is distributed using `Ruby Gems <https://rubygems.org//>`_.
+The **TeleSign Ruby SDK** is a set of software development tools—a *Ruby Library* that wraps the TeleSign REST API, and it simplifies TeleSign application development in the `Ruby programming language <https://www.ruby-lang.org/>`_. The SDK software is packaged as a Ruby gem called **telesign**, and is distributed using `Ruby Gems <https://rubygems.org/>`_.
 
 The Ruby Classes
 ------------------
