@@ -8,7 +8,7 @@
 # Verify and PhoneId TeleSign web services.
 #
 
-require './lib/rest.rb'
+require 'telesign/rest'
 
 module Telesign
 
