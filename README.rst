@@ -95,7 +95,7 @@ Here's a basic code example.
     phone_number = "13103409700"
     cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
     secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
-    verify = Telesign::API::Verify(cust_id, secret_key) # Instantiate a Verify instance object,
+    verify = Telesign::API::Verify.new(cust_id, secret_key) # Instantiate a Verify instance object,
     result = verify.call(phone_number) # and use it to call the "call" method.
     p result.body
 
