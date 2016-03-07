@@ -23,7 +23,7 @@ The Ruby Classes
 With just two classes, **Telesign::API** abstracts much of the complexity of the TeleSign REST API.
 
 +------------------------+--------------------------------------------------------------------------+
-| Python Class           | Description                                                              |
+| Ruby Class             | Description                                                              |
 +========================+==========================================================================+
 | Telesign::API::PhoneId | The **PhoneId** class exposes four services that each provide            |
 |                        | information about a specified phone number.                              |
@@ -84,7 +84,7 @@ Installation
 With `Ruby Gems <https://github.com/rubygems/rubygems>`_
 installed, simply type **gem install telesign** at the command prompt.
 
-Python Code Example: To Verify a Call
+Ruby Code Example: To Verify a Call
 -------------------------------------
 
 Here's a basic code example.
