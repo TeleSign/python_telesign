@@ -1,7 +1,3 @@
-Release 1.1.1
-
-- Fixed setup.py packages directive and added recursive-include to manifest.
-
 Release 1.1.0
 
 - This module should now work with Python3.4+ (and has been tested
@@ -53,4 +49,3 @@ Release 1.1.0
   level and at the individual call level.   See the documentation in
   the requests module.  
 
-jeff putnam - jputnam@telesign.com

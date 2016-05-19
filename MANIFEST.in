@@ -2,5 +2,3 @@ include *.py
 include *.txt
 include *.rst
 include MANIFEST.in
-include RELEASE.notes
-recursive-include telesign *.py

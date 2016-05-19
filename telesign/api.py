@@ -5,6 +5,7 @@
 
 """
 from __future__ import print_function 
+from __future__ import unicode_literals
 
 import json
 from random import SystemRandom
@@ -113,6 +114,7 @@ class PhoneId(ServiceBase):
        standard
        score
        contact
+       sim_swap
     """
 
     def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com", proxy_host=None, timeout=None):
@@ -474,6 +476,265 @@ class PhoneId(ServiceBase):
 
         return Response(self._validate_response(req), req)
 
+    def call_forward(self, phone_number, use_case_code, extra=None):
+        """
+        In addition to the information retrieved by **standard**, this service provides information about call forwarding enabled at this number.  
+
+        .. list-table::
+           :widths: 5 30
+           :header-rows: 1
+
+           * - Parameters
+             -
+           * - `phone_number`
+             - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
+           * - `use_case_code`
+             - A four letter use case code used to specify a particular usage scenario for the web service.
+           * - `extra`
+             - (optional) Key value mapping of additional parameters.
+
+        .. rubric:: Use-case Codes
+
+        The following table list the available use-case codes, and includes a description of each.
+
+        ========  =====================================
+        Code      Description
+        ========  =====================================
+        **BACS**  Prevent bulk account creation + spam.
+        **BACF**  Prevent bulk account creation + fraud.
+        **CHBK**  Prevent chargebacks.
+        **ATCK**  Prevent account takeover/compromise.
+        **LEAD**  Prevent false lead entry.
+        **RESV**  Prevent fake/missed reservations.
+        **PWRT**  Password reset.
+        **THEF**  Prevent identity theft.
+        **TELF**  Prevent telecom fraud.
+        **RXPF**  Prevent prescription fraud.
+        **OTHR**  Other.
+        **UNKN**  Unknown/prefer not to say.
+        ========  =====================================
+
+        **Example**::
+
+            from telesign.api import PhoneId
+            from telesign.exceptions import AuthorizationError, TelesignError
+
+            cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+            secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+            phone_number = "13107409700"
+            use_case_code = "RXPF"
+
+            phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
+
+            try:
+                phone_info = phoneid.live(phone_number, use_case_code)
+            except AuthorizationError as ex:
+                # API authorization failed, the API response should tell you the reason
+                ...
+            except TelesignError as ex:
+                # failed to completely execute the PhoneID service, check the API response
+                #    for details; data returned may be incomplete or not be valid
+                ...
+
+        """
+        resource = "/v1/phoneid/call_forward/%s" % phone_number
+        method = "GET"
+
+        fields = {
+            "ucid": use_case_code,
+        }
+
+        if extra is not None:
+            fields.update(extra)
+
+        headers = generate_auth_headers(
+            self._customer_id,
+            self._secret_key,
+            resource,
+            method)
+
+        req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
+
+        return Response(self._validate_response(req), req)
+
+
+    def sim_swap(self, phone_number, use_case_code, extra=None, timeout=None):
+        """
+        In addition to the information retrieved by **standard**, this service provides data about potential sim_swaps associated with the specified phone number.  
+        .. list-table::
+           :widths: 5 30
+           :header-rows: 1
+
+           * - Parameters
+             -
+           * - `phone_number`
+             - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
+           * - `use_case_code`
+             - A four letter use case code used to specify a particular usage scenario for the web service.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
+           * - `extra`
+             - (optional) Key value mapping of additional parameters.
+
+        .. rubric:: Use-case Codes
+
+        The following table list the available use-case codes, and includes a description of each.
+
+        ========  =====================================
+        Code      Description
+        ========  =====================================
+        **BACS**  Prevent bulk account creation + spam.
+        **BACF**  Prevent bulk account creation + fraud.
+        **CHBK**  Prevent chargebacks.
+        **ATCK**  Prevent account takeover/compromise.
+        **LEAD**  Prevent false lead entry.
+        **RESV**  Prevent fake/missed reservations.
+        **PWRT**  Password reset.
+        **THEF**  Prevent identity theft.
+        **TELF**  Prevent telecom fraud.
+        **RXPF**  Prevent prescription fraud.
+        **OTHR**  Other.
+        **UNKN**  Unknown/prefer not to say.
+        ========  =====================================
+
+        **Example**::
+
+            from telesign.api import PhoneId
+            from telesign.exceptions import AuthorizationError, TelesignError
+
+            cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+            secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+            phone_number = "13107409700"
+            use_case_code = "RXPF"
+
+            phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
+
+            try:
+                phone_info = phoneid.sim_swap(phone_number, use_case_code)
+            except AuthorizationError as ex:
+                # API authorization failed, the API response should tell you the reason
+                ...
+            except TelesignError as ex:
+                # failed to completely execute the PhoneID service, check the API response
+                #    for details; data returned may be incomplete or not be valid
+                ...
+
+        """
+
+        resource = "/v1/phoneid/sim_swap/check/%s" % phone_number
+
+        method = "GET"
+
+        fields = {
+            "ucid": use_case_code,
+        }
+
+        if extra is not None:
+            fields.update(extra)
+
+        headers = generate_auth_headers(
+            self._customer_id,
+            self._secret_key,
+            resource,
+            method)
+
+        headers['User-Agent'] = self._user_agent
+
+        req = requests.get(url="{}{}".format(self._url, resource),
+                           params=fields,
+                           headers=headers,
+                           proxies=self._proxy,
+                           timeout=timeout or self._timeout)
+
+        return Response(self._validate_response(req), req)
+
+    def call_forward(self, phone_number, use_case_code, extra=None, timeout=None):
+        """
+        In addition to the information retrieved by **standard**, this service provides information on call forwarding for the phone number provided.
+       .. list-table::
+           :widths: 5 30
+           :header-rows: 1
+
+           * - Parameters
+             -
+           * - `phone_number`
+             - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
+           * - `use_case_code`
+             - A four letter use case code used to specify a particular usage scenario for the web service.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
+           * - `extra`
+             - (optional) Key value mapping of additional parameters.
+
+        .. rubric:: Use-case Codes
+
+        The following table list the available use-case codes, and includes a description of each.
+
+        ========  =====================================
+        Code      Description
+        ========  =====================================
+        **BACS**  Prevent bulk account creation + spam.
+        **BACF**  Prevent bulk account creation + fraud.
+        **CHBK**  Prevent chargebacks.
+        **ATCK**  Prevent account takeover/compromise.
+        **LEAD**  Prevent false lead entry.
+        **RESV**  Prevent fake/missed reservations.
+        **PWRT**  Password reset.
+        **THEF**  Prevent identity theft.
+        **TELF**  Prevent telecom fraud.
+        **RXPF**  Prevent prescription fraud.
+        **OTHR**  Other.
+        **UNKN**  Unknown/prefer not to say.
+        ========  =====================================
+
+        **Example**::
+
+            from telesign.api import PhoneId
+            from telesign.exceptions import AuthorizationError, TelesignError
+
+            cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+            secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+            phone_number = "13107409700"
+            use_case_code = "RXPF"
+
+            phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
+
+            try:
+                phone_info = phoneid.call_forward(phone_number, use_case_code)
+            except AuthorizationError as ex:
+                # API authorization failed, the API response should tell you the reason
+                ...
+            except TelesignError as ex:
+                # failed to completely execute the PhoneID service, check the API response
+                #    for details; data returned may be incomplete or not be valid
+                ...
+
+        """
+        resource = "/v1/phoneid/call_forward/%s" % phone_number
+        method = "GET"
+
+        fields = {
+            "ucid": use_case_code,
+        }
+
+        if extra is not None:
+            fields.update(extra)
+
+        headers = generate_auth_headers(
+            self._customer_id,
+            self._secret_key,
+            resource,
+            method)
+
+        headers['User-Agent'] = self._user_agent
+
+        req = requests.get(url="{}{}".format(self._url, resource),
+                           params=fields,
+                           headers=headers,
+                           proxies=self._proxy,
+                           timeout=timeout or self._timeout)
+
+        return Response(self._validate_response(req), req)
 
 class Verify(ServiceBase):
     """
@@ -1057,4 +1318,446 @@ class Verify(ServiceBase):
                            timeout=timeout or self._timeout)
 
         return Response(self._validate_response(req), req)
+
+    def soft_token(self, bundle_id, phone_number, soft_token_id, verify_code, session_id=None):
+        """
+        The TeleSign Mobile Device Soft Token Notification web service allows you to anticipate when your users need to use their soft token to generate a time-sensitive one-time passcode. You can use this web service to preemptively send them a push notification that initializes their on-device TeleSign AuthID application with the right soft token. When they open the notification, the soft token launches ready for them to use.
+
+         .. list-table::
+           :widths: 5 30
+           :header-rows: 1
+
+           * - Parameters
+             -
+           * - `phone_number`
+             - The phone number for the Mobile Device Soft Token Notification request, including country code. For example, phone_number=13105551212
+           * - `soft_token_id`
+             - The alphanumeric string that uniquely identifies your TeleSign soft token subscription.
+           * - `bundle_id`
+             - Unique identifier for the mobile app.
+           * - `verify_code`
+             - The verification code to send to the user. 
+           * - `session_id`
+             - [Optional] A free form string (up to 64 ASCII characters) that indicates an ID (either raw or hashed) that is unique to the user's session with the customer. The session_id links multiple calls and other TeleSign services that are associated with the current session.
+
+        **Example**::
+
+            from telesign.api import Verify
+            from telesign.exceptions import AuthorizationError, TelesignError
+
+            cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+            secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+            phone_number = "13107409700"
+
+            verify = Verify(cust_id, secret_key) # Instantiate a Verify object.
+            bundle_id = 'abcde12345'
+            soft_token_id = '12345abc'
+            verify_code = '12345'
+            phone_info = verify.soft_token(bundle_id, phone_number, soft_token_id, verify_code) 
+
+            if (phone_info != None):
+                try:
+                    status_info = verify.status(phone_info.data["reference_id"], verify_code=phone_info.verify_code)
+                except AuthorizationError as ex:
+                    ...
+                except TelesignError as ex:
+                    ...
+        """
+        resource = "/v2/verify/soft_token"
+        method = "POST"
+
+        fields = {
+                    'bundle_id': bundle_id,
+                    'phone_number': phone_number,
+                    'soft_token_id': soft_token_id,
+                    'verify_code': verify_code
+                }
+
+        if session_id:
+            fields['session_id'] = session_id
+
+        headers = generate_auth_headers(
+            self._customer_id,
+            self._secret_key,
+            resource,
+            method,
+            fields=fields)
+
+        req = requests.post(url="{}{}".format(self._url, resource), headers=headers, data=fields)
+
+        return Response(self._validate_response(req), req, verify_code=verify_code)
+
+    def registration_status(self, bundle_id, phone_number):
+        """
+        The TeleSign Mobile Device Registration Status web service allows you to query the current state of the
+        AuthID application registration.  
+
+         .. list-table::
+           :widths: 5 30
+           :header-rows: 1
+
+           * - Parameters
+             -
+           * - `phone_number`
+             - The phone number for the Mobile Device Soft Token Notification request, including country code. For example, phone_number=13105551212
+           * - `bundle_id`
+             - Unique identifier for the mobile app.
+
+        **Example**::
+
+            from telesign.api import Verify
+            from telesign.exceptions import AuthorizationError, TelesignError
+
+            cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+            secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+            phone_number = "13107409700"
+
+            verify = Verify(cust_id, secret_key) # Instantiate a Verify object.
+            bundle_id = 'com.example.authid'
+            status = verify.registration_status(bundle_id, phone_number) 
+
+            if (status != None):
+                device_info = status['device']
+                app_info = status['app']
+                status_info = status['status']
+        """
+
+        resource = "/v2/verify/registration/{}".format(phone_number)
+        method = "GET"
+
+        fields = {
+                    'bundle_id' : bundle_id,
+                 }
+
+        headers = generate_auth_headers(
+            self._customer_id,
+            self._secret_key,
+            resource,
+            method)
+        
+        headers['User-Agent'] = self._user_agent
+
+        req = requests.get(url="{}{}".format(self._url, resource),
+                           headers=headers,
+                           params=fields)
+
+        return Response(self._validate_response(req), req)
+
+
+
+class Telebureau(ServiceBase):
+    """
+    The **Telebureau** class exposes services for creating, retrieving, updating and deleting telebureau fraud events. You can use this mechanism to simply test whether you can reach teleburea services.
+
+    .. list-table::
+       :widths: 5 30
+       :header-rows: 1
+
+       * - Attributes
+         -
+       * - `customer_id`
+         - A string value that identifies your TeleSign account.
+       * - `secret_key`
+         - A base64-encoded string value that validates your access to the TeleSign web services.
+       * - `ssl`
+         - Specifies whether to use a secure connection with the TeleSign server. Defaults to *True*.
+       * - `api_host`
+         - The Internet host used in the base URI for REST web services. The default is *rest.telesign.com* (and the base URI is https://rest.telesign.com/).
+
+    .. note::
+       You can obtain both your Customer ID and Secret Key from the `TeleSign Customer Portal <https://portal.telesign.com/account_profile_api_auth.php>`_.
+
+    """
+
+    def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com"):
+        super(Telebureau, self).__init__(api_host, customer_id, secret_key, ssl=True)
+
+    def create(self,
+               phone_number,
+               fraud_type,
+               occurred_at,
+               verified_by=None,
+               verified_at=None,
+               discovered_at=None,
+               fraud_ip=None,
+               impact_type=None,
+               impact=None,
+               extra=None):
+        """
+        Creates a telebureau event corresponding to supplied data.
+
+        .. list-table::
+           :widths: 5 30
+           :header-rows: 1
+
+           * - Parameters
+             -
+           * - `phone_number`
+             - The phone number to receive the text message. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
+           * - `fraud_type`
+             - Type of fraud event can be chosen from the options detailed below. It must be an ENUM value and not an abitrary string.
+           * - `occurred_at`
+             - The date and time when the fraud event occurred.  This must be in the format "%Y-%m-%dT%H:%M:%SZ" as produced by the datetime module. 
+
+           * - `verified_by` (optional)
+             - The agency name by which the event was verified. It has to be a string and should be "telesign" or "other"
+           * - `verified_at` (optional)
+             - The date and time of verification for the fraud event.
+           * - `discovered_at` (optional)
+             - The date and time when the fraud event was discovered.
+           * - `fraud_ip` (optional)
+             - An IP (v4 or v6) address, possibly detected by the customer's website, that is considered related to the fraud event
+           * - `impact_type` (optional)
+             - Type of impact the fraud event had. It must be an ENUM value from the options shown below, and not an abitrary string.
+           * - `impact` (optional)
+             - Extent to which the fraud event had an impact. It must be an ENUM value from options shown below and not an abitrary string.
+           * - `extra`
+             - (optional) dict - any extra optional params
+
+        .. rubric:: Fraud Type Codes
+
+        The following lists the available fraud-type values.
+
+        =================================
+        Fraud Type
+        =================================
+        account_takeover
+        auction_fraud
+        business_opportunity
+        counterfeit_cashiers_check
+        credit_card_fraud
+        debt_elimination
+        domain_illegal_website
+        domain_phishing_website
+        domain_scam_website
+        ecommerce_chargeback
+        employment_opportunity
+        escrow_services_fraud
+        healthcare_fraud
+        identity_theft
+        internet_extortion
+        investment_fraud
+        lottery_scam
+        nigerian_letter
+        online_gambling
+        other
+        parcel_courier_email_scheme
+        phishing
+        ponzi_scheme
+        pyramid_scheme
+        reshipping
+        spam
+        telco_dialer_number
+        telco_spoofed_number
+        telco_unallocated_number
+        telemarketing_fraud
+        third_party_receiver_of_funds
+        =====================================
+
+        .. rubric:: Impact Type Codes
+
+        The following lists the available impact-type values.
+
+        =====================================
+        Impact Type
+        =====================================
+        revenue_loss
+        operational_overhead
+        customer_experience
+        other
+        =====================================
+
+        .. rubric:: Impact Codes
+
+        The following lists the available impact values.
+
+        ====================================
+        Impact
+        ====================================
+        low
+        medium
+        high
+        ====================================
+
+
+        **Example**::
+
+            from telesign.api import Telebureau
+            from telesign.exceptions import AuthorizationError, TelesignError
+
+            cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+            secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+            phone_number = "13107409700"
+
+            telebureau = Telebureau(cust_id, secret_key) # Instantiate a telebureau object.
+
+            try:
+                event = telebureau.create(phone_number, fraud_type="spam")
+            except AuthorizationError as ex:
+                # API authorization failed, the API response should tell you the reason
+                ...
+            except TelesignError as ex:
+                # failed to execute the telebureau service, check the API response for details
+                ...
+
+            # Once the event is created, you can verify that the submission was accepted.
+            if (event != None):
+                try:
+                    status = telebureau.retrieve(event.data["reference_id"])
+                except AuthorizationError as ex:
+                    ...
+                except TelesignError as ex:
+                    ...
+
+        """
+        resource = "/v1/telebureau/event"
+        method = "POST"
+
+        fields = {
+            "phone_number": phone_number,
+            "fraud_type": fraud_type,
+            # "verified_by": verified_by,
+            # "verified_at": verified_at,
+            "occurred_at": occurred_at,
+            # "discovered_at": discovered_at,
+            # "fraud_ip": fraud_ip,
+            # "impact_type": impact_type,
+            # "impact": impact,
+        }
+        if verified_by:
+            fields['verified_by'] = verified_by
+        if verified_at:
+            fields['verified_at'] = verified_at
+        if discovered_at:
+            fields['discovered_at'] = discovered_at
+        if fraud_ip:
+            fields['fraud_ip'] = fraud_ip
+        if impact_type:
+            fields['impact_type'] = impact_type
+        if impact:
+            fields['impact'] = impact
+        if extra is not None:
+            fields.update(extra)
+
+        headers = generate_auth_headers(
+            self._customer_id,
+            self._secret_key,
+            resource,
+            method,
+            fields=fields)
+
+        req = requests.post(url="{}{}".format(self._url, resource), headers = headers, data=fields)
+
+        return Response(self._validate_response(req), req)
+
+
+    def retrieve(self, ref_id):
+        """
+        Retrieves the fraud event status. You make this call in your web application after completion of create/update transaction for a telebureau event.
+
+        .. list-table::
+           :widths: 5 30
+           :header-rows: 1
+
+           * - Parameters
+             -
+           * - `ref_id`
+             - The Reference ID returned in the response from the TeleSign server, after you called either **create** or **update**.
+
+        **Example**::
+
+            from telesign.api import Telebureau
+            from telesign.exceptions import AuthorizationError, TelesignError
+
+            cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+            secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+            phone_number = "13107409700"
+
+            telebureau = Telebureau(cust_id, secret_key) # Instantiate a telebureau object.
+
+            try:
+                event = telebureau.create(phone_number, fraud_type="spam")
+            except AuthorizationError as ex:
+                # API authorization failed, the API response should tell you the reason
+                ...
+            except TelesignError as ex:
+                # failed to execute the telebureau service, check the API response for details
+                ...
+
+            # When the event is submitted, you can verify that it was accepted.
+            if (event != None):
+                try:
+                    status = telebureau.retrieve(event.data["reference_id"])
+                except AuthorizationError as ex:
+                    ...
+                except TelesignError as ex:
+                    ...
+
+        """
+
+        resource = "/v1/telebureau/event/{}".format(ref_id)
+        headers = generate_auth_headers(self._customer_id,
+                                        self._secret_key,
+                                        resource,
+                                        "GET")
+        fields = None
+        req =  requests.get(url="{}{}".format(self._url, resource), headers=headers, params=fields)
+
+        return Response(self._validate_response(req), req)
+
+
+    def delete(self, ref_id):
+        """
+        Deletes a previously submitted fraud event. You make this call in your web application after completion of submit/update transaction for a telebureau event.
+
+        .. list-table::
+           :widths: 5 30
+           :header-rows: 1
+
+           * - Parameters
+             -
+           * - `ref_id`
+             - The Reference ID returned in the response from the TeleSign server, after you called either **create** or **update**.
+
+        **Example**::
+
+            from telesign.api import Telebureau
+            from telesign.exceptions import AuthorizationError, TelesignError
+
+            cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+            secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+            phone_number = "13107409700"
+
+            telebureau = Telebureau(cust_id, secret_key) # Instantiate a telebureau object.
+
+            try:
+                event = telebureau.create(phone_number, fraud_type="spam")
+            except AuthorizationError as ex:
+                # API authorization failed, the API response should tell you the reason
+                ...
+            except TelesignError as ex:
+                # failed to execute the telebureau service, check the API response for details
+                ...
+
+            # If the event is submitted in error, you can submit a delete request.
+            if (event != None):
+                try:
+                    status = telebureau.delete(event.data["reference_id"])
+                except AuthorizationError as ex:
+                    ...
+                except TelesignError as ex:
+                    ...
+
+        """
+
+        resource = "/v1/telebureau/event/{}".format(ref_id)
+        headers = generate_auth_headers(self._customer_id,
+                                        self._secret_key,
+                                        resource,
+                                        "DELETE")
+        fields = None
+        req = requests.delete(url="{}{}".format(self._url, resource), headers=headers)
+
+        return Response(self._validate_response(req), req)
+
 

@@ -25,7 +25,7 @@ With just two classes, **telesign.api** abstracts much of the complexity of the 
 +----------------------+--------------------------------------------------------------------------+ 
 | Python Class         | Description                                                              | 
 +======================+==========================================================================+ 
-| telesign.api.PhoneId | The **PhoneId** class exposes four services that each provide            |
+| telesign.api.PhoneId | The **PhoneId** class exposes three services that each provide           | 
 |                      | information about a specified phone number.                              | 
 |                      |                                                                          | 
 |                      | *standard*                                                               | 
@@ -40,13 +40,10 @@ With just two classes, **telesign.api** abstracts much of the complexity of the 
 |                      | *contact*                                                                | 
 |                      |     In addition to the information retrieved by *standard*, this service | 
 |                      |     provides the Name & Address associated with the specified phone      | 
-|                      |     number.                                                              |
-|                      | *live*                                                                   |
-|                      |     In addition to the information retrieved by standard, this service   |
-|                      |     provides actionable data associated with the specified phone number. |
+|                      |     number.                                                              | 
 |                      |                                                                          | 
 +----------------------+--------------------------------------------------------------------------+ 
-| telesign.api.Verify  | The **Verify** class exposes four services for sending users a           |
+| telesign.api.Verify  | The **Verify** class exposes two services for sending users a            | 
 |                      | verification token (a three to five-digit number). You can use this      | 
 |                      | mechanism to simply test whether you can reach users at the phone number | 
 |                      | they supplied, or you can have them use the token to authenticate        | 
@@ -60,17 +57,10 @@ With just two classes, **telesign.api** abstracts much of the complexity of the 
 |                      |                                                                          | 
 |                      | *call*                                                                   | 
 |                      |     Calls the specified phone number, and using speech synthesis—speaks  | 
-|                      |     the verification code to the user.                                   |
+|                      |     the verification code to the user.                                   | 
 |                      | *sms*                                                                    | 
 |                      |     Send a text message containing the verification code to the          | 
-|                      |     specified phone number (supported for mobile phones only).           |
-|                      | *smart*                                                                  |
-|                      |     Smart will intelligently determines the best service to use based on |
-|                      |     the end user device and then attempts to place a call, send an SMS,  |
-|                      |     or send a push request.                                              |
-|                      | *push*                                                                   |
-|                      |     Send a push notification containing the verification code to the     |
-|                      |     specified phone number (supported for registered devices only).      |
+|                      |     specified phone number (supported for mobile phones only).           | 
 |                      | *status*                                                                 | 
 |                      |     Retrieves the verification result. You make this call in your web    | 
 |                      |     application after users complete the authentication transaction      | 
