@@ -1,10 +1,9 @@
 import os, sys, subprocess
-import multiprocessing, logging
 from setuptools import setup, find_packages 
 from distutils.cmd import Command
 
 
-version = "1.2.0"
+version = "1.2.1"
 
 f = open("README.rst")
 try:

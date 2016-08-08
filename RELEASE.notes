@@ -1,4 +1,15 @@
-Release 1.1.0
+
+1.2.1
+
+- Updated docstrings for TeleBureau endpoints.
+
+- Some minor clean up of code and comments.
+
+1.2.0
+
+- Added TeleBureau endpoints: create, retrieve, delete.
+
+1.1.0
 
 - This module should now work with Python3.4+ (and has been tested
   with Python3.4) as well as Python2.7.

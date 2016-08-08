@@ -11,14 +11,13 @@ import json
 from random import SystemRandom
 import requests
 
-import pkg_resources  # need this to get version
 from telesign import __version__
 
 from telesign.auth import generate_auth_headers
 from telesign.exceptions import TelesignError, AuthorizationError
 
-__author__ = "Jeremy Cunningham"
-__copyright__ = "Copyright 2015, TeleSign Corp."
+__author__ = "TeleSign"
+__copyright__ = "Copyright 2016, TeleSign Corp."
 __credits__ = [
     "Jeremy Cunningham",
     "Radu Maierean",
@@ -33,17 +32,24 @@ __email__ = "support@telesign.com"
 __status__ = "Production"
 
 
-rng = SystemRandom()
+def to_utc_rfc3339(a_datetime):
+    """
+    Helper function to format a timezone unaware datetime in rfc3339 utc timestamp the easy way.
+
+    :param a_datetime: timezone unaware datetime object
+    :return: rfc3339 timestamp
+    """
+    return "{}Z".format(a_datetime.replace(microsecond=0).isoformat())
 
 
 def random_with_n_digits(n):
     """
-    Generate a random number n digits in length using a system random.
+    Helper function to generate a random number n digits in length using a system random.
 
     :param n: n length digit code to generate
     :return: a digit code of n length
     """
-    return "".join(rng.choice('0123456789') for _ in range(n))
+    return "".join(SystemRandom().choice('0123456789') for _ in range(n))
 
 
 class Response(object):
@@ -120,7 +126,11 @@ class PhoneId(ServiceBase):
     def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com", proxy_host=None, timeout=None):
         super(PhoneId, self).__init__(api_host, customer_id, secret_key, ssl, proxy_host, timeout)
 
-    def standard(self, phone_number, use_case_code=None, extra=None, timeout=None):
+    def standard(self,
+                 phone_number,
+                 use_case_code=None,
+                 extra=None,
+                 timeout=None):
         """
         Retrieves the standard set of details about the specified phone number. This includes the type of phone (e.g., land line or mobile), and it's approximate geographic location.
 
@@ -134,10 +144,10 @@ class PhoneId(ServiceBase):
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
            * - `use_case_code`
              - (optional, recommended) A four letter code (use case code) used to specify a particular usage scenario for the web service.
-           * - `timeout`
-             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
            * - `extra`
              - (optional) Key value mapping of additional parameters.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
 
         .. rubric:: Use-case Codes
 
@@ -212,7 +222,11 @@ class PhoneId(ServiceBase):
 
         return Response(self._validate_response(req), req)
 
-    def score(self, phone_number, use_case_code, extra=None, timeout=None):
+    def score(self,
+              phone_number,
+              use_case_code,
+              extra=None,
+              timeout=None):
         """
         Retrieves a score for the specified phone number. This ranks the phone number's "risk level" on a scale from 0 to 1000, so you can code your web application to handle particular use cases (e.g., to stop things like chargebacks, identity theft, fraud, and spam).
 
@@ -226,10 +240,10 @@ class PhoneId(ServiceBase):
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
            * - `use_case_code`
              - A four letter code used to specify a particular usage scenario for the web service.
-           * - `timeout`
-             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
            * - `extra`
              - (optional) Key value mapping of additional parameters.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
 
         .. rubric:: Use-case Codes
 
@@ -298,7 +312,11 @@ class PhoneId(ServiceBase):
 
         return Response(self._validate_response(req), req)
 
-    def contact(self, phone_number, use_case_code, extra=None, timeout=None):
+    def contact(self,
+                phone_number,
+                use_case_code,
+                extra=None,
+                timeout=None):
         """
         In addition to the information retrieved by **standard**, this service provides the Name & Address associated with the specified phone number.
 
@@ -312,10 +330,10 @@ class PhoneId(ServiceBase):
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
            * - `use_case_code`
              - A four letter use case code used to specify a particular usage scenario for the web service.
-           * - `timeout`
-             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
            * - `extra`
              - (optional) Key value mapping of additional parameters.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
 
         .. rubric:: Use-case Codes
 
@@ -387,7 +405,11 @@ class PhoneId(ServiceBase):
 
         return Response(self._validate_response(req), req)
 
-    def live(self, phone_number, use_case_code, extra=None, timeout=None):
+    def live(self,
+             phone_number,
+             use_case_code,
+             extra=None,
+             timeout=None):
         """
         In addition to the information retrieved by **standard**, this service provides actionable data associated with the specified phone number.
 
@@ -401,10 +423,10 @@ class PhoneId(ServiceBase):
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
            * - `use_case_code`
              - A four letter use case code used to specify a particular usage scenario for the web service.
-           * - `timeout`
-             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
            * - `extra`
              - (optional) Key value mapping of additional parameters.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
 
         .. rubric:: Use-case Codes
 
@@ -476,89 +498,11 @@ class PhoneId(ServiceBase):
 
         return Response(self._validate_response(req), req)
 
-    def call_forward(self, phone_number, use_case_code, extra=None):
-        """
-        In addition to the information retrieved by **standard**, this service provides information about call forwarding enabled at this number.  
-
-        .. list-table::
-           :widths: 5 30
-           :header-rows: 1
-
-           * - Parameters
-             -
-           * - `phone_number`
-             - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
-           * - `use_case_code`
-             - A four letter use case code used to specify a particular usage scenario for the web service.
-           * - `extra`
-             - (optional) Key value mapping of additional parameters.
-
-        .. rubric:: Use-case Codes
-
-        The following table list the available use-case codes, and includes a description of each.
-
-        ========  =====================================
-        Code      Description
-        ========  =====================================
-        **BACS**  Prevent bulk account creation + spam.
-        **BACF**  Prevent bulk account creation + fraud.
-        **CHBK**  Prevent chargebacks.
-        **ATCK**  Prevent account takeover/compromise.
-        **LEAD**  Prevent false lead entry.
-        **RESV**  Prevent fake/missed reservations.
-        **PWRT**  Password reset.
-        **THEF**  Prevent identity theft.
-        **TELF**  Prevent telecom fraud.
-        **RXPF**  Prevent prescription fraud.
-        **OTHR**  Other.
-        **UNKN**  Unknown/prefer not to say.
-        ========  =====================================
-
-        **Example**::
-
-            from telesign.api import PhoneId
-            from telesign.exceptions import AuthorizationError, TelesignError
-
-            cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
-            secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
-            phone_number = "13107409700"
-            use_case_code = "RXPF"
-
-            phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
-
-            try:
-                phone_info = phoneid.live(phone_number, use_case_code)
-            except AuthorizationError as ex:
-                # API authorization failed, the API response should tell you the reason
-                ...
-            except TelesignError as ex:
-                # failed to completely execute the PhoneID service, check the API response
-                #    for details; data returned may be incomplete or not be valid
-                ...
-
-        """
-        resource = "/v1/phoneid/call_forward/%s" % phone_number
-        method = "GET"
-
-        fields = {
-            "ucid": use_case_code,
-        }
-
-        if extra is not None:
-            fields.update(extra)
-
-        headers = generate_auth_headers(
-            self._customer_id,
-            self._secret_key,
-            resource,
-            method)
-
-        req = requests.get(url="{}{}".format(self._url, resource), params=fields, headers=headers, proxies=self._proxy)
-
-        return Response(self._validate_response(req), req)
-
-
-    def sim_swap(self, phone_number, use_case_code, extra=None, timeout=None):
+    def sim_swap(self,
+                 phone_number,
+                 use_case_code,
+                 extra=None,
+                 timeout=None):
         """
         In addition to the information retrieved by **standard**, this service provides data about potential sim_swaps associated with the specified phone number.  
         .. list-table::
@@ -571,10 +515,10 @@ class PhoneId(ServiceBase):
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
            * - `use_case_code`
              - A four letter use case code used to specify a particular usage scenario for the web service.
-           * - `timeout`
-             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
            * - `extra`
              - (optional) Key value mapping of additional parameters.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
 
         .. rubric:: Use-case Codes
 
@@ -648,7 +592,11 @@ class PhoneId(ServiceBase):
 
         return Response(self._validate_response(req), req)
 
-    def call_forward(self, phone_number, use_case_code, extra=None, timeout=None):
+    def call_forward(self,
+                     phone_number,
+                     use_case_code,
+                     extra=None,
+                     timeout=None):
         """
         In addition to the information retrieved by **standard**, this service provides information on call forwarding for the phone number provided.
        .. list-table::
@@ -661,10 +609,10 @@ class PhoneId(ServiceBase):
              - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
            * - `use_case_code`
              - A four letter use case code used to specify a particular usage scenario for the web service.
-           * - `timeout`
-             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
            * - `extra`
              - (optional) Key value mapping of additional parameters.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
 
         .. rubric:: Use-case Codes
 
@@ -801,10 +749,10 @@ class Verify(ServiceBase):
              - (optional, recommended) A four letter code (use case code) used to specify a particular usage scenario for the web service.
            * - `originating_ip`
              - (optional) An IP (v4 or v6) address, possibly detected by the customer's website, that is considered related to the user verification request
-           * - `timeout`
-             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
            * - `extra`
              - (optional) Key value mapping of additional parameters.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
 
         .. rubric:: Use-case Codes
 
@@ -933,10 +881,10 @@ class Verify(ServiceBase):
              - (optional, recommended) A four letter code (use case code) used to specify a particular usage scenario for the web service.
            * - `originating_ip`
              - (optional) An IP (v4 or v6) address, possibly detected by the customer's website, that is considered related to the user verification request
-           * - `timeout`
-             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.  Note that this is not a timeout for the actual phone call, just for the http request. 
            * - `extra`
              - (optional) Key value mapping of additional parameters.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation). Will override any timeout set in the initialization.
 
         .. rubric:: Use-case Codes
 
@@ -1041,8 +989,8 @@ class Verify(ServiceBase):
               language="en",
               preference=None,
               ignore_risk=False,
-              timeout=None,
-              extra=None):
+              extra=None,
+              timeout=None):
         """
         Calls the specified phone number, and using speech synthesis, speaks the verification code to the user.
 
@@ -1063,9 +1011,11 @@ class Verify(ServiceBase):
            * - `preference`
              - (optional) Customer preference for delivery method.   One of 'call', 'sms', 'push'.  This may override TeleSign's determination of the method to use when possible (for instance, it is not possible to send an sms to all phones).
            * - `ignore_risk`
-             - (optional) If true, TeleSign will ignore the evaluated risk for the phone and attempt delivery in all cases. 
+             - (optional) If true, TeleSign will ignore the evaluated risk for the phone and attempt delivery in all cases.
            * - `extra`
              - (optional) Key value mapping of additional parameters.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
 
         .. rubric:: Use-case Codes
 
@@ -1158,8 +1108,8 @@ class Verify(ServiceBase):
     def push(self,
              phone_number,
              use_case_code,
-             timeout=None,
-             extra={}):
+             extra={},
+             timeout=None,):
         """
         The **push** method sends a push notification containing the verification code to the specified phone number (supported for mobile phones only).
 
@@ -1171,14 +1121,33 @@ class Verify(ServiceBase):
              -
            * - `phone_number`
              - The phone number to receive the text message. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
-           * - `notification_type`
-             - The notification type to sent to the user. It could have the following valid values: SIMPLE | CODE | GESTURE | QR
-           * - `notification_value`
-             - The notification value is sent to the user. This is a value ranging between 6-8 digits long. Default length 6.
-           * - `template`
-             - (optional) A standard form for the text message. It must contain the token ``$$CODE$$``, which TeleSign auto-populates with the verification code.
-           * - `message`
-             - (optional) Text message that the application displays when asking for the notification details information.
+           * - `use_case_code`
+             - A four letter code (use case code) used to specify a particular usage scenario for the web service.
+           * - `extra`
+             - (optional) Key value mapping of additional parameters.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
+
+         .. rubric:: Use-case Codes
+
+        The following table list the available use-case codes, and includes a description of each.
+
+        ========  =====================================
+        Code      Description
+        ========  =====================================
+        **BACS**  Prevent bulk account creation + spam.
+        **BACF**  Prevent bulk account creation + fraud.
+        **CHBK**  Prevent chargebacks.
+        **ATCK**  Prevent account takeover/compromise.
+        **LEAD**  Prevent false lead entry.
+        **RESV**  Prevent fake/missed reservations.
+        **PWRT**  Password reset.
+        **THEF**  Prevent identity theft.
+        **TELF**  Prevent telecom fraud.
+        **RXPF**  Prevent prescription fraud.
+        **OTHR**  Other.
+        **UNKN**  Unknown/prefer not to say.
+        ========  =====================================
 
         **Example**::
 
@@ -1193,7 +1162,7 @@ class Verify(ServiceBase):
             phone_number = "13107409700"
 
             try:
-                phone_info = verify.sms(phone_number)
+                phone_info = verify.push(phone_number, "ATCK")
             except AuthorizationError as ex:
                 # API authorization failed, the API response should tell you the reason
                 ...
@@ -1259,10 +1228,10 @@ class Verify(ServiceBase):
              - The Reference ID returned in the response from the TeleSign server, after you called either **call** or **sms**.
            * - `verify_code`
              - (optional) The verification code received from the user.
-           * - `timeout`
-             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization. 
            * - `extra`
              - (optional) Key value mapping of additional parameters.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
 
         **Example**::
 
@@ -1319,7 +1288,14 @@ class Verify(ServiceBase):
 
         return Response(self._validate_response(req), req)
 
-    def soft_token(self, bundle_id, phone_number, soft_token_id, verify_code, session_id=None):
+    def soft_token(self,
+                   bundle_id,
+                   phone_number,
+                   soft_token_id,
+                   verify_code,
+                   session_id=None,
+                   extra=None,
+                   timeout=None):
         """
         The TeleSign Mobile Device Soft Token Notification web service allows you to anticipate when your users need to use their soft token to generate a time-sensitive one-time passcode. You can use this web service to preemptively send them a push notification that initializes their on-device TeleSign AuthID application with the right soft token. When they open the notification, the soft token launches ready for them to use.
 
@@ -1339,6 +1315,10 @@ class Verify(ServiceBase):
              - The verification code to send to the user. 
            * - `session_id`
              - [Optional] A free form string (up to 64 ASCII characters) that indicates an ID (either raw or hashed) that is unique to the user's session with the customer. The session_id links multiple calls and other TeleSign services that are associated with the current session.
+           * - `extra`
+             - (optional) Key value mapping of additional parameters.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
 
         **Example**::
 
@@ -1376,6 +1356,9 @@ class Verify(ServiceBase):
         if session_id:
             fields['session_id'] = session_id
 
+        if extra is not None:
+            fields.update(extra)
+
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
@@ -1383,14 +1366,22 @@ class Verify(ServiceBase):
             method,
             fields=fields)
 
-        req = requests.post(url="{}{}".format(self._url, resource), headers=headers, data=fields)
+        req = requests.post(url="{}{}".format(self._url, resource),
+                            headers=headers,
+                            data=fields,
+                            proxies=self._proxy,
+                            timeout=timeout or self._timeout)
 
         return Response(self._validate_response(req), req, verify_code=verify_code)
 
-    def registration_status(self, bundle_id, phone_number):
+    def registration_status(self,
+                            phone_number,
+                            bundle_id,
+                            extra=None,
+                            timeout=None):
         """
         The TeleSign Mobile Device Registration Status web service allows you to query the current state of the
-        AuthID application registration.  
+        Push Verify application registration.
 
          .. list-table::
            :widths: 5 30
@@ -1399,9 +1390,13 @@ class Verify(ServiceBase):
            * - Parameters
              -
            * - `phone_number`
-             - The phone number for the Mobile Device Soft Token Notification request, including country code. For example, phone_number=13105551212
+             - The phone number for the Push Verify registration, including country code. For example, phone_number=13105551212
            * - `bundle_id`
              - Unique identifier for the mobile app.
+           * - `extra`
+             - (optional) Key value mapping of additional parameters.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
 
         **Example**::
 
@@ -1429,6 +1424,9 @@ class Verify(ServiceBase):
                     'bundle_id' : bundle_id,
                  }
 
+        if extra is not None:
+            fields.update(extra)
+
         headers = generate_auth_headers(
             self._customer_id,
             self._secret_key,
@@ -1439,7 +1437,9 @@ class Verify(ServiceBase):
 
         req = requests.get(url="{}{}".format(self._url, resource),
                            headers=headers,
-                           params=fields)
+                           params=fields,
+                           proxies=self._proxy,
+                           timeout=timeout or self._timeout)
 
         return Response(self._validate_response(req), req)
 
@@ -1463,14 +1463,18 @@ class Telebureau(ServiceBase):
          - Specifies whether to use a secure connection with the TeleSign server. Defaults to *True*.
        * - `api_host`
          - The Internet host used in the base URI for REST web services. The default is *rest.telesign.com* (and the base URI is https://rest.telesign.com/).
+       * - `proxy_host`
+         - (optional) The host and port when going through a proxy server. ex: "localhost:8080. The default to no proxy.
+       * - `timeout`
+         - (optional) A timeout value to use in requests - float or tuple (see requests documentation for details).  Defaults to None.
 
     .. note::
        You can obtain both your Customer ID and Secret Key from the `TeleSign Customer Portal <https://portal.telesign.com/account_profile_api_auth.php>`_.
 
     """
 
-    def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com"):
-        super(Telebureau, self).__init__(api_host, customer_id, secret_key, ssl=True)
+    def __init__(self, customer_id, secret_key, ssl=True, api_host="rest.telesign.com", proxy_host=None, timeout=None):
+        super(Telebureau, self).__init__(api_host, customer_id, secret_key, ssl, proxy_host, timeout)
 
     def create(self,
                phone_number,
@@ -1482,7 +1486,8 @@ class Telebureau(ServiceBase):
                fraud_ip=None,
                impact_type=None,
                impact=None,
-               extra=None):
+               extra=None,
+               timeout=None):
         """
         Creates a telebureau event corresponding to supplied data.
 
@@ -1493,26 +1498,28 @@ class Telebureau(ServiceBase):
            * - Parameters
              -
            * - `phone_number`
-             - The phone number to receive the text message. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
+             - The phone number you want to submit, composed of a string of digits without spaces or punctuation, beginning with the country dialing code (for example, "1" for North America). You would specify the phone number (310) 555-1212 as 13105551212.
            * - `fraud_type`
-             - Type of fraud event can be chosen from the options detailed below. It must be an ENUM value and not an abitrary string.
+             - The type of fraud committed.
            * - `occurred_at`
-             - The date and time when the fraud event occurred.  This must be in the format "%Y-%m-%dT%H:%M:%SZ" as produced by the datetime module. 
+             -  A string value specifying when the fraud event occurred. The value must be in RFC 3339 time format (for example, yyyy-mm-ddThh:mm:ssZ).
 
-           * - `verified_by` (optional)
-             - The agency name by which the event was verified. It has to be a string and should be "telesign" or "other"
-           * - `verified_at` (optional)
-             - The date and time of verification for the fraud event.
            * - `discovered_at` (optional)
-             - The date and time when the fraud event was discovered.
+             - A string value specifying when you discovered the fraud event. The value must be in RFC 3339 time format (for example, yyyy-mm-ddThh:mm:ssZ).
            * - `fraud_ip` (optional)
-             - An IP (v4 or v6) address, possibly detected by the customer's website, that is considered related to the fraud event
+             - If you managed to capture the user's IP address, then specify it here.
            * - `impact_type` (optional)
-             - Type of impact the fraud event had. It must be an ENUM value from the options shown below, and not an abitrary string.
+             - A string enumeration value indicating the area of your business that was affected by this fraud event.
            * - `impact` (optional)
-             - Extent to which the fraud event had an impact. It must be an ENUM value from options shown below and not an abitrary string.
+             - A string enumeration value indicating how severely your business was affected by this fraud event.
+           * - `verified_by` (optional)
+             - A string enumeration value identifying the method used to verify the submitted phone number.
+           * - `verified_at` (optional)
+             - If you verified the user's phone number, then you use this parameter to specify when. The value must be in RFC 3339 time format (for example, yyyy-mm-ddThh:mm:ssZ).
            * - `extra`
              - (optional) dict - any extra optional params
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
 
         .. rubric:: Fraud Type Codes
 
@@ -1521,37 +1528,15 @@ class Telebureau(ServiceBase):
         =================================
         Fraud Type
         =================================
-        account_takeover
-        auction_fraud
-        business_opportunity
-        counterfeit_cashiers_check
-        credit_card_fraud
-        debt_elimination
-        domain_illegal_website
-        domain_phishing_website
-        domain_scam_website
-        ecommerce_chargeback
-        employment_opportunity
-        escrow_services_fraud
-        healthcare_fraud
+        chargeback
+        coupon
+        harass
         identity_theft
-        internet_extortion
-        investment_fraud
-        lottery_scam
-        nigerian_letter
-        online_gambling
         other
-        parcel_courier_email_scheme
-        phishing
-        ponzi_scheme
-        pyramid_scheme
-        reshipping
+        property_damage
         spam
-        telco_dialer_number
-        telco_spoofed_number
-        telco_unallocated_number
-        telemarketing_fraud
-        third_party_receiver_of_funds
+        takeover
+        telco
         =====================================
 
         .. rubric:: Impact Type Codes
@@ -1579,11 +1564,23 @@ class Telebureau(ServiceBase):
         high
         ====================================
 
+        .. rubric:: Verified By
+
+        The following lists the available impact values.
+
+        ====================================
+        Impact
+        ====================================
+        telesign
+        other
+        ====================================
+
 
         **Example**::
 
-            from telesign.api import Telebureau
+            from telesign.api import Telebureau, to_utc_rfc3339
             from telesign.exceptions import AuthorizationError, TelesignError
+            from datetime import datetime
 
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
@@ -1592,7 +1589,7 @@ class Telebureau(ServiceBase):
             telebureau = Telebureau(cust_id, secret_key) # Instantiate a telebureau object.
 
             try:
-                event = telebureau.create(phone_number, fraud_type="spam")
+                event = telebureau.create(phone_number, "spam", to_utc_rfc3339(datetime.utcnow()))
             except AuthorizationError as ex:
                 # API authorization failed, the API response should tell you the reason
                 ...
@@ -1616,13 +1613,7 @@ class Telebureau(ServiceBase):
         fields = {
             "phone_number": phone_number,
             "fraud_type": fraud_type,
-            # "verified_by": verified_by,
-            # "verified_at": verified_at,
             "occurred_at": occurred_at,
-            # "discovered_at": discovered_at,
-            # "fraud_ip": fraud_ip,
-            # "impact_type": impact_type,
-            # "impact": impact,
         }
         if verified_by:
             fields['verified_by'] = verified_by
@@ -1646,14 +1637,20 @@ class Telebureau(ServiceBase):
             method,
             fields=fields)
 
-        req = requests.post(url="{}{}".format(self._url, resource), headers = headers, data=fields)
+        req = requests.post(url="{}{}".format(self._url, resource),
+                            headers=headers,
+                            data=fields,
+                            proxies=self._proxy,
+                            timeout=timeout or self._timeout)
 
         return Response(self._validate_response(req), req)
 
-
-    def retrieve(self, ref_id):
+    def retrieve(self,
+                 ref_id,
+                 extra=None,
+                 timeout=None):
         """
-        Retrieves the fraud event status. You make this call in your web application after completion of create/update transaction for a telebureau event.
+        Retrieves the fraud event status. You make this call in your web application after completion of create transaction for a telebureau event.
 
         .. list-table::
            :widths: 5 30
@@ -1662,12 +1659,17 @@ class Telebureau(ServiceBase):
            * - Parameters
              -
            * - `ref_id`
-             - The Reference ID returned in the response from the TeleSign server, after you called either **create** or **update**.
+             - The Reference ID returned in the response from the TeleSign server, after you called **create**.
+           * - `extra`
+             - (optional) Key value mapping of additional parameters.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
 
         **Example**::
 
-            from telesign.api import Telebureau
+            from telesign.api import Telebureau, to_utc_rfc3339
             from telesign.exceptions import AuthorizationError, TelesignError
+            from datetime import datetime
 
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
@@ -1676,7 +1678,7 @@ class Telebureau(ServiceBase):
             telebureau = Telebureau(cust_id, secret_key) # Instantiate a telebureau object.
 
             try:
-                event = telebureau.create(phone_number, fraud_type="spam")
+                event = telebureau.create(phone_number, "spam", to_utc_rfc3339(datetime.utcnow()))
             except AuthorizationError as ex:
                 # API authorization failed, the API response should tell you the reason
                 ...
@@ -1696,19 +1698,31 @@ class Telebureau(ServiceBase):
         """
 
         resource = "/v1/telebureau/event/{}".format(ref_id)
+        method = "GET"
+
         headers = generate_auth_headers(self._customer_id,
                                         self._secret_key,
                                         resource,
-                                        "GET")
-        fields = None
-        req =  requests.get(url="{}{}".format(self._url, resource), headers=headers, params=fields)
+                                        method)
+        fields = {}
+
+        if extra is not None:
+            fields.update(extra)
+
+        req = requests.get(url="{}{}".format(self._url, resource),
+                           headers=headers,
+                           params=fields,
+                           proxies=self._proxy,
+                           timeout=timeout or self._timeout)
 
         return Response(self._validate_response(req), req)
 
-
-    def delete(self, ref_id):
+    def delete(self,
+               ref_id,
+               extra=None,
+               timeout=None):
         """
-        Deletes a previously submitted fraud event. You make this call in your web application after completion of submit/update transaction for a telebureau event.
+        Deletes a previously submitted fraud event. You make this call in your web application after completion of the create transaction for a telebureau event.
 
         .. list-table::
            :widths: 5 30
@@ -1717,12 +1731,17 @@ class Telebureau(ServiceBase):
            * - Parameters
              -
            * - `ref_id`
-             - The Reference ID returned in the response from the TeleSign server, after you called either **create** or **update**.
+             - The Reference ID returned in the response from the TeleSign server, after you called **create**
+           * - `extra`
+             - (optional) Key value mapping of additional parameters.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
 
         **Example**::
 
-            from telesign.api import Telebureau
+            from telesign.api import Telebureau, to_utc_rfc3339
             from telesign.exceptions import AuthorizationError, TelesignError
+            from datetime import datetime
 
             cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
             secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
@@ -1731,7 +1750,7 @@ class Telebureau(ServiceBase):
             telebureau = Telebureau(cust_id, secret_key) # Instantiate a telebureau object.
 
             try:
-                event = telebureau.create(phone_number, fraud_type="spam")
+                event = telebureau.create(phone_number, "spam", to_utc_rfc3339(datetime.utcnow()))
             except AuthorizationError as ex:
                 # API authorization failed, the API response should tell you the reason
                 ...
@@ -1751,13 +1770,22 @@ class Telebureau(ServiceBase):
         """
 
         resource = "/v1/telebureau/event/{}".format(ref_id)
+        method = "DELETE"
+
         headers = generate_auth_headers(self._customer_id,
                                         self._secret_key,
                                         resource,
-                                        "DELETE")
-        fields = None
-        req = requests.delete(url="{}{}".format(self._url, resource), headers=headers)
+                                        method)
+
+        fields = {}
+
+        if extra is not None:
+            fields.update(extra)
+
+        req = requests.delete(url="{}{}".format(self._url, resource),
+                              headers=headers,
+                              params=fields,
+                              proxies=self._proxy,
+                              timeout=timeout or self._timeout)
 
         return Response(self._validate_response(req), req)
-
-
