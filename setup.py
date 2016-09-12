@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 from distutils.cmd import Command
 
 
-version = "1.2.1"
+version = "1.2.2"
 
 f = open("README.rst")
 try:
@@ -71,7 +71,7 @@ setup(name='telesign',
       author = 'TeleSign Corp.',
       author_email='support@telesign.com',
       url="http://github.com/telesign/python_telesign",
-      install_requires=['requests==2.8.0',
+      install_requires=['requests>=2.8.0',
                         ],
 
       packages=find_packages(exclude=['test', 'test.*']),
