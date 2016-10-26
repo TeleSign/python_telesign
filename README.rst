@@ -11,7 +11,7 @@ TeleSign Web Services: PHP SDK
 
 **TeleSign web services** conform to the `REST Web Service Design Model <http://en.wikipedia.org/wiki/Representational_state_transfer>`_. Services are exposed as URI-addressable resources through the set of *RESTful* procedures in our **TeleSign REST API**.
 
-The **TeleSign PHP SDK** is a PHP library that provides an interface to `TeleSign web services <https://developer.telesign.com/docs/getting-started-with-the-rest-api/>`_. 
+The **TeleSign PHP SDK** is a PHP library that provides an interface to `TeleSign web services <https://developer.telesign.com/docs/getting-started-with-the-rest-api/>`_. You can include the SDK by including the 'api.class.php' file located here: https://github.com/TeleSign/php_telesign/tree/master/telesign/api.class.php .
 
 Authentication
 --------------
