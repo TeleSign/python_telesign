@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 from distutils.cmd import Command
 
 
-version = "1.2.2"
+version = "1.2.3"
 
 f = open("README.rst")
 try:

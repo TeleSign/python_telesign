@@ -41,7 +41,10 @@ With just three classes, **telesign.api** abstracts much of the complexity of th
 |                         | *live*                                                                   |
 |                         |     In addition to the information retrieved by *standard*, this service |
 |                         |     provides actionable data associated with the specified phone number. |
-|                         |                                                                          |
+|                         | *number_deactivation*                                                    |
+|                         |     In addition to the information retrieved by *standard*, this service |
+|                         |     provides information on number deactivation for the phone number     |
+|                         |     provided.                                                            |
 |                         |                                                                          | 
 +-------------------------+--------------------------------------------------------------------------+ 
 | telesign.api.Verify     | The **Verify** class exposes three services for sending users a          | 

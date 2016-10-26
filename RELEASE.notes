@@ -1,3 +1,7 @@
+1.2.3
+
+- Added PhoneId number_deactivation endpoint.
+
 1.2.2
 
 - Updated setup.py install_requires requests>=2.8.0

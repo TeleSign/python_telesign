@@ -684,6 +684,98 @@ class PhoneId(ServiceBase):
 
         return Response(self._validate_response(req), req)
 
+    def number_deactivation(self,
+                            phone_number,
+                            use_case_code,
+                            extra=None,
+                            timeout=None):
+        """
+        In addition to the information retrieved by **standard**, this service provides information on number deactivation for the phone number provided.
+       .. list-table::
+           :widths: 5 30
+           :header-rows: 1
+
+           * - Parameters
+             -
+           * - `phone_number`
+             - The phone number you want details about. You must specify the phone number in its entirety. That is, it must begin with the country code, followed by the area code, and then by the local number. For example, you would specify the phone number (310) 555-1212 as 13105551212.
+           * - `use_case_code`
+             - A four letter use case code used to specify a particular usage scenario for the web service.
+           * - `extra`
+             - (optional) Key value mapping of additional parameters.
+           * - `timeout`
+             - (optional) Timeout for the request (see timeout in the requests documentation).   Will override any timeout set in the initialization.
+
+        .. rubric:: Use-case Codes
+
+        The following table list the available use-case codes, and includes a description of each.
+
+        ========  =====================================
+        Code      Description
+        ========  =====================================
+        **BACS**  Prevent bulk account creation + spam.
+        **BACF**  Prevent bulk account creation + fraud.
+        **CHBK**  Prevent chargebacks.
+        **ATCK**  Prevent account takeover/compromise.
+        **LEAD**  Prevent false lead entry.
+        **RESV**  Prevent fake/missed reservations.
+        **PWRT**  Password reset.
+        **THEF**  Prevent identity theft.
+        **TELF**  Prevent telecom fraud.
+        **RXPF**  Prevent prescription fraud.
+        **OTHR**  Other.
+        **UNKN**  Unknown/prefer not to say.
+        ========  =====================================
+
+        **Example**::
+
+            from telesign.api import PhoneId
+            from telesign.exceptions import AuthorizationError, TelesignError
+
+            cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+            secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+            phone_number = "13107409700"
+            use_case_code = "RXPF"
+
+            phoneid = PhoneId(cust_id, secret_key) # Instantiate a PhoneId object.
+
+            try:
+                phone_info = phoneid.number_deactivation(phone_number, use_case_code)
+            except AuthorizationError as ex:
+                # API authorization failed, the API response should tell you the reason
+                ...
+            except TelesignError as ex:
+                # failed to completely execute the PhoneID service, check the API response
+                #    for details; data returned may be incomplete or not be valid
+                ...
+
+        """
+        resource = "/v1/phoneid/number_deactivation/%s" % phone_number
+        method = "GET"
+
+        fields = {
+            "ucid": use_case_code,
+        }
+
+        if extra is not None:
+            fields.update(extra)
+
+        headers = generate_auth_headers(
+            self._customer_id,
+            self._secret_key,
+            resource,
+            method)
+
+        headers['User-Agent'] = self._user_agent
+
+        req = requests.get(url="{}{}".format(self._url, resource),
+                           params=fields,
+                           headers=headers,
+                           proxies=self._proxy,
+                           timeout=timeout or self._timeout)
+
+        return Response(self._validate_response(req), req)
+
 class Verify(ServiceBase):
     """
     The **Verify** class exposes several services for sending users a verification token. You can use this mechanism to simply test whether you can reach users at the phone number they supplied, or you can have them use the token to authenticate themselves with your web application.
