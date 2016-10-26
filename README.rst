@@ -21,7 +21,7 @@ With just three classes, **telesign.api** abstracts much of the complexity of th
 +-------------------------+--------------------------------------------------------------------------+ 
 | Python Class            | Description                                                              | 
 +=========================+==========================================================================+ 
-| telesign.api.PhoneId    | The **PhoneId** class exposes four services that each provide            | 
+| telesign.api.PhoneId    | The **PhoneId** class exposes five services that each provide            |
 |                         | information about a specified phone number.                              | 
 |                         |                                                                          | 
 |                         | *standard*                                                               | 
