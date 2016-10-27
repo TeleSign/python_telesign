@@ -21,6 +21,7 @@ Authentication
 You supply your credentials to the API by passing them in during class initialization.
 
 >>>
+  include './telesign/api.class.php';
   $customer_id = "CUSTOMER_ID_GOES_HERE";
   $secret_key = "SECRECT_KEY_GOES_HERE";
   $verify = new Verify($customer_id, $secret_key);
