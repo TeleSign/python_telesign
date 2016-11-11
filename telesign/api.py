@@ -1170,6 +1170,9 @@ class Verify(ServiceBase):
             'ucid': use_case_code,
         }
 
+        if verify_code:
+            fields['verify_code'] = verify_code
+
         if preference:
             fields['preference'] = preference
 
