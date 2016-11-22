@@ -64,7 +64,14 @@ With just three classes, **telesign.api** abstracts much of the complexity of th
 |                         |     the verification code to the user.                                   | 
 |                         | *sms*                                                                    | 
 |                         |     Sends a text message containing the verification code to the         | 
-|                         |     specified phone number (supported for mobile phones only).           | 
+|                         |     specified phone number (supported for mobile phones only).           |
+|                         | *smart*                                                                  |
+|                         |     Smart intelligently determines the best service to use based on      |
+|                         |     the end user device and then attempts to place a call, send an SMS,  |
+|                         |     or send a push request.                                              |
+|                         | *push*                                                                   |
+|                         |     Sends a push notification containing the verification code to the    |
+|                         |     specified phone number (supported for registered devices only).      |
 |                         | *status*                                                                 | 
 |                         |     Retrieves the verification result. You make this call in your web    | 
 |                         |     application after users complete the authentication transaction      | 
