@@ -158,6 +158,26 @@ module Telesign
                 timeout)
       end
 
+      # In addition to the information retrieved by standard, this service provides
+      # information on call forwarding for the phone number provided.
+      def number_deactivation(phone_number,
+                              use_case_code,
+                              extra=nil,
+                              timeout=nil)
+
+        params = {:ucid => use_case_code}
+
+        unless extra.nil?
+          params.merge!(extra)
+        end
+
+        execute(Net::HTTP::Get,
+                "/v1/phoneid/number_deactivation/#{phone_number}",
+                params,
+                nil,
+                timeout)
+      end
+
     end
 
     # The Verify class exposes several services for sending users a verification
@@ -270,7 +290,7 @@ module Telesign
         end
 
         execute(Net::HTTP::Post,
-                "/v1/verify/push",
+                "/v2/verify/push",
                 nil,
                 params,
                 timeout)
@@ -296,6 +316,86 @@ module Telesign
 
         execute(Net::HTTP::Get,
                 "/v1/verify/#{reference_id}",
+                params,
+                nil,
+                timeout)
+      end
+    end
+
+
+    # The **Telebureau** class exposes services for creating, retrieving, updating and
+    # deleting telebureau fraud events. You can use this mechanism to simply test whether
+    # you can reach telebureau services.
+    class TeleBureau < Telesign::API::Rest
+
+      def initialize(customer_id,
+                     secret_key,
+                     ssl=true,
+                     api_host='rest.telesign.com',
+                     timeout=nil)
+
+        super(customer_id,
+              secret_key,
+              ssl,
+              api_host,
+              timeout)
+      end
+
+      # Creates a telebureau event corresponding to supplied data.
+      def create(phone_number,
+                 fraud_type,
+                 occurred_at,
+                 extra=nil,
+                 timeout=nil)
+
+        params = {:phone_number => phone_number,
+                  :fraud_type => fraud_type,
+                  :occurred_at => occurred_at}
+
+        unless extra.nil?
+          params.merge!(extra)
+        end
+
+        execute(Net::HTTP::Post,
+                "/v1/telebureau/event",
+                nil,
+                params,
+                timeout)
+      end
+
+      # Retrieves the fraud event status. You make this call in your web application after
+      # completion of create transaction for a telebureau event.
+      def retrieve(reference_id,
+                   extra=nil,
+                   timeout=nil)
+
+        params = {}
+
+        unless extra.nil?
+          params.merge!(extra)
+        end
+
+        execute(Net::HTTP::Get,
+                "/v1/telebureau/event/#{reference_id}",
+                params,
+                nil,
+                timeout)
+      end
+
+      # Deletes a previously submitted fraud event. You make this call in your web application
+      # after completion of the create transaction for a telebureau event.
+      def delete(reference_id,
+                 extra=nil,
+                 timeout=nil)
+
+        params = {}
+
+        unless extra.nil?
+          params.merge!(extra)
+        end
+
+        execute(Net::HTTP::Delete,
+                "/v1/telebureau/event/#{reference_id}",
                 params,
                 nil,
                 timeout)
