@@ -1,0 +1,36 @@
+{
+  "name": "telesign/telesign",
+  "description": "TeleSign SDK",
+  "type": "library",
+  "keywords": [
+    "telesign", "sms", "voice", "mobile", "authentication", "identity"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/telesign/php_telesign",
+  "authors": [
+    {
+      "name": "TeleSign Corp.",
+      "email": "support@telesign.com",
+      "homepage": "https://www.telesign.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.6.0",
+    "guzzlehttp/guzzle": "^6.2",
+    "ramsey/uuid": "^3.5",
+    "psr/http-message": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.7"
+  },
+  "autoload": {
+    "psr-4": { "telesign\\sdk\\": "src/" },
+    "files": [ "src/util.php", "src/version.php" ]
+  },
+  "autoload-dev": {
+    "psr-4": { "telesign\\sdk\\": "test/" }
+  },
+  "scripts": {
+    "test": "php vendor/phpunit/phpunit/phpunit --bootstrap ./vendor/autoload.php test/"
+  }
+}
