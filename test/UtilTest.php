@@ -4,7 +4,6 @@ namespace telesign\sdk\util;
 
 use PHPUnit\Framework\TestCase;
 use telesign\sdk\Example;
-use GuzzleHttp\Psr7\Request;
 
 final class UtilTest extends TestCase {
 
@@ -24,9 +23,9 @@ final class UtilTest extends TestCase {
     $this->assertNotEquals($a, $b);
   }
 
-  function testVerifyTelesignCallback () {
+  function testVerifyTelesignCallbackSignature () {
     $secret_key = Example::SECRET_KEY;
-    $expected_header_value = "4NzBWLbUiX4doPp5ls4rBNSZdTBO+LBo1adwJeaLt04=";
+    $header_value = "4NzBWLbUiX4doPp5ls4rBNSZdTBO+LBo1adwJeaLt04=";
     $json_str = json_encode([
       "status" => [
         "updated_on" => "2016-07-08T20:52:46.417428Z",
@@ -42,11 +41,8 @@ final class UtilTest extends TestCase {
       "sub_resource" => "sms",
       "reference_id" => "2557312299CC1304904080F4BE17BFB4"
     ]);
-    $request = new Request("POST", "https://httpbin.org/post", [
-      "X-TS-Authorization" => $expected_header_value
-    ]);
 
-    $this->assertTrue(verifyTelesignCallback($secret_key, $request->getHeaders(), $json_str));
+    $this->assertTrue(verifyTelesignCallbackSignature($secret_key, $header_value, $json_str));
   }
 
 }

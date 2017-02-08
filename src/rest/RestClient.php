@@ -37,7 +37,7 @@ class RestClient {
   function __construct (
     $customer_id,
     $secret_key,
-    $api_host = "https://rest.telesign.com",
+    $api_host = "https://rest-api.telesign.com",
     $timeout = 10,
     $proxy = null,
     $handler = null
@@ -109,7 +109,7 @@ class RestClient {
       "\nx-ts-nonce:$nonce"
     ];
 
-    if ($content_type) {
+    if ($content_type && $url_encoded_fields) {
       $string_to_sign_builder[] = "\n$url_encoded_fields";
     }
 

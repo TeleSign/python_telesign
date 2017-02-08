@@ -3,7 +3,7 @@
   "description": "TeleSign SDK",
   "type": "library",
   "keywords": [
-    "telesign", "sms", "voice", "mobile", "authentication", "identity"
+    "telesign", "sms", "voice", "mobile", "authentication", "identity", "messaging"
   ],
   "license": "MIT",
   "homepage": "https://github.com/telesign/php_telesign",

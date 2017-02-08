@@ -36,24 +36,8 @@ final class PhoneIdClientTest extends TestCase {
   function getRequestExamples () {
     $methods = [
       [
-        "method" => "standard",
-        "relative_uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/standard/" . self::EXAMPLE_PHONE_NUMBER
-      ],
-      [
-        "method" => "score",
-        "relative_uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/score/" . self::EXAMPLE_PHONE_NUMBER
-      ],
-      [
-        "method" => "contact",
-        "relative_uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/contact/" . self::EXAMPLE_PHONE_NUMBER
-      ],
-      [
-        "method" => "live",
-        "relative_uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/live/" . self::EXAMPLE_PHONE_NUMBER
-      ],
-      [
-        "method" => "numberDeactivation",
-        "relative_uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/number_deactivation/" . self::EXAMPLE_PHONE_NUMBER
+        "method" => "phoneid",
+        "relative_uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/" . self::EXAMPLE_PHONE_NUMBER
       ],
     ];
 
@@ -66,8 +50,8 @@ final class PhoneIdClientTest extends TestCase {
             [ "ucid" => self::EXAMPLE_UCID ]
           ],
           "request" => [
-            "uri" => "{$m["relative_uri"]}?ucid=" . self::EXAMPLE_UCID,
-            "body" => ""
+            "uri" => $m["relative_uri"],
+            "body" => "ucid=" . self::EXAMPLE_UCID
           ]
         ]
       ];

@@ -26,18 +26,17 @@ function randomWithNDigits ($n) {
  * Verify that a callback was made by TeleSign and was not sent by a malicious client by verifying the signature.
  *
  * @param string $secret_key The TeleSign API secret_key associated with your account
- * @param array  $headers    HTTP POST request headers
+ * @param string $signature  The TeleSign Authorization header value supplied in the callback
  * @param string $json_str   The POST body text, that is, the JSON string sent by TeleSign describing the transaction status
  */
-function verifyTelesignCallback ($secret_key, $headers, $json_str) {
-  $callback_signature = $headers["X-TS-Authorization"][0];
+function verifyTelesignCallbackSignature ($secret_key, $signature, $json_str) {
   $your_signature = base64_encode(hash_hmac("sha256", $json_str, base64_decode($secret_key), true));
 
-  if (strlen($callback_signature) != strlen($your_signature)) {
+  if (strlen($signature) != strlen($your_signature)) {
     return false;
   }
 
   // Avoid timing attack with constant time equality check
 
-  return hash_equals($callback_signature, $your_signature);
+  return hash_equals($signature, $your_signature);
 }
