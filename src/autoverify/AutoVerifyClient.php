@@ -20,8 +20,8 @@ class AutoVerifyClient extends RestClient {
    * See https://developer.telesign.com/docs/auto-verify-sdk#section-obtaining-verification-status for detailed API
    * documentation.
    */
-  function status ($external_id, array $fields = []) {
-    return $this->get(sprintf(self::AUTOVERIFY_STATUS_RESOURCE, $external_id), $fields);
+  function status ($external_id, array $params = []) {
+    return $this->get(sprintf(self::AUTOVERIFY_STATUS_RESOURCE, $external_id), $params);
   }
 
 }
