@@ -37,7 +37,7 @@ Here's a basic code example with JSON response.
 
   require __DIR__ . "/vendor/autoload.php";
 
-  use telesign\messaging\MessagingClient;
+  use telesign\sdk\messaging\MessagingClient;
 
   $customer_id = "customer_id";
   $secret_key = "secret_key";
