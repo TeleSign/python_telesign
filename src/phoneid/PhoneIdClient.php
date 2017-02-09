@@ -1,6 +1,6 @@
 <?php
 
-namespace telesign\sdk\phoneid;
+namespace telesign\enterprise\sdk\phoneid;
 
 use telesign\sdk\rest\RestClient;
 
@@ -27,8 +27,8 @@ class PhoneIdClient extends RestClient {
    *
    * See https://developer.telesign.com/docs/rest_phoneid-standard for detailed API documentation.
    */
-  function standard ($phone_number, array $fields = []) {
-    return $this->get(sprintf(self::PHONEID_STANDARD_RESOURCE, $phone_number), $fields);
+  function standard ($phone_number, array $params = []) {
+    return $this->get(sprintf(self::PHONEID_STANDARD_RESOURCE, $phone_number), $params);
   }
 
   /**
@@ -37,8 +37,10 @@ class PhoneIdClient extends RestClient {
    *
    * See https://developer.telesign.com/docs/rest_api-phoneid-score for detailed API documentation.
    */
-  function score ($phone_number, array $fields = []) {
-    return $this->get(sprintf(self::PHONEID_SCORE_RESOURCE, $phone_number), $fields);
+  function score ($phone_number, $ucid, array $other = []) {
+    return $this->get(sprintf(self::PHONEID_SCORE_RESOURCE, $phone_number), array_merge($other, [
+      "ucid" => $ucid
+    ]));
   }
 
   /**
@@ -47,8 +49,10 @@ class PhoneIdClient extends RestClient {
    *
    * See https://developer.telesign.com/docs/rest_api-phoneid-contact for detailed API documentation.
    */
-  function contact ($phone_number, array $fields = []) {
-    return $this->get(sprintf(self::PHONEID_CONTACT_RESOURCE, $phone_number), $fields);
+  function contact ($phone_number, $ucid, array $other = []) {
+    return $this->get(sprintf(self::PHONEID_CONTACT_RESOURCE, $phone_number), array_merge($other, [
+      "ucid" => $ucid
+    ]));
   }
 
   /**
@@ -57,8 +61,10 @@ class PhoneIdClient extends RestClient {
    *
    * See https://developer.telesign.com/docs/rest_api-phoneid-live for detailed API documentation.
    */
-  function live ($phone_number, array $fields = []) {
-    return $this->get(sprintf(self::PHONEID_LIVE_RESOURCE, $phone_number), $fields);
+  function live ($phone_number, $ucid, array $other = []) {
+    return $this->get(sprintf(self::PHONEID_LIVE_RESOURCE, $phone_number), array_merge($other, [
+      "ucid" => $ucid
+    ]));
   }
 
   /**
@@ -67,8 +73,10 @@ class PhoneIdClient extends RestClient {
    *
    * See https://developer.telesign.com/docs/rest_api-phoneid-number-deactivation for detailed API documentation.
    */
-  function numberDeactivation ($phone_number, array $fields = []) {
-    return $this->get(sprintf(self::PHONEID_NUMBER_DEACTIVATION_RESOURCE, $phone_number), $fields);
+  function numberDeactivation ($phone_number, $ucid, array $other = []) {
+    return $this->get(sprintf(self::PHONEID_NUMBER_DEACTIVATION_RESOURCE, $phone_number), array_merge($other, [
+      "ucid" => $ucid
+    ]));
   }
 
 }

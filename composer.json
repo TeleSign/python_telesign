@@ -1,12 +1,12 @@
 {
-  "name": "telesign/telesign",
-  "description": "TeleSign SDK",
+  "name": "telesign/telesignenterprise",
+  "description": "TeleSign Enterprise SDK",
   "type": "library",
   "keywords": [
-    "telesign", "sms", "voice", "mobile", "authentication", "identity"
+    "telesign", "sms", "voice", "mobile", "authentication", "identity", "messaging"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/telesign/php_telesign",
+  "homepage": "https://github.com/telesign/php_telesign_enterprise",
   "authors": [
     {
       "name": "TeleSign Corp.",
@@ -18,19 +18,23 @@
     "php": ">=5.6.0",
     "guzzlehttp/guzzle": "^6.2",
     "ramsey/uuid": "^3.5",
-    "psr/http-message": "^1.0"
+    "psr/http-message": "^1.0",
+    "telesign/telesign": "master@dev"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.7"
   },
   "autoload": {
-    "psr-4": { "telesign\\sdk\\": "src/" },
-    "files": [ "src/util.php", "src/version.php" ]
+    "psr-4": { "telesign\\enterprise\\sdk\\": "src/" }
   },
   "autoload-dev": {
-    "psr-4": { "telesign\\sdk\\": "test/" }
+    "psr-4": { "telesign\\enterprise\\sdk\\": "test/" }
   },
   "scripts": {
     "test": "php vendor/phpunit/phpunit/phpunit --bootstrap ./vendor/autoload.php test/"
-  }
+  },
+  "repositories": [{
+    "type": "vcs",
+    "url": "ssh://git@github.com/TeleSign/php_telesign_private"
+  }]
 }

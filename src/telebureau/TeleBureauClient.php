@@ -1,6 +1,6 @@
 <?php
 
-namespace telesign\sdk\telebureau;
+namespace telesign\enterprise\sdk\telebureau;
 
 use telesign\sdk\rest\RestClient;
 

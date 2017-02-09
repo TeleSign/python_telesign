@@ -1,6 +1,6 @@
 <?php
 
-namespace telesign\sdk;
+namespace telesign\enterprise\sdk;
 
 class Example {
 

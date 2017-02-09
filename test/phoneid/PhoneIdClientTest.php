@@ -1,8 +1,8 @@
 <?php
 
-namespace telesign\sdk\phoneid;
+namespace telesign\enterprise\sdk\phoneid;
 
-use telesign\sdk\Example;
+use telesign\enterprise\sdk\Example;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
@@ -36,10 +36,6 @@ final class PhoneIdClientTest extends TestCase {
   function getRequestExamples () {
     $methods = [
       [
-        "method" => "standard",
-        "relative_uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/standard/" . self::EXAMPLE_PHONE_NUMBER
-      ],
-      [
         "method" => "score",
         "relative_uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/score/" . self::EXAMPLE_PHONE_NUMBER
       ],
@@ -63,7 +59,7 @@ final class PhoneIdClientTest extends TestCase {
           "method" => $m["method"],
           "args" => [
             self::EXAMPLE_PHONE_NUMBER,
-            [ "ucid" => self::EXAMPLE_UCID ]
+            self::EXAMPLE_UCID
           ],
           "request" => [
             "uri" => "{$m["relative_uri"]}?ucid=" . self::EXAMPLE_UCID,
@@ -72,6 +68,20 @@ final class PhoneIdClientTest extends TestCase {
         ]
       ];
     }
+
+    $data[] = [
+      [
+        "method" => "standard",
+        "args" => [
+          self::EXAMPLE_PHONE_NUMBER,
+          [ "ucid" => self::EXAMPLE_UCID ]
+        ],
+        "request" => [
+          "uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/standard/" . self::EXAMPLE_PHONE_NUMBER . "?ucid=" . self::EXAMPLE_UCID,
+          "body" => ""
+        ]
+      ]
+    ];
 
     return $data;
   }

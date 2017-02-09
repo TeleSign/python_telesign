@@ -28,7 +28,7 @@ Installation
 
   $ composer require telesign/telesign
 
-PHP Code Example: Verify Voice
+PHP Code Example: Verify SMS
 -------------------------------------
 
 Here's a basic code example with JSON response.
@@ -37,27 +37,29 @@ Here's a basic code example with JSON response.
 
   require __DIR__ . "/vendor/autoload.php";
 
-  use telesign\verify\VerifyClient;
+  use telesign\enterprise\sdk\verify\VerifyClient;
 
-  $phone_number = "13103409700";
-  $ucid = "OTHR";
-  $verify_code = "1234";
-  $customer_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
-  $secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
+  $customer_id = "customer_id";
+  $secret_key = "secret_key";
+
+  $phone_number = "phone_number";
+
   $verify = new VerifyClient($customer_id, $secret_key);
-  $result = $verify->voice($phone_number, $ucid, $verify_code);
+  $result = $verify->sms($phone_number);
   print_r($result->json);
 
 .. code-block:: javascript
 
   {'errors': [],
-   'reference_id': 'DGFDF6E11AB86303ASDFD425BE00000657',
-   'resource_uri': '/v1/verify/DGFDF6E11AB86303ASDFD425BE00000657',
-   'status': {'code': 103,
-      'description': 'Call in progress',
-      'updated_on': '2016-12-12T00:39:58.325559Z'},
-   'sub_resource': 'call',
-   'verify': {'code_state': 'UNKNOWN', 'code_entered': ''}}
+   'reference_id': '25685A40218006049044A58789044948',
+   'resource_uri': '/v1/verify/25685A40218006049044A58789044948',
+   'status': {'code': 290,
+      'description': 'Message in progress',
+      'updated_on': '2017-02-07T03:13:42.610863Z'},
+   'sub_resource': 'sms',
+   'verify': {'code_entered': '', 'code_state': 'UNKNOWN'}}
+
+For more examples, see the examples folder or visit `TeleSign Developer Portal <https://developer.telesign.com/>`_.
 
 Authentication
 --------------

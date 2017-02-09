@@ -1,6 +1,6 @@
 <?php
 
-namespace telesign\sdk\verify;
+namespace telesign\enterprise\sdk\verify;
 
 use telesign\sdk\rest\RestClient;
 
@@ -22,8 +22,10 @@ class VerifyClient extends RestClient {
    *
    * See https://developer.telesign.com/docs/rest_api-verify-sms for detailed API documentation.
    */
-  function sms (array $fields) {
-    return $this->post(self::VERIFY_SMS_RESOURCE, $fields);
+  function sms ($phone_number, array $other = []) {
+    return $this->post(self::VERIFY_SMS_RESOURCE, array_merge($other, [
+      "phone_number" => $phone_number
+    ]));
   }
 
   /**
@@ -32,8 +34,10 @@ class VerifyClient extends RestClient {
    *
    * See https://developer.telesign.com/docs/rest_api-verify-call for detailed API documentation.
    */
-  function voice (array $fields) {
-    return $this->post(self::VERIFY_VOICE_RESOURCE, $fields);
+  function voice ($phone_number, array $other = []) {
+    return $this->post(self::VERIFY_VOICE_RESOURCE, array_merge($other, [
+      "phone_number" => $phone_number
+    ]));
   }
 
   /**
@@ -43,8 +47,11 @@ class VerifyClient extends RestClient {
    *
    * See https://developer.telesign.com/docs/rest_api-smart-verify for detailed API documentation.
    */
-  function smart (array $fields) {
-    return $this->post(self::VERIFY_SMART_RESOURCE, $fields);
+  function smart ($phone_number, $ucid, array $other = []) {
+    return $this->post(self::VERIFY_SMART_RESOURCE, array_merge($other, [
+      "phone_number" => $phone_number,
+      "ucid" => $ucid
+    ]));
   }
 
   /**
@@ -54,8 +61,11 @@ class VerifyClient extends RestClient {
    *
    * See https://developer.telesign.com/docs/rest_api-verify-push for detailed API documentation.
    */
-  function push (array $fields) {
-    return $this->post(self::VERIFY_PUSH_RESOURCE, $fields);
+  function push ($phone_number, $ucid, array $other = []) {
+    return $this->post(self::VERIFY_PUSH_RESOURCE, array_merge($other, [
+      "phone_number" => $phone_number,
+      "ucid" => $ucid
+    ]));
   }
 
   /**
@@ -63,8 +73,8 @@ class VerifyClient extends RestClient {
    *
    * See https://developer.telesign.com/docs/rest_api-verify-transaction-callback for detailed API documentation.
    */
-  function status ($reference_id, array $fields = []) {
-    return $this->get(sprintf(self::VERIFY_STATUS_RESOURCE, $reference_id), $fields);
+  function status ($reference_id, array $params = []) {
+    return $this->get(sprintf(self::VERIFY_STATUS_RESOURCE, $reference_id), $params);
   }
 
 }

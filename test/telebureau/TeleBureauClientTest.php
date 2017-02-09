@@ -1,8 +1,8 @@
 <?php
 
-namespace telesign\sdk\telebureau;
+namespace telesign\enterprise\sdk\telebureau;
 
-use telesign\sdk\Example;
+use telesign\enterprise\sdk\Example;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
