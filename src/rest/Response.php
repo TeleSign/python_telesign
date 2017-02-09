@@ -20,7 +20,7 @@ class Response {
   function __construct (ResponseInterface $response) {
     $this->status_code = $response->getStatusCode();
     $this->headers = $response->getHeaders();
-    $this->body = $response->getBody();
+    $this->body = $response->getBody()->getContents();
     $this->ok = 400 <= $this->status_code && $this->status_code < 600;
     $this->json = json_decode($this->body);
   }
