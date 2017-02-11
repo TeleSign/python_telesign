@@ -16,6 +16,10 @@ class VerifyClient extends RestClient {
   const VERIFY_PUSH_RESOURCE = "/v2/verify/push";
   const VERIFY_STATUS_RESOURCE = "/v1/verify/%s";
 
+  function __construct ($customer_id, $secret_key, $api_host = "https://rest.telesign.com", ...$other) {
+    parent::__construct($customer_id, $secret_key, $api_host, ...$other);
+  }
+
   /**
    * The SMS Verify API delivers phone-based verification and two-factor authentication using a time-based,
    * one-time passcode sent over SMS.

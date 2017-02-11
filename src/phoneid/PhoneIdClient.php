@@ -21,6 +21,10 @@ class PhoneIdClient extends RestClient {
   const PHONEID_CALL_FORWARD_RESOURCE = "/v1/phoneid/call_forward/%s";
   const PHONEID_NUMBER_DEACTIVATION_RESOURCE = "/v1/phoneid/number_deactivation/%s";
 
+  function __construct ($customer_id, $secret_key, $api_host = "https://rest.telesign.com", ...$other) {
+    parent::__construct($customer_id, $secret_key, $api_host, ...$other);
+  }
+
   /**
    * The PhoneID Standard API that provides phone type and telecom carrier information to identify which phone
    * numbers can receive SMS messages and/or a potential fraud risk.
