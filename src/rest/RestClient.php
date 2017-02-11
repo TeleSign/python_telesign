@@ -207,7 +207,8 @@ class RestClient {
 
     return new Response($this->client->request($method_name, $resource, [
       "headers" => $headers,
-      $option => $url_encoded_fields
+      $option => $url_encoded_fields,
+      "http_errors" => false
     ]));
   }
 
