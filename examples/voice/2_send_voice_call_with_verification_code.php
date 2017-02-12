@@ -2,7 +2,7 @@
 
 require __DIR__ . "/../../vendor/autoload.php";
 
-use telesign\sdk\messaging\MessagingClient;
+use telesign\sdk\voice\VoiceClient;
 use function telesign\sdk\util\randomWithNDigits;
 
 $customer_id = "customer_id";
@@ -10,11 +10,11 @@ $secret_key = "secret_key";
 
 $phone_number = "phone_number";
 $verify_code = randomWithNDigits(5);
-$message = "Your code is $verify_code";
+$message = "Hello, your code is $verify_code. Once again, your code is $verify_code. Goodbye.";
 $message_type = "OTP";
 
-$messaging = new MessagingClient($customer_id, $secret_key);
-$response = $messaging->message($phone_number, $message, $message_type);
+$voice = new VoiceClient($customer_id, $secret_key);
+$response = $voice->call($phone_number, $message, $message_type);
 
 echo "Please enter the verification code you were sent: ";
 
