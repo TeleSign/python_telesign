@@ -13,5 +13,7 @@ $account_lifecycle_event = "create";
 $data = new ScoreClient($customer_id, $secret_key);
 $response = $data->score($phone_number, $account_lifecycle_event);
 
-echo "Phone number $phone_number has a '{$response->json["risk"]["level"]}' risk level"
+if ($response->ok) {
+  echo "Phone number $phone_number has a '{$response->json["risk"]["level"]}' risk level"
   . " and the recommendation is to '{$response->json["risk"]["recommendation"]}' the transaction.";
+}
