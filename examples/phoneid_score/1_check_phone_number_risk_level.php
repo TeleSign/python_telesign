@@ -13,5 +13,7 @@ $ucid = "BACF";
 $phoneid = new PhoneIdClient($customer_id, $secret_key);
 $response = $phoneid->score($phone_number, $ucid);
 
-echo "Phone number $phone_number has a '{$response->json["risk"]["level"]}' risk level"
-  . " and the recommendation is to '{$response->json["risk"]["recommendation"]}' the transaction.";
+if ($response->ok) {
+  echo "Phone number $phone_number has a '{$response->json["risk"]["level"]}' risk level"
+    . " and the recommendation is to '{$response->json["risk"]["recommendation"]}' the transaction.";
+}
