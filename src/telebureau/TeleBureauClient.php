@@ -22,7 +22,7 @@ class TeleBureauClient extends RestClient {
   /**
    * Creates a telebureau event corresponding to supplied data.
    *
-   * See https://developer.telesign.com/docs/rest_api-telebureau for detailed API documentation.
+   * See https://developer.telesign.com/docs/telebureau-api for detailed API documentation.
    */
   function create (array $fields) {
     return $this->post(self::TELEBUREAU_CREATE_RESOURCE, $fields);
@@ -32,7 +32,7 @@ class TeleBureauClient extends RestClient {
    * Retrieves the fraud event status. You make this call in your web application after completion of create
    * transaction for a telebureau event.
    *
-   * See https://developer.telesign.com/docs/rest_api-telebureau for detailed API documentation.
+   * See https://developer.telesign.com/docs/telebureau-api for detailed API documentation.
    */
   function retrieve ($reference_id, array $fields = []) {
     return $this->get(sprintf(self::TELEBUREAU_RETRIEVE_RESOURCE, $reference_id), $fields);
@@ -42,7 +42,7 @@ class TeleBureauClient extends RestClient {
    * Deletes a previously submitted fraud event. You make this call in your web application after completion of the
    * create transaction for a telebureau event.
    *
-   * See https://developer.telesign.com/docs/rest_api-telebureau for detailed API documentation.
+   * See https://developer.telesign.com/docs/telebureau-api for detailed API documentation.
    */
   function delete ($reference_id, array $fields = []) {
     return parent::delete(sprintf(self::TELEBUREAU_DELETE_RESOURCE, $reference_id), $fields);
