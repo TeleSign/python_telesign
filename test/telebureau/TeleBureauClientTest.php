@@ -32,55 +32,68 @@ final class TeleBureauClientTest extends TestCase {
 
     $this->assertInstanceOf(RequestInterface::class, $request);
     $this->assertEquals($data["request"]["uri"], $request->getUri());
-    $this->assertEquals($data["request"]["body"], $request->getBody());
+
+    parse_str($request->getBody()->getContents(), $actual_fields);
+
+    $this->assertEquals($data["request"]["fields"], $actual_fields);
   }
 
   function getRequestExamples () {
-    $fields = [
-      [
-        "fields" => [
-          "phone_number" => self::EXAMPLE_PHONE_NUMBER,
-          "label" => self::EXAMPLE_LABEL,
-          "ucid" => self::EXAMPLE_UCID
-        ],
-        "url_encoded_fields" => sprintf(
-          "phone_number=%s&label=%s&ucid=%s",
-          self::EXAMPLE_PHONE_NUMBER,
-          self::EXAMPLE_LABEL,
-          self::EXAMPLE_UCID
-        )
-      ]
-    ];
-
     return [
       [[
         "method" => "create",
-        "args" => [ $fields[0]["fields"] ],
+        "args" => [
+          [
+            "phone_number" => self::EXAMPLE_PHONE_NUMBER,
+            "label" => self::EXAMPLE_LABEL,
+            "ucid" => self::EXAMPLE_UCID
+          ]
+        ],
         "request" => [
           "uri" => self::EXAMPLE_API_HOST. "/v1/telebureau/event",
-          "body" => $fields[0]["url_encoded_fields"]
+          "fields" => [
+            "phone_number" => self::EXAMPLE_PHONE_NUMBER,
+            "label" => self::EXAMPLE_LABEL,
+            "ucid" => self::EXAMPLE_UCID
+          ]
         ]
       ]],
       [[
         "method" => "retrieve",
         "args" => [
           self::EXAMPLE_REFERENCE_ID,
-          $fields[0]["fields"]
+          [
+            "phone_number" => self::EXAMPLE_PHONE_NUMBER,
+            "label" => self::EXAMPLE_LABEL,
+            "ucid" => self::EXAMPLE_UCID
+          ]
         ],
         "request" => [
-          "uri" => self::EXAMPLE_API_HOST . "/v1/telebureau/event/". self::EXAMPLE_REFERENCE_ID . "?{$fields[0]["url_encoded_fields"]}",
-          "body" => ""
+          "uri" => self::EXAMPLE_API_HOST . "/v1/telebureau/event/". self::EXAMPLE_REFERENCE_ID . "?" . http_build_query([
+            "phone_number" => self::EXAMPLE_PHONE_NUMBER,
+            "label" => self::EXAMPLE_LABEL,
+            "ucid" => self::EXAMPLE_UCID
+          ], '', '&'),
+          "fields" => []
         ]
       ]],
       [[
         "method" => "delete",
         "args" => [
           self::EXAMPLE_REFERENCE_ID,
-          $fields[0]["fields"]
+          [
+            "phone_number" => self::EXAMPLE_PHONE_NUMBER,
+            "label" => self::EXAMPLE_LABEL,
+            "ucid" => self::EXAMPLE_UCID
+          ]
         ],
         "request" => [
-          "uri" => self::EXAMPLE_API_HOST . "/v1/telebureau/event/". self::EXAMPLE_REFERENCE_ID . "?{$fields[0]["url_encoded_fields"]}",
-          "body" => ""
+          "uri" => self::EXAMPLE_API_HOST . "/v1/telebureau/event/". self::EXAMPLE_REFERENCE_ID . "?" . http_build_query([
+            "phone_number" => self::EXAMPLE_PHONE_NUMBER,
+            "label" => self::EXAMPLE_LABEL,
+            "ucid" => self::EXAMPLE_UCID
+          ], '', '&'),
+          "fields" => []
         ]
       ]],
     ];
