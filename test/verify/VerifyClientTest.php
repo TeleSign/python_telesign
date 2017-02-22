@@ -117,11 +117,11 @@ final class VerifyClientTest extends TestCase {
         "args" => [
           self::EXAMPLE_REFERENCE_ID,
           [
-            "verify_code" => self::EXAMPLE_VERIFY_CODE
+            "optional_param" => "123"
           ]
         ],
         "request" => [
-          "uri" => self::EXAMPLE_API_HOST . "/v1/verify/". self::EXAMPLE_REFERENCE_ID . "?verify_code=" . self::EXAMPLE_VERIFY_CODE,
+          "uri" => self::EXAMPLE_API_HOST . "/v1/verify/". self::EXAMPLE_REFERENCE_ID . "?optional_param=123",
           "fields" => []
         ]
       ]],

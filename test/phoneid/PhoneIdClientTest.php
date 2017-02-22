@@ -42,10 +42,11 @@ final class PhoneIdClientTest extends TestCase {
         "method" => "score",
         "args" => [
           self::EXAMPLE_PHONE_NUMBER,
-          self::EXAMPLE_UCID
+          self::EXAMPLE_UCID,
+          [ "optional_param" => "123" ]
         ],
         "request" => [
-          "uri" => self::EXAMPLE_API_HOST . "/v1/phoneid/score/" . self::EXAMPLE_PHONE_NUMBER . "?ucid=" . self::EXAMPLE_UCID,
+          "uri" => self::EXAMPLE_API_HOST . "/v1/phoneid/score/" . self::EXAMPLE_PHONE_NUMBER . "?optional_param=123&ucid=" . self::EXAMPLE_UCID,
           "fields" => []
         ]
       ]],
@@ -53,10 +54,11 @@ final class PhoneIdClientTest extends TestCase {
         "method" => "contact",
         "args" => [
           self::EXAMPLE_PHONE_NUMBER,
-          self::EXAMPLE_UCID
+          self::EXAMPLE_UCID,
+          [ "optional_param" => "123" ]
         ],
         "request" => [
-          "uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/contact/" . self::EXAMPLE_PHONE_NUMBER . "?ucid=" . self::EXAMPLE_UCID,
+          "uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/contact/" . self::EXAMPLE_PHONE_NUMBER . "?optional_param=123&ucid=" . self::EXAMPLE_UCID,
           "fields" => []
         ]
       ]],
@@ -64,10 +66,11 @@ final class PhoneIdClientTest extends TestCase {
         "method" => "live",
         "args" => [
           self::EXAMPLE_PHONE_NUMBER,
-          self::EXAMPLE_UCID
+          self::EXAMPLE_UCID,
+          [ "optional_param" => "123" ]
         ],
         "request" => [
-          "uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/live/" . self::EXAMPLE_PHONE_NUMBER . "?ucid=" . self::EXAMPLE_UCID,
+          "uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/live/" . self::EXAMPLE_PHONE_NUMBER . "?optional_param=123&ucid=" . self::EXAMPLE_UCID,
           "fields" => []
         ]
       ]],
@@ -75,10 +78,11 @@ final class PhoneIdClientTest extends TestCase {
         "method" => "numberDeactivation",
         "args" => [
           self::EXAMPLE_PHONE_NUMBER,
-          self::EXAMPLE_UCID
+          self::EXAMPLE_UCID,
+          [ "optional_param" => "123" ]
         ],
         "request" => [
-          "uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/number_deactivation/" . self::EXAMPLE_PHONE_NUMBER . "?ucid=" . self::EXAMPLE_UCID,
+          "uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/number_deactivation/" . self::EXAMPLE_PHONE_NUMBER . "?optional_param=123&ucid=" . self::EXAMPLE_UCID,
           "fields" => []
         ]
       ]],
@@ -86,10 +90,10 @@ final class PhoneIdClientTest extends TestCase {
         "method" => "standard",
         "args" => [
           self::EXAMPLE_PHONE_NUMBER,
-          [ "ucid" => self::EXAMPLE_UCID ]
+          [ "optional_param" => "123" ]
         ],
         "request" => [
-          "uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/standard/" . self::EXAMPLE_PHONE_NUMBER . "?ucid=" . self::EXAMPLE_UCID,
+          "uri" => self::EXAMPLE_API_HOST. "/v1/phoneid/standard/" . self::EXAMPLE_PHONE_NUMBER . "?optional_param=123",
           "fields" => []
         ]
       ]]

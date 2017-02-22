@@ -17,7 +17,7 @@ final class TeleBureauClientTest extends TestCase {
   const EXAMPLE_PHONE_NUMBER = Example::PHONE_NUMBER;
   const EXAMPLE_UCID = Example::UCID;
   const EXAMPLE_REFERENCE_ID = Example::REFERENCE_ID;
-  const EXAMPLE_LABEL = "bad";
+  const EXAMPLE_FRAUD_TYPE = "chargeback";
 
   /**
    * @dataProvider getRequestExamples
@@ -45,16 +45,16 @@ final class TeleBureauClientTest extends TestCase {
         "args" => [
           [
             "phone_number" => self::EXAMPLE_PHONE_NUMBER,
-            "label" => self::EXAMPLE_LABEL,
-            "ucid" => self::EXAMPLE_UCID
+            "fraud_type" => self::EXAMPLE_FRAUD_TYPE,
+            "optional_param" => "123"
           ]
         ],
         "request" => [
           "uri" => self::EXAMPLE_API_HOST. "/v1/telebureau/event",
           "fields" => [
             "phone_number" => self::EXAMPLE_PHONE_NUMBER,
-            "label" => self::EXAMPLE_LABEL,
-            "ucid" => self::EXAMPLE_UCID
+            "fraud_type" => self::EXAMPLE_FRAUD_TYPE,
+            "optional_param" => "123"
           ]
         ]
       ]],
@@ -63,17 +63,11 @@ final class TeleBureauClientTest extends TestCase {
         "args" => [
           self::EXAMPLE_REFERENCE_ID,
           [
-            "phone_number" => self::EXAMPLE_PHONE_NUMBER,
-            "label" => self::EXAMPLE_LABEL,
-            "ucid" => self::EXAMPLE_UCID
+            "optional_param" => "123"
           ]
         ],
         "request" => [
-          "uri" => self::EXAMPLE_API_HOST . "/v1/telebureau/event/". self::EXAMPLE_REFERENCE_ID . "?" . http_build_query([
-            "phone_number" => self::EXAMPLE_PHONE_NUMBER,
-            "label" => self::EXAMPLE_LABEL,
-            "ucid" => self::EXAMPLE_UCID
-          ], '', '&'),
+          "uri" => self::EXAMPLE_API_HOST . "/v1/telebureau/event/". self::EXAMPLE_REFERENCE_ID . "?optional_param=123",
           "fields" => []
         ]
       ]],
@@ -82,17 +76,11 @@ final class TeleBureauClientTest extends TestCase {
         "args" => [
           self::EXAMPLE_REFERENCE_ID,
           [
-            "phone_number" => self::EXAMPLE_PHONE_NUMBER,
-            "label" => self::EXAMPLE_LABEL,
-            "ucid" => self::EXAMPLE_UCID
+            "optional_param" => "123"
           ]
         ],
         "request" => [
-          "uri" => self::EXAMPLE_API_HOST . "/v1/telebureau/event/". self::EXAMPLE_REFERENCE_ID . "?" . http_build_query([
-            "phone_number" => self::EXAMPLE_PHONE_NUMBER,
-            "label" => self::EXAMPLE_LABEL,
-            "ucid" => self::EXAMPLE_UCID
-          ], '', '&'),
+          "uri" => self::EXAMPLE_API_HOST . "/v1/telebureau/event/". self::EXAMPLE_REFERENCE_ID . "?optional_param=123",
           "fields" => []
         ]
       ]],
