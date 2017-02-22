@@ -19,7 +19,7 @@ final class RestClientTest extends TestCase {
   const EXAMPLE_RESOURCE = "/v1/resource";
   const EXAMPLE_FIELDS = [ "test" => "param" ];
   const EXAMPLE_URL_ENCODED_FIELDS = "test=param";
-  const EXAMPLE_DATE_RFC2616 = "Mon, 27 Jan 2017 23:59:59 GMT";
+  const EXAMPLE_DATE = "Mon, 27 Jan 2017 23:59:59 +0000";
   const EXAMPLE_NONCE = "5ffb243e-8e2a-4a7b-bf22-2b3925b3d6ef";
 
   /**
@@ -32,13 +32,13 @@ final class RestClientTest extends TestCase {
       $data["method_name"],
       self::EXAMPLE_RESOURCE,
       self::EXAMPLE_URL_ENCODED_FIELDS,
-      self::EXAMPLE_DATE_RFC2616,
+      self::EXAMPLE_DATE,
       self::EXAMPLE_NONCE
     );
 
     $expected_headers = [
       "Authorization" => $data["request"]["headers"]["authorization"],
-      "Date" => self::EXAMPLE_DATE_RFC2616,
+      "Date" => self::EXAMPLE_DATE,
       "Content-Type" => $data["request"]["headers"]["content-type"],
       "x-ts-auth-method" => "HMAC-SHA256",
       "x-ts-nonce" => self::EXAMPLE_NONCE
@@ -131,7 +131,7 @@ final class RestClientTest extends TestCase {
       self::EXAMPLE_CUSTOMER_ID, self::EXAMPLE_SECRET_KEY, self::EXAMPLE_API_HOST, 10, null, $mock
     );
     $client->$data["method_name"](
-      self::EXAMPLE_RESOURCE, self::EXAMPLE_FIELDS, self::EXAMPLE_DATE_RFC2616, self::EXAMPLE_NONCE
+      self::EXAMPLE_RESOURCE, self::EXAMPLE_FIELDS, self::EXAMPLE_DATE, self::EXAMPLE_NONCE
     );
 
     $request = $mock->getLastRequest();
@@ -153,7 +153,7 @@ final class RestClientTest extends TestCase {
       self::EXAMPLE_CUSTOMER_ID, self::EXAMPLE_SECRET_KEY, self::EXAMPLE_API_HOST, 10, null, $mock
     );
     $response = $client->$data["method_name"](
-      self::EXAMPLE_RESOURCE, self::EXAMPLE_FIELDS, self::EXAMPLE_DATE_RFC2616, self::EXAMPLE_NONCE
+      self::EXAMPLE_RESOURCE, self::EXAMPLE_FIELDS, self::EXAMPLE_DATE, self::EXAMPLE_NONCE
     );
 
     $this->assertInstanceOf(TelesignSdkRestResponse::class, $response);

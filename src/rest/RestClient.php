@@ -73,7 +73,7 @@ class RestClient {
    *                                   'DELETE'
    * @param string $resource           The partial resource URI to perform the request against
    * @param string $url_encoded_fields HTTP body parameters to perform the HTTP request with, must be urlencoded
-   * @param string $date_rfc2616       The date and time of the request formatted in rfc 2616
+   * @param string $date               The date and time of the request
    * @param string $nonce              A unique cryptographic nonce for the request
    * @param string $user_agent         User Agent associated with the request
    *
@@ -85,12 +85,12 @@ class RestClient {
     $method_name,
     $resource,
     $url_encoded_fields,
-    $date_rfc2616 = null,
+    $date = null,
     $nonce = null,
     $user_agent = null
   ) {
-    if (!$date_rfc2616) {
-      $date_rfc2616 = gmdate("D, d M Y H:i:s T");
+    if (!$date) {
+      $date = gmdate(DATE_RFC2822);
     }
 
     if (!$nonce) {
@@ -104,7 +104,7 @@ class RestClient {
     $string_to_sign_builder = [
       $method_name,
       "\n$content_type",
-      "\n$date_rfc2616",
+      "\n$date",
       "\nx-ts-auth-method:$auth_method",
       "\nx-ts-nonce:$nonce"
     ];
@@ -124,7 +124,7 @@ class RestClient {
 
     $headers = [
       "Authorization" => $authorization,
-      "Date" => $date_rfc2616,
+      "Date" => $date,
       "Content-Type" => $content_type,
       "x-ts-auth-method" => $auth_method,
       "x-ts-nonce" => $nonce
@@ -140,10 +140,10 @@ class RestClient {
   /**
    * Generic TeleSign REST API POST handler
    *
-   * @param string $resource     The partial resource URI to perform the request against
-   * @param array  $fields       Body params to perform the POST request with
-   * @param string $date_rfc2616 The date and time of the request formatted in rfc 2616
-   * @param string $nonce        A unique cryptographic nonce for the request
+   * @param string $resource The partial resource URI to perform the request against
+   * @param array  $fields   Body params to perform the POST request with
+   * @param string $date     The date and time of the request
+   * @param string $nonce    A unique cryptographic nonce for the request
    *
    * @return \telesign\sdk\rest\Response The RestClient Response object
    */
@@ -154,10 +154,10 @@ class RestClient {
   /**
    * Generic TeleSign REST API GET handler
    *
-   * @param string $resource     The partial resource URI to perform the request against
-   * @param array  $fields       Query params to perform the GET request with
-   * @param string $date_rfc2616 The date and time of the request formatted in rfc 2616
-   * @param string $nonce        A unique cryptographic nonce for the request
+   * @param string $resource The partial resource URI to perform the request against
+   * @param array  $fields   Query params to perform the GET request with
+   * @param string $date     The date and time of the request
+   * @param string $nonce    A unique cryptographic nonce for the request
    *
    * @return \telesign\sdk\rest\Response The RestClient Response object
    */
@@ -168,10 +168,10 @@ class RestClient {
   /**
    * Generic TeleSign REST API DELETE handler
    *
-   * @param string $resource     The partial resource URI to perform the request against
-   * @param array  $fields       Query params to perform the DELETE request with
-   * @param string $date_rfc2616 The date and time of the request formatted in rfc 2616
-   * @param string $nonce        A unique cryptographic nonce for the request
+   * @param string $resource The partial resource URI to perform the request against
+   * @param array  $fields   Query params to perform the DELETE request with
+   * @param string $date     The date and time of the request
+   * @param string $nonce    A unique cryptographic nonce for the request
    *
    * @return \telesign\sdk\rest\Response The RestClient Response object
    */
@@ -182,14 +182,14 @@ class RestClient {
   /**
    * Generic TeleSign REST API request handler
    *
-   * @param string $resource     The partial resource URI to perform the request against
-   * @param array  $fields       Body of query params to perform the HTTP request with
-   * @param string $date_rfc2616 The date and time of the request formatted in rfc 2616
-   * @param string $nonce        A unique cryptographic nonce for the request
+   * @param string $resource The partial resource URI to perform the request against
+   * @param array  $fields   Body of query params to perform the HTTP request with
+   * @param string $date     The date and time of the request
+   * @param string $nonce    A unique cryptographic nonce for the request
    *
    * @return \telesign\sdk\rest\Response The RestClient Response object
    */
-  private function execute ($method_name, $resource, $fields = [], $date_rfc2616 = null, $nonce = null) {
+  private function execute ($method_name, $resource, $fields = [], $date = null, $nonce = null) {
     $url_encoded_fields = http_build_query($fields, null, "&");
 
     $headers = $this->generateTelesignHeaders(
@@ -198,7 +198,7 @@ class RestClient {
       $method_name,
       $resource,
       $url_encoded_fields,
-      $date_rfc2616,
+      $date,
       $nonce,
       $this->user_agent
     );
