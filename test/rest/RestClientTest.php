@@ -55,7 +55,7 @@ final class RestClientTest extends TestCase {
           "uri" => self::EXAMPLE_API_HOST . self::EXAMPLE_RESOURCE,
           "body" => self::EXAMPLE_URL_ENCODED_FIELDS,
           "headers" => [
-            "authorization" => "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:smUGWEeXtN+WT1s/y1Ssp4Q2Acm/ultPxkgl/GjqSsA=",
+            "authorization" => "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:L9DS0dl0Pil6DH81IyOjQ3pT22e3Ysv75Hph7Ll1os4=",
             "content-type" => "application/x-www-form-urlencoded",
           ]
         ]
@@ -66,7 +66,7 @@ final class RestClientTest extends TestCase {
           "uri" => self::EXAMPLE_API_HOST . self::EXAMPLE_RESOURCE . "?" . self::EXAMPLE_URL_ENCODED_FIELDS,
           "body" => "",
           "headers" => [
-            "authorization" => "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:YgzQt6LcuBDSUeTpE4SASXcSAKAm1eL5TWetbxhXJxg=",
+            "authorization" => "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:4tuFd/oafDAijm0XiMxoqVVbMjq/ME+zNWaNmrQEtR0=",
             "content-type" => ""
           ]
         ]
@@ -77,7 +77,7 @@ final class RestClientTest extends TestCase {
           "uri" => self::EXAMPLE_API_HOST . self::EXAMPLE_RESOURCE . "?" . self::EXAMPLE_URL_ENCODED_FIELDS,
           "body" => "",
           "headers" => [
-            "authorization" => "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:ODT8s51qSdrS2pKbtrKIu76gQJf2h0hDz8nJ5ho0/6w=",
+            "authorization" => "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:FSSvv/YoFJrk0MFcqIzULLKdeyOran9yRVTuBTGAwEA=",
             "content-type" => ""
           ]
         ]
