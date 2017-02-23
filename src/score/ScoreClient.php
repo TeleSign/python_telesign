@@ -5,8 +5,7 @@ namespace telesign\sdk\score;
 use telesign\sdk\rest\RestClient;
 
 /**
- * The TeleSign Data APIs that deliver deep phone number data attributes that help optimize the end user
- * verification process and evaluate risk.
+ * Score provides risk information about a specified phone number.
  */
 class ScoreClient extends RestClient {
 
