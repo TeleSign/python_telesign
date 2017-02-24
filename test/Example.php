@@ -10,5 +10,6 @@ class Example {
   const PHONE_NUMBER = "13103409700";
   const UCID = "OTHR";
   const REFERENCE_ID = "AEBC93B5898342F790E4E19FED41A7DA";
+  const ACCOUNT_LIFECYCLE_EVENT = "create";
 
 }
