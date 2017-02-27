@@ -21,8 +21,8 @@ class Response {
     $this->status_code = $response->getStatusCode();
     $this->headers = $response->getHeaders();
     $this->body = $response->getBody()->getContents();
-    $this->ok = 400 <= $this->status_code && $this->status_code < 600;
-    $this->json = json_decode($this->body);
+    $this->ok = $this->status_code < 400;
+    $this->json = json_decode($this->body, true);
   }
 
 }
