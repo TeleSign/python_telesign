@@ -18,7 +18,7 @@ The **TeleSign PHP SDK** is a PHP library that provides an interface to `TeleSig
 
 The **TeleSign Enterprise PHP SDK** is a PHP library that provides support for additional REST endpoints.
 
-You can differentiate between the two easily by the "enterprise" label that you'll find in the documentation.
+You can differentiate between the two easily by the *enterprise* label that you'll find in the documentation.
 
 Documentation
 -------------
