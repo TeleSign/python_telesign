@@ -45,19 +45,35 @@ Here's a basic code example with JSON response.
   $phone_number = "phone_number";
 
   $verify = new VerifyClient($customer_id, $secret_key);
-  $result = $verify->sms($phone_number);
-  print_r($result->json);
+  $response = $verify->sms($phone_number);
 
-.. code-block:: javascript
+  print_r($response->json);
 
-  {'errors': [],
-   'reference_id': '25685A40218006049044A58789044948',
-   'resource_uri': '/v1/verify/25685A40218006049044A58789044948',
-   'status': {'code': 290,
-      'description': 'Message in progress',
-      'updated_on': '2017-02-07T03:13:42.610863Z'},
-   'sub_resource': 'sms',
-   'verify': {'code_entered': '', 'code_state': 'UNKNOWN'}}
+.. code-block::
+
+  Array
+  (
+    [resource_uri] => /v1/verify/356A273D5EFC08049043921C89E7872E
+    [reference_id] => 356A273D5EFC08049043921C89E7872E
+    [sub_resource] => sms
+    [errors] => Array
+        (
+        )
+
+    [verify] => Array
+        (
+            [code_state] => UNKNOWN
+            [code_entered] =>
+        )
+
+    [status] => Array
+        (
+            [updated_on] => 2017-03-01T12:19:11.459049Z
+            [code] => 290
+            [description] => Message in progress
+        )
+
+  )
 
 For more examples, see the examples folder or visit `TeleSign Developer Portal <https://developer.telesign.com/>`_.
 
