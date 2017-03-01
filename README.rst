@@ -30,14 +30,9 @@ Installation
 
 This library can be installed as a Composer package. You only have to update your project's `composer.json` with its containing repository because it's not Packagist.
 
-.. code-block:: json
+.. code-block:: bash
 
-  {
-    "repositories": [{
-      "type": "vcs",
-      "url": "https://github.com/TeleSign/python_telesign_enterprise.git"
-    }]
-  }
+  $ composer repositories.telesign/telesignenterprise vcs ssh://git@github.com/TeleSign/php_telesign_enterprise
 
 Then you can run from your terminal the expected:
 
