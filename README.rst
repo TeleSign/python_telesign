@@ -49,9 +49,21 @@ Here's a basic code example with JSON response.
   $messaging = new MessagingClient($customer_id, $secret_key);
   $response = $messaging->message($phone_number, $message, $message_type);
 
-.. code-block:: javascript
+  print_r($response->json);
 
-  {}
+.. code-block::
+
+  Array
+  (
+    [reference_id] => B56A272B0784016889544CB4E6E70011
+    [status] => Array
+        (
+            [code] => 290
+            [description] => Message in progress
+        )
+
+    [external_id] =>
+  )
 
 For more examples, see the examples folder or visit `TeleSign Developer Portal <https://developer.telesign.com/>`_.
 
