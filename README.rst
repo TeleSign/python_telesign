@@ -28,13 +28,13 @@ Detailed documentation for TeleSign REST APIs is available in the `Developer Por
 Installation
 ------------
 
-This library can be installed as a Composer package. You only have to update your project's `composer.json` with its containing repository because it's not Packagist.
+This library can be installed as a Composer package. You only have to add its containing repository to your project's `composer.json`.
 
 .. code-block:: bash
 
   $ composer repositories.telesign/telesignenterprise vcs ssh://git@github.com/TeleSign/php_telesign_enterprise
 
-Then you can run from your terminal the expected:
+Then you can require it as usual.
 
 .. code-block:: bash
 
