@@ -6,8 +6,8 @@ TeleSign provides the world’s most comprehensive approach to account security 
 
 For more information about TeleSign, visit the `TeleSign website <http://www.TeleSign.com>`_.
 
-TeleSign Web Services: PHP SDK
----------------------------------
+TeleSign Web Services: Enterprise PHP SDK
+-----------------------------------------
 
 **TeleSign web services** conform to the `REST Web Service Design Model
 <http://en.wikipedia.org/wiki/Representational_state_transfer>`_. Services are exposed as URI-addressable resources
@@ -15,6 +15,10 @@ through the set of *RESTful* procedures in our **TeleSign REST API**.
 
 The **TeleSign PHP SDK** is a PHP library that provides an interface to `TeleSign web services
 <https://developer.telesign.com/docs/getting-started-with-the-rest-api/>`_.
+
+The **TeleSign Enterprise PHP SDK** is a PHP library that provides support for additional REST endpoints.
+
+You can differentiate between the two easily by the "enterprise" label that you'll find in the documentation.
 
 Documentation
 -------------
@@ -24,9 +28,22 @@ Detailed documentation for TeleSign REST APIs is available in the `Developer Por
 Installation
 ------------
 
+This library can be installed as a Composer package. You only have to update your project's `composer.json` with its containing repository because it's not Packagist.
+
+.. code-block:: json
+
+  {
+    "repositories": [{
+      "type": "vcs",
+      "url": "https://github.com/TeleSign/python_telesign_enterprise.git"
+    }]
+  }
+
+Then you can run from your terminal the expected:
+
 .. code-block:: bash
 
-  $ composer require telesign/telesign
+  $ composer require telesign/telesignenterprise
 
 PHP Code Example: Verify SMS
 -------------------------------------
