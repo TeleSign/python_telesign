@@ -39,6 +39,7 @@ const VERSION = \"$version\";
     $result = self::exec([
       "git commit -am \"bump version to $version\"",
       "git tag $version",
+      "git push",
       "git push --tag"
     ], $stdout, $stderr);
     
