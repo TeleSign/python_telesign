@@ -9,15 +9,15 @@ use telesign\sdk\rest\Response;
 class ResponseTest extends TestCase {
 
   function testInvalidJsonResolvesToNull () {
-    $response = new Response(new Psr7Response(200, [], '{'));
+    $response = new Response(new Psr7Response(200, [], "{"));
     $this->assertEquals('{', $response->body);
     $this->assertNull($response->json);
   }
 
-  function testValidJsonResolvesToStdClass () {
-    $response = new Response(new Psr7Response(200, [], '{}'));
-    $this->assertEquals('{}', $response->body);
-    $this->assertInstanceOf(\stdClass::class, $response->json);
+  function testValidJsonResolvesArray () {
+    $response = new Response(new Psr7Response(200, [], "{}"));
+    $this->assertEquals("{}", $response->body);
+    $this->assertInternalType("array", $response->json);
   }
 
 }
