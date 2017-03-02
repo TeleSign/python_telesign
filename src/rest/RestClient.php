@@ -6,7 +6,7 @@ use Eloquent\Composer\Configuration\ConfigurationReader;
 use GuzzleHttp\Client;
 use Ramsey\Uuid\Uuid;
 
-use const telesign\sdk\VERSION;
+use const telesign\sdk\version\VERSION;
 
 /**
  * The TeleSign RestClient is a generic HTTP REST client that can be extended to make requests against any of
