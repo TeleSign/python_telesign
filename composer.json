@@ -32,7 +32,7 @@
     "psr-4": { "telesign\\sdk\\": "test/" }
   },
   "scripts": {
-    "test": "php vendor/phpunit/phpunit/phpunit --bootstrap ./vendor/autoload.php test/",
+    "test": "phpunit --bootstrap ./vendor/autoload.php test/",
     "bump-version": "telesign\\sdk\\version\\Script::bumpVersion"
   }
 }
