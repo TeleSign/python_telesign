@@ -9,7 +9,7 @@ use telesign\sdk\rest\RestClient;
  * numbers of users known to have committed online fraud. TeleSign crowd-sources this information from its customers.
  * Participation is voluntary, but you have to contribute in order to benefit.
  */
-class TeleBureauClient extends RestClient {
+class TelebureauClient extends RestClient {
 
   const TELEBUREAU_CREATE_RESOURCE = "/v1/telebureau/event";
   const TELEBUREAU_RETRIEVE_RESOURCE = "/v1/telebureau/event/%s";

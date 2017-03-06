@@ -5,7 +5,7 @@ namespace telesign\enterprise\sdk\telebureau;
 use telesign\sdk\Example;
 use telesign\sdk\ClientTest;
 
-final class TeleBureauClientTest extends ClientTest {
+final class TelebureauClientTest extends ClientTest {
 
   const EXAMPLE_PHONE_NUMBER = Example::PHONE_NUMBER;
   const EXAMPLE_UCID = Example::UCID;
@@ -15,7 +15,7 @@ final class TeleBureauClientTest extends ClientTest {
   function getRequestExamples () {
     return [
       [
-        TeleBureauClient::class,
+        TelebureauClient::class,
         "create",
         [
           [
@@ -32,7 +32,7 @@ final class TeleBureauClientTest extends ClientTest {
         ]
       ],
       [
-        TeleBureauClient::class,
+        TelebureauClient::class,
         "retrieve",
         [
           self::EXAMPLE_REFERENCE_ID,
@@ -44,7 +44,7 @@ final class TeleBureauClientTest extends ClientTest {
         []
       ],
       [
-        TeleBureauClient::class,
+        TelebureauClient::class,
         "delete",
         [
           self::EXAMPLE_REFERENCE_ID,

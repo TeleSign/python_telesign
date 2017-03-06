@@ -18,7 +18,6 @@ class PhoneIdClient extends RestClient {
   const PHONEID_SCORE_RESOURCE = "/v1/phoneid/score/%s";
   const PHONEID_CONTACT_RESOURCE = "/v1/phoneid/contact/%s";
   const PHONEID_LIVE_RESOURCE = "/v1/phoneid/live/%s";
-  const PHONEID_CALL_FORWARD_RESOURCE = "/v1/phoneid/call_forward/%s";
   const PHONEID_NUMBER_DEACTIVATION_RESOURCE = "/v1/phoneid/number_deactivation/%s";
 
   function __construct ($customer_id, $secret_key, $api_host = "https://rest.telesign.com", ...$other) {
