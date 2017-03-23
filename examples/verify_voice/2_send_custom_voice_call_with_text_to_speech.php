@@ -10,7 +10,8 @@ $secret_key = "secret_key";
 
 $phone_number = "phone_number";
 $verify_code = randomWithNDigits(5);
-$tts_message = "Hello, your code is $verify_code. Once again, your code is $verify_code. Goodbye.";
+$tts_message = sprintf('Hello, your code is %1$s. Once again, your code is %1$s. Goodbye.',
+  join(", ", str_split($verify_code)));
 
 $verify = new VerifyClient($customer_id, $secret_key);
 $response = $verify->voice($phone_number, [ "tts_message" => $tts_message ]);
