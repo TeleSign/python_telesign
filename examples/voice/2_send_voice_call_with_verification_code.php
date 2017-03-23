@@ -10,7 +10,8 @@ $secret_key = "secret_key";
 
 $phone_number = "phone_number";
 $verify_code = randomWithNDigits(5);
-$message = "Hello, your code is $verify_code. Once again, your code is $verify_code. Goodbye.";
+$message = sprintf('Hello, your code is %1$s. Once again, your code is %1$s. Goodbye.',
+  join(", ", str_split($verify_code)));
 $message_type = "OTP";
 
 $voice = new VoiceClient($customer_id, $secret_key);
