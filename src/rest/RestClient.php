@@ -90,7 +90,7 @@ class RestClient {
     $user_agent = null
   ) {
     if (!$date) {
-      $date = gmdate(DATE_RFC2822);
+      $date = gmdate("D, d M Y H:i:s T");
     }
 
     if (!$nonce) {

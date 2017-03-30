@@ -19,7 +19,7 @@ final class RestClientTest extends TestCase {
   const EXAMPLE_RESOURCE = "/v1/resource";
   const EXAMPLE_FIELDS = [ "test" => "param" ];
   const EXAMPLE_URL_ENCODED_FIELDS = "test=param";
-  const EXAMPLE_DATE = "Mon, 27 Jan 2017 23:59:59 +0000";
+  const EXAMPLE_DATE = "Mon, 27 Jan 2017 23:59:59 GMT";
   const EXAMPLE_NONCE = "5ffb243e-8e2a-4a7b-bf22-2b3925b3d6ef";
 
   /**
@@ -55,7 +55,7 @@ final class RestClientTest extends TestCase {
           "uri" => self::EXAMPLE_API_HOST . self::EXAMPLE_RESOURCE,
           "body" => self::EXAMPLE_URL_ENCODED_FIELDS,
           "headers" => [
-            "authorization" => "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:L9DS0dl0Pil6DH81IyOjQ3pT22e3Ysv75Hph7Ll1os4=",
+            "authorization" => "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:smUGWEeXtN+WT1s/y1Ssp4Q2Acm/ultPxkgl/GjqSsA=",
             "content-type" => "application/x-www-form-urlencoded",
           ]
         ]
@@ -66,7 +66,7 @@ final class RestClientTest extends TestCase {
           "uri" => self::EXAMPLE_API_HOST . self::EXAMPLE_RESOURCE . "?" . self::EXAMPLE_URL_ENCODED_FIELDS,
           "body" => "",
           "headers" => [
-            "authorization" => "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:4tuFd/oafDAijm0XiMxoqVVbMjq/ME+zNWaNmrQEtR0=",
+            "authorization" => "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:YgzQt6LcuBDSUeTpE4SASXcSAKAm1eL5TWetbxhXJxg=",
             "content-type" => ""
           ]
         ]
@@ -77,7 +77,7 @@ final class RestClientTest extends TestCase {
           "uri" => self::EXAMPLE_API_HOST . self::EXAMPLE_RESOURCE . "?" . self::EXAMPLE_URL_ENCODED_FIELDS,
           "body" => "",
           "headers" => [
-            "authorization" => "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:FSSvv/YoFJrk0MFcqIzULLKdeyOran9yRVTuBTGAwEA=",
+            "authorization" => "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:ODT8s51qSdrS2pKbtrKIu76gQJf2h0hDz8nJ5ho0/6w=",
             "content-type" => ""
           ]
         ]
