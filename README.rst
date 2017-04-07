@@ -56,8 +56,8 @@ Here's a basic code example with JSON response.
 
   $phone_number = "phone_number";
 
-  $verify = new VerifyClient($customer_id, $secret_key);
-  $response = $verify->sms($phone_number);
+  $verify_client = new VerifyClient($customer_id, $secret_key);
+  $response = $verify_client->sms($phone_number);
 
   print_r($response->json);
 
@@ -93,8 +93,7 @@ Authentication
 --------------
 
 You will need a Customer ID and API Key in order to use TeleSign’s REST API. If you are already a customer and need an
-API Key, you can generate one in `TelePortal <https://teleportal.telesign.com>`_. If you are not a customer and would
-like to get an API Key, please contact `support@telesign.com <mailto:support@telesign.com>`_.
+API Key, you can generate one in `TelePortal <https://teleportal.telesign.com>`_.
 
 Testing
 -------
