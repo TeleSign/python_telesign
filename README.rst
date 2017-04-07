@@ -46,8 +46,8 @@ Here's a basic code example with JSON response.
   $message = "You're scheduled for a dentist appointment at 2:30PM.";
   $message_type = "ARN";
 
-  $messaging = new MessagingClient($customer_id, $secret_key);
-  $response = $messaging->message($phone_number, $message, $message_type);
+  $messaging_client = new MessagingClient($customer_id, $secret_key);
+  $response = $messaging_client->message($phone_number, $message, $message_type);
 
   print_r($response->json);
 
@@ -71,8 +71,7 @@ Authentication
 --------------
 
 You will need a Customer ID and API Key in order to use TeleSign’s REST API. If you are already a customer and need an
-API Key, you can generate one in `TelePortal <https://teleportal.telesign.com>`_. If you are not a customer and would
-like to get an API Key, please contact `support@telesign.com <mailto:support@telesign.com>`_.
+API Key, you can generate one in the `Portal <https://portal.telesign.com>`_.
 
 Testing
 -------
