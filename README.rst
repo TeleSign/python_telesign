@@ -16,9 +16,8 @@ through the set of *RESTful* procedures in our **TeleSign REST API**.
 The **TeleSign PHP SDK** is a PHP library that provides an interface to `TeleSign web services
 <https://developer.telesign.com/docs/getting-started-with-the-rest-api/>`_.
 
-The **TeleSign Enterprise PHP SDK** is a PHP library that provides support for additional REST endpoints.
-
-You can differentiate between the two easily by the *enterprise* label that you'll find in the documentation.
+The **TeleSign Enterprise PHP SDK** is a PHP library that provides support for a complementary REST service. The
+`documentation`_ makes it easily distinguishable.
 
 Documentation
 -------------
