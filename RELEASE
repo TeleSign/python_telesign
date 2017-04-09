@@ -1,0 +1,16 @@
+2.0.0
+
+- Major refactor and simplification into generic REST client.
+- API parameters are now passed as kwargs to endpoint handlers.
+- UserAgent is now set to track client usage and help debug issues.
+- generate_telesign_headers is now static and easily extracted from the SDK if
+  custom behavior/implementation is required.
+
+1.0.2
+
+- Fixed gem imports
+- Added number_deactivation and telebureau create, retrieve and delete endpoints.
+
+1.0.0
+
+- Initial version supporting commonly used Telesign endpoints.
