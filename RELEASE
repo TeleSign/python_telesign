@@ -1,3 +1,12 @@
+2.0.0
+
+- Major refactor and simplification into generic REST client.
+- API parameters are now passed as kwargs to endpoint handlers.
+- Now using Requests sessions correctly.
+- UserAgent is now set to track client usage and help debug issues.
+- generate_telesign_headers is now static and easily extracted from the SDK if
+  custom behavior/implementation is required.
+
 1.2.3
 
 - Added PhoneId number_deactivation endpoint.

@@ -8,3 +8,6 @@ _build
 
 # PyCharm IDE
 .idea
+
+# Other
+.DS_Store
