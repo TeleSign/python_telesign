@@ -16,7 +16,7 @@ class VerifyClient extends RestClient {
   const VERIFY_PUSH_RESOURCE = "/v2/verify/push";
   const VERIFY_STATUS_RESOURCE = "/v1/verify/%s";
 
-  function __construct ($customer_id, $secret_key, $api_host = "https://rest.telesign.com", ...$other) {
+  function __construct ($customer_id, $secret_key, $api_host = "https://rest-ww.telesign.com", ...$other) {
     parent::__construct($customer_id, $secret_key, $api_host, ...$other);
   }
 
