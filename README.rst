@@ -57,14 +57,10 @@ Here's a basic code example with JSON response.
 
 .. code-block:: javascript
     
-    {'errors': [],
-     'reference_id': 'DGFDF6E11AB86303ASDFD425BE00000657',
-     'resource_uri': '/v1/verify/DGFDF6E11AB86303ASDFD425BE00000657',
+    {'reference_id': 'DGFDF6E11AB86303ASDFD425BE00000657',
      'status': {'code': 103,
         'description': 'Call in progress',
-        'updated_on': '2016-12-12T00:39:58.325559Z'},
-     'sub_resource': 'call',
-     'verify': {'code_state': 'UNKNOWN', 'code_entered': ''}}
+        'updated_on': '2016-12-12T00:39:58.325559Z'}}
 
 For more examples, see the examples folder or visit `TeleSign Developer Portal <https://developer.telesign.com/>`_.
 
