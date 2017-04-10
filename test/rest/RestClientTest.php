@@ -130,7 +130,7 @@ final class RestClientTest extends TestCase {
     $client = new RestClient(
       self::EXAMPLE_CUSTOMER_ID, self::EXAMPLE_SECRET_KEY, self::EXAMPLE_API_HOST, 10, null, $mock
     );
-    $client->$data["method_name"](
+    $client->{$data["method_name"]}(
       self::EXAMPLE_RESOURCE, self::EXAMPLE_FIELDS, self::EXAMPLE_DATE, self::EXAMPLE_NONCE
     );
 
@@ -152,7 +152,7 @@ final class RestClientTest extends TestCase {
     $client = new RestClient(
       self::EXAMPLE_CUSTOMER_ID, self::EXAMPLE_SECRET_KEY, self::EXAMPLE_API_HOST, 10, null, $mock
     );
-    $response = $client->$data["method_name"](
+    $response = $client->{$data["method_name"]}(
       self::EXAMPLE_RESOURCE, self::EXAMPLE_FIELDS, self::EXAMPLE_DATE, self::EXAMPLE_NONCE
     );
 
