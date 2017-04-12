@@ -1,8 +1,10 @@
-package com.telesign.example.voice;
+package com.telesign.enterprise.example.verify_voice;
 
 import com.telesign.RestClient;
 import com.telesign.Util;
-import com.telesign.VoiceClient;
+import com.telesign.enterprise.VerifyClient;
+
+import java.util.HashMap;
 
 public class SendVoiceCallWithVerificationCode {
 
@@ -13,12 +15,13 @@ public class SendVoiceCallWithVerificationCode {
 
         String phoneNumber = "phone_number";
         String verifyCode = Util.randomWithNDigits(5);
-        String message = String.format("Hello, your code is %s. Once again, your code is %s. Goodbye.", verifyCode, verifyCode);
-        String messageType = "OTP";
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("verify_code", verifyCode);
 
         try {
-            VoiceClient voiceClient = new VoiceClient(customerId, secretKey);
-            RestClient.TelesignResponse telesignResponse = voiceClient.call(phoneNumber, message, messageType, null);
+            VerifyClient verifyClient = new VerifyClient(customerId, secretKey);
+            RestClient.TelesignResponse telesignResponse = verifyClient.voice(phoneNumber, params);
         } catch (Exception e) {
             e.printStackTrace();
         }
