@@ -14,11 +14,11 @@ import java.util.Map;
  */
 public class PhoneIdClient extends RestClient {
 
-    private static final String PHONEID_STANDARD_RESOURCE = "/v1/phoneid_number_deactivation/standard/%s";
-    private static final String PHONEID_SCORE_RESOURCE = "/v1/phoneid_number_deactivation/phoneid_score/%s";
-    private static final String PHONEID_CONTACT_RESOURCE = "/v1/phoneid_number_deactivation/contact/%s";
-    private static final String PHONEID_LIVE_RESOURCE = "/v1/phoneid_number_deactivation/live/%s";
-    private static final String PHONEID_NUMBER_DEACTIVATION_RESOURCE = "/v1/phoneid_number_deactivation/number_deactivation/%s";
+    private static final String PHONEID_STANDARD_RESOURCE = "/v1/phoneid/standard/%s";
+    private static final String PHONEID_SCORE_RESOURCE = "/v1/phoneid/score/%s";
+    private static final String PHONEID_CONTACT_RESOURCE = "/v1/phoneid/contact/%s";
+    private static final String PHONEID_LIVE_RESOURCE = "/v1/phoneid/live/%s";
+    private static final String PHONEID_NUMBER_DEACTIVATION_RESOURCE = "/v1/phoneid/number_deactivation/%s";
 
     public PhoneIdClient(String customerId, String secretKey) {
 

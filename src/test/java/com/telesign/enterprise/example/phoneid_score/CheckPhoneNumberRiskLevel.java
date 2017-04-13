@@ -18,7 +18,7 @@ public class CheckPhoneNumberRiskLevel {
             RestClient.TelesignResponse telesignResponse = phoneIdClient.score(phoneNumber, ucid, null);
 
             if (telesignResponse.ok) {
-                System.out.println(String.format("Phone number %s has a '%s' risk level and the recommendation is to '{}' the transaction.",
+                System.out.println(String.format("Phone number %s has a '%s' risk level and the recommendation is to '%s' the transaction.",
                         phoneNumber,
                         telesignResponse.json.getAsJsonObject("risk").get("level").getAsString(),
                         telesignResponse.json.getAsJsonObject("risk").get("recommendation").getAsString()));

@@ -16,10 +16,10 @@ public class CheckPhoneNumberDeactivated {
         try {
 
             PhoneIdClient phoneIdClient = new PhoneIdClient(customerId, secretKey);
-            RestClient.TelesignResponse telesignResponse = phoneIdClient.standard(phoneNumber, null);
+            RestClient.TelesignResponse telesignResponse = phoneIdClient.number_deactivation(phoneNumber, ucid, null);
 
             if (telesignResponse.ok) {
-                if (!telesignResponse.json.getAsJsonObject("number_deactivation").get("last_deactivated").getAsString().isEmpty()) {
+                if (!telesignResponse.json.getAsJsonObject("number_deactivation").get("last_deactivated").isJsonNull()) {
                     System.out.println(String.format("Phone number %s was last deactivated %s.",
                             telesignResponse.json.getAsJsonObject("number_deactivation").get("number").getAsString(),
                             telesignResponse.json.getAsJsonObject("number_deactivation").get("last_deactivated").getAsString()));

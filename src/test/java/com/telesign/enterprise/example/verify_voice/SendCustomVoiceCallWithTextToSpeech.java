@@ -15,7 +15,7 @@ public class SendCustomVoiceCallWithTextToSpeech {
 
         String phoneNumber = "phone_number";
         String verifyCode = Util.randomWithNDigits(5);
-        String ttsMessage = String.format("Hello, your code is %s. Once again, your code is %s. Goodbye.", verifyCode);
+        String ttsMessage = String.format("Hello, your code is %s. Once again, your code is %s. Goodbye.", verifyCode, verifyCode);
 
         HashMap<String, String> params = new HashMap<>();
         params.put("tts_message", ttsMessage);
