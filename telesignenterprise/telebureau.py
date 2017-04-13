@@ -17,7 +17,7 @@ class TelebureauClient(RestClient):
     def __init__(self, customer_id, secret_key, api_host='https://rest-ww.telesign.com', **kwargs):
         super(TelebureauClient, self).__init__(customer_id, secret_key, api_host=api_host, **kwargs)
 
-    def create(self, phone_number, fraud_type, occurred_at, **params):
+    def create_event(self, phone_number, fraud_type, occurred_at, **params):
         """
         Creates a telebureau event corresponding to supplied data.
 
@@ -29,7 +29,7 @@ class TelebureauClient(RestClient):
                          occurred_at=occurred_at,
                          **params)
 
-    def retrieve(self, reference_id, **params):
+    def retrieve_event(self, reference_id, **params):
         """
         Retrieves the fraud event status. You make this call in your web application after completion of create
         transaction for a telebureau event.
@@ -39,7 +39,7 @@ class TelebureauClient(RestClient):
         return self.get(TELEBUREAU_RETRIEVE_RESOURCE.format(reference_id=reference_id),
                         **params)
 
-    def delete(self, reference_id, **params):
+    def delete_event(self, reference_id, **params):
         """
         Deletes a previously submitted fraud event. You make this call in your web application after completion of the
         create transaction for a telebureau event.
