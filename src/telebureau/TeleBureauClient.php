@@ -24,7 +24,7 @@ class TelebureauClient extends RestClient {
    *
    * See https://developer.telesign.com/docs/telebureau-api for detailed API documentation.
    */
-  function create (array $fields) {
+  function createEvent (array $fields) {
     return $this->post(self::TELEBUREAU_CREATE_RESOURCE, $fields);
   }
 
@@ -34,7 +34,7 @@ class TelebureauClient extends RestClient {
    *
    * See https://developer.telesign.com/docs/telebureau-api for detailed API documentation.
    */
-  function retrieve ($reference_id, array $fields = []) {
+  function retrieveEvent ($reference_id, array $fields = []) {
     return $this->get(sprintf(self::TELEBUREAU_RETRIEVE_RESOURCE, $reference_id), $fields);
   }
 
@@ -44,8 +44,8 @@ class TelebureauClient extends RestClient {
    *
    * See https://developer.telesign.com/docs/telebureau-api for detailed API documentation.
    */
-  function delete ($reference_id, array $fields = []) {
-    return parent::delete(sprintf(self::TELEBUREAU_DELETE_RESOURCE, $reference_id), $fields);
+  function deleteEvent ($reference_id, array $fields = []) {
+    return $this->delete(sprintf(self::TELEBUREAU_DELETE_RESOURCE, $reference_id), $fields);
   }
 
 }
