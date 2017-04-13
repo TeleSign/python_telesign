@@ -16,7 +16,7 @@ final class TelebureauClientTest extends ClientTest {
     return [
       [
         TelebureauClient::class,
-        "create",
+        "createEvent",
         [
           [
             "phone_number" => self::EXAMPLE_PHONE_NUMBER,
@@ -33,7 +33,7 @@ final class TelebureauClientTest extends ClientTest {
       ],
       [
         TelebureauClient::class,
-        "retrieve",
+        "retrieveEvent",
         [
           self::EXAMPLE_REFERENCE_ID,
           [
@@ -45,7 +45,7 @@ final class TelebureauClientTest extends ClientTest {
       ],
       [
         TelebureauClient::class,
-        "delete",
+        "deleteEvent",
         [
           self::EXAMPLE_REFERENCE_ID,
           [
