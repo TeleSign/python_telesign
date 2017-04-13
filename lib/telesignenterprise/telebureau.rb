@@ -25,7 +25,7 @@ module TelesignEnterprise
     # Creates a telebureau event corresponding to supplied data.
     #
     # See https://developer.telesign.com/docs/rest_api-telebureau for detailed API documentation.
-    def create(phone_number, fraud_type, occurred_at, **params)
+    def create_event(phone_number, fraud_type, occurred_at, **params)
 
       self.post(TELEBUREAU_CREATE_RESOURCE,
                 phone_number: phone_number,
@@ -38,7 +38,7 @@ module TelesignEnterprise
     # transaction for a telebureau event.
     #
     # See https://developer.telesign.com/docs/rest_api-telebureau for detailed API documentation.
-    def retrieve(reference_id, **params)
+    def retrieve_event(reference_id, **params)
 
       self.get(TELEBUREAU_RETRIEVE_RESOURCE % {:reference_id => reference_id},
                **params)
@@ -48,7 +48,7 @@ module TelesignEnterprise
     # create transaction for a telebureau event.
     #
     # See https://developer.telesign.com/docs/rest_api-telebureau for detailed API documentation.
-    def delete(reference_id, **params)
+    def delete_event(reference_id, **params)
 
       self.delete(TELEBUREAU_DELETE_RESOURCE % {:reference_id => reference_id},
                   **params)
