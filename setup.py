@@ -16,7 +16,7 @@ setup(name='telesign',
           "Development Status :: 5 - Production/Stable",
           "Intended Audience :: Developers",
           "License :: OSI Approved :: MIT License",
-          "Natural Language :: English"
+          "Natural Language :: English",
           "Programming Language :: Python",
           "Programming Language :: Python :: 2.6",
           "Programming Language :: Python :: 2.7",
