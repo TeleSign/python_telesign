@@ -19,7 +19,7 @@ class MessagingClient(RestClient):
         """
         Send a message to the target phone_number.
 
-        See https://developer.telesign.com/v2.0/docs/messaging-api for detailed API documentation.
+        See https://developer.telesign.com/docs/messaging-api for detailed API documentation.
         """
         return self.post(MESSAGING_RESOURCE,
                          phone_number=phone_number,
@@ -31,7 +31,7 @@ class MessagingClient(RestClient):
         """
         Retrieves the current status of the message.
 
-        See https://developer.telesign.com/v2.0/docs/messaging-api for detailed API documentation.
+        See https://developer.telesign.com/docs/messaging-api for detailed API documentation.
         """
         return self.get(MESSAGING_STATUS_RESOURCE.format(reference_id=reference_id),
                         **params)
