@@ -17,7 +17,7 @@ class AutoVerifyClient extends RestClient {
    * flow you must check the status using TeleSign's servers on your backend. Do not rely on the SDK alone to
    * indicate a successful verification.
    *
-   * See https://developer.telesign.com/docs/auto-verify-sdk#section-obtaining-verification-status for detailed API
+   * See https://developer.telesign.com/docs/auto-verify-sdk-self#section-obtaining-verification-status for detailed API
    * documentation.
    */
   function status ($external_id, array $params = []) {

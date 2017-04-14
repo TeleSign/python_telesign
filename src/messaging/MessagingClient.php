@@ -16,7 +16,7 @@ class MessagingClient extends RestClient {
   /**
    * Send a message to the target phone_number.
    *
-   * See https://developer.telesign.com/v2.0/docs/messaging-api for detailed API documentation.
+   * See https://developer.telesign.com/docs/messaging-api for detailed API documentation.
    */
   function message ($phone_number, $message, $message_type, array $other = []) {
     return $this->post(self::MESSAGING_RESOURCE, array_merge($other, [
@@ -29,7 +29,7 @@ class MessagingClient extends RestClient {
   /**
    * Retrieves the current status of the message.
    *
-   * See https://developer.telesign.com/v2.0/docs/messaging-api for detailed API documentation.
+   * See https://developer.telesign.com/docs/messaging-api for detailed API documentation.
    */
   function status ($reference_id, array $params = []) {
     return $this->get(sprintf(self::MESSAGING_STATUS_RESOURCE, $reference_id), $params);
