@@ -45,7 +45,7 @@ public class TelebureauClient extends RestClient {
      * <p>
      * See https://developer.telesign.com/docs/rest_api-telebureau for detailed API documentation.
      */
-    public TelesignResponse create_event(String phoneNumber, String fraudType, String occurredAt, Map<String, String> params) throws IOException, GeneralSecurityException {
+    public TelesignResponse createEvent(String phoneNumber, String fraudType, String occurredAt, Map<String, String> params) throws IOException, GeneralSecurityException {
 
         if (params == null) {
             params = new HashMap<>();
@@ -55,7 +55,7 @@ public class TelebureauClient extends RestClient {
         params.put("fraud_type", fraudType);
         params.put("occurred_at", occurredAt);
 
-        return super.post(TELEBUREAU_CREATE_RESOURCE, params);
+        return this.post(TELEBUREAU_CREATE_RESOURCE, params);
     }
 
     /**
@@ -63,9 +63,9 @@ public class TelebureauClient extends RestClient {
      * <p>
      * See https://developer.telesign.com/docs/rest_api-telebureau for detailed API documentation.
      */
-    public TelesignResponse retrieve_event(String referenceId, Map<String, String> params) throws IOException, GeneralSecurityException {
+    public TelesignResponse retrieveEvent(String referenceId, Map<String, String> params) throws IOException, GeneralSecurityException {
 
-        return super.get(String.format(TELEBUREAU_RETRIEVE_RESOURCE, referenceId), params);
+        return this.get(String.format(TELEBUREAU_RETRIEVE_RESOURCE, referenceId), params);
     }
 
     /**
@@ -74,8 +74,8 @@ public class TelebureauClient extends RestClient {
      * <p>
      * See https://developer.telesign.com/docs/rest_api-telebureau for detailed API documentation.
      */
-    public TelesignResponse delete_event(String referenceId, Map<String, String> params) throws IOException, GeneralSecurityException {
+    public TelesignResponse deleteEvent(String referenceId, Map<String, String> params) throws IOException, GeneralSecurityException {
 
-        return super.delete(String.format(TELEBUREAU_DELETE_RESOURCE, referenceId), params);
+        return this.delete(String.format(TELEBUREAU_DELETE_RESOURCE, referenceId), params);
     }
 }
