@@ -43,7 +43,7 @@ public class TelebureauClient extends RestClient {
     /**
      * Creates a telebureau event corresponding to supplied data.
      * <p>
-     * See https://developer.telesign.com/docs/rest_api-telebureau for detailed API documentation.
+     * See https://developer.telesign.com/docs/telebureau-api for detailed API documentation.
      */
     public TelesignResponse createEvent(String phoneNumber, String fraudType, String occurredAt, Map<String, String> params) throws IOException, GeneralSecurityException {
 
@@ -61,7 +61,7 @@ public class TelebureauClient extends RestClient {
     /**
      * Creates a telebureau event corresponding to supplied data.
      * <p>
-     * See https://developer.telesign.com/docs/rest_api-telebureau for detailed API documentation.
+     * See https://developer.telesign.com/docs/telebureau-api for detailed API documentation.
      */
     public TelesignResponse retrieveEvent(String referenceId, Map<String, String> params) throws IOException, GeneralSecurityException {
 
@@ -72,7 +72,7 @@ public class TelebureauClient extends RestClient {
      * Deletes a previously submitted fraud event. You make this call in your web application after completion of the
      * create transaction for a telebureau event.
      * <p>
-     * See https://developer.telesign.com/docs/rest_api-telebureau for detailed API documentation.
+     * See https://developer.telesign.com/docs/telebureau-api for detailed API documentation.
      */
     public TelesignResponse deleteEvent(String referenceId, Map<String, String> params) throws IOException, GeneralSecurityException {
 
