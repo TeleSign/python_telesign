@@ -51,7 +51,7 @@ public class PhoneIdClient extends RestClient {
      */
     public TelesignResponse standard(String phoneNumber, Map<String, String> params) throws IOException, GeneralSecurityException {
 
-        return super.get(String.format(PHONEID_STANDARD_RESOURCE, phoneNumber), params);
+        return this.get(String.format(PHONEID_STANDARD_RESOURCE, phoneNumber), params);
     }
 
     /**
@@ -68,7 +68,7 @@ public class PhoneIdClient extends RestClient {
 
         params.put("ucid", ucid);
 
-        return super.get(String.format(PHONEID_SCORE_RESOURCE, phoneNumber), params);
+        return this.get(String.format(PHONEID_SCORE_RESOURCE, phoneNumber), params);
     }
 
     /**
@@ -85,7 +85,7 @@ public class PhoneIdClient extends RestClient {
 
         params.put("ucid", ucid);
 
-        return super.get(String.format(PHONEID_CONTACT_RESOURCE, phoneNumber), params);
+        return this.get(String.format(PHONEID_CONTACT_RESOURCE, phoneNumber), params);
     }
 
     /**
@@ -102,7 +102,7 @@ public class PhoneIdClient extends RestClient {
 
         params.put("ucid", ucid);
 
-        return super.get(String.format(PHONEID_LIVE_RESOURCE, phoneNumber), params);
+        return this.get(String.format(PHONEID_LIVE_RESOURCE, phoneNumber), params);
     }
 
     /**
@@ -119,6 +119,6 @@ public class PhoneIdClient extends RestClient {
 
         params.put("ucid", ucid);
 
-        return super.get(String.format(PHONEID_NUMBER_DEACTIVATION_RESOURCE, phoneNumber), params);
+        return this.get(String.format(PHONEID_NUMBER_DEACTIVATION_RESOURCE, phoneNumber), params);
     }
 }
