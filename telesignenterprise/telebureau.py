@@ -21,7 +21,7 @@ class TelebureauClient(RestClient):
         """
         Creates a telebureau event corresponding to supplied data.
 
-        See https://developer.telesign.com/docs/rest_api-telebureau for detailed API documentation.
+        See https://developer.telesign.com/docs/telebureau-api for detailed API documentation.
         """
         return self.post(TELEBUREAU_CREATE_RESOURCE,
                          phone_number=phone_number,
@@ -34,7 +34,7 @@ class TelebureauClient(RestClient):
         Retrieves the fraud event status. You make this call in your web application after completion of create
         transaction for a telebureau event.
 
-        See https://developer.telesign.com/docs/rest_api-telebureau for detailed API documentation.
+        See https://developer.telesign.com/docs/telebureau-api for detailed API documentation.
         """
         return self.get(TELEBUREAU_RETRIEVE_RESOURCE.format(reference_id=reference_id),
                         **params)
@@ -44,7 +44,7 @@ class TelebureauClient(RestClient):
         Deletes a previously submitted fraud event. You make this call in your web application after completion of the
         create transaction for a telebureau event.
 
-        See https://developer.telesign.com/docs/rest_api-telebureau for detailed API documentation.
+        See https://developer.telesign.com/docs/telebureau-api for detailed API documentation.
         """
         return self.delete(TELEBUREAU_DELETE_RESOURCE.format(reference_id=reference_id),
                            **params)
