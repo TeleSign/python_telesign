@@ -16,7 +16,7 @@ public class CheckPhoneNumberDeactivated {
         try {
 
             PhoneIdClient phoneIdClient = new PhoneIdClient(customerId, secretKey);
-            RestClient.TelesignResponse telesignResponse = phoneIdClient.number_deactivation(phoneNumber, ucid, null);
+            RestClient.TelesignResponse telesignResponse = phoneIdClient.numberDeactivation(phoneNumber, ucid, null);
 
             if (telesignResponse.ok) {
                 if (!telesignResponse.json.getAsJsonObject("number_deactivation").get("last_deactivated").isJsonNull()) {
