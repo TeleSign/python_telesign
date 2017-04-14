@@ -111,7 +111,7 @@ public class PhoneIdClient extends RestClient {
      * <p>
      * See https://developer.telesign.com/docs/rest_api-phoneid-number-deactivation for detailed API documentation.
      */
-    public TelesignResponse number_deactivation(String phoneNumber, String ucid, Map<String, String> params) throws IOException, GeneralSecurityException {
+    public TelesignResponse numberDeactivation(String phoneNumber, String ucid, Map<String, String> params) throws IOException, GeneralSecurityException {
 
         if (params == null) {
             params = new HashMap<>();
