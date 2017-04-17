@@ -8,8 +8,9 @@ python:
   - "3.6"
 install:
   - pip install .
-script: nosetests
+script: nosetests --with-coverage --cover-package=telesign --cover-inclusive
 before_install:
+  pip install coverage
   pip install codecov
 after_success:
   codecov
