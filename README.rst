@@ -1,3 +1,9 @@
+.. image:: https://travis-ci.org/TeleSign/python_telesign.svg?branch=master
+    :target: https://travis-ci.org/TeleSign/python_telesign
+
+.. image:: https://badge.fury.io/py/telesign.svg
+    :target: https://badge.fury.io/py/telesign
+
 ========
 TeleSign
 ========
