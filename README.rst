@@ -1,3 +1,12 @@
+.. image:: https://img.shields.io/travis/TeleSign/php_telesign.svg?branch=master
+    :target: https://travis-ci.org/TeleSign/php_telesign
+
+.. image:: https://img.shields.io/packagist/v/telesign/telesign.svg
+    :target: https://packagist.org/packages/telesign/telesign
+
+.. image:: https://img.shields.io/packagist/l/telesign/telesign.svg
+    :target: https://github.com/TeleSign/php_telesign/blob/master/LICENSE
+
 ========
 TeleSign
 ========
