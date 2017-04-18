@@ -1,8 +1,14 @@
 .. image:: https://travis-ci.org/TeleSign/python_telesign.svg?branch=master
     :target: https://travis-ci.org/TeleSign/python_telesign
 
-.. image:: https://badge.fury.io/py/telesign.svg
-    :target: https://badge.fury.io/py/telesign
+.. image:: https://img.shields.io/pypi/v/telesign.svg
+    :target: https://pypi.python.org/pypi/telesign
+
+.. image:: https://img.shields.io/pypi/l/telesign.svg
+    :target: https://github.com/TeleSign/python_telesign/blob/master/LICENSE
+
+.. image:: https://img.shields.io/pypi/pyversions/telesign.svg
+    :target: https://pypi.python.org/pypi/telesign
 
 ========
 TeleSign
