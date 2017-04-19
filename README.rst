@@ -4,7 +4,7 @@
 .. image:: https://img.shields.io/packagist/v/telesign/telesign.svg
     :target: https://packagist.org/packages/telesign/telesign
 
-.. image:: https://img.shields.io/packagist/l/telesign/telesign.svg
+.. image:: https://img.shields.io/github/license/TeleSign/php_telesign.svg
     :target: https://github.com/TeleSign/php_telesign/blob/master/LICENSE
 
 ========
