@@ -33,7 +33,7 @@
     "psr-4": { "telesign\\sdk\\": "test/" }
   },
   "scripts": {
-    "test": "phpunit --bootstrap ./vendor/autoload.php test/",
+    "test": "phpunit --coverage-clover=coverage.xml --bootstrap ./vendor/autoload.php test/",
     "bump-version": "telesign\\sdk\\version\\Script::bumpVersion"
   }
 }
