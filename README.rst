@@ -20,8 +20,8 @@ For more information about TeleSign, visit our `website <http://www.TeleSign.com
 Documentation
 -------------
 
-Detailed documentation for the TeleSign APIs is available at the
-`TeleSign Developer Center <https://developer.telesign.com/>`_.
+Code documentation is included in the SDK. Complete documentation, quick start guides and reference material
+for the TeleSign API is available at the `TeleSign Developer Center <https://developer.telesign.com/>`_.
 
 Installation
 ------------
