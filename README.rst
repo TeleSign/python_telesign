@@ -1,8 +1,6 @@
 .. image:: https://raw.github.com/TeleSign/python_telesign/master/sdk_banner.jpg
+    :target: https://developer.telesign.com
 
-===================
-TeleSign Python SDK
-===================
 .. image:: https://img.shields.io/travis/TeleSign/python_telesign.svg
     :target: https://travis-ci.org/TeleSign/python_telesign
 
