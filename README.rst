@@ -1,3 +1,5 @@
+.. image:: https://raw.github.com/TeleSign/python_telesign/master/sdk_banner.jpg
+
 ===================
 TeleSign Python SDK
 ===================
