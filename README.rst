@@ -75,6 +75,8 @@ Here is a basic code example with the JSON response.
     messaging_client = MessagingClient(customer_id, api_key)
     response = messaging_client.message(phone_number, message, message_type)
 
+    print(response.json)
+
 .. code-block:: javascript
     
     {'reference_id': 'DGFDF6E11AB86303ASDFD425BE00000657',
