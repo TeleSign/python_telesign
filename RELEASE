@@ -1,4 +1,4 @@
-2.1.0 (development)
+2.1.0
 - updated and improved README
 - secret_key refactored to api_key to align with docs and portal
 - api_host is now known as rest_endpoint to align with docs and portal
