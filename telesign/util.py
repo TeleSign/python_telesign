@@ -28,7 +28,7 @@ def verify_telesign_callback_signature(secret_key, signature, json_str):
     :param signature: the TeleSign Authorization header value supplied in the callback, as a string.
     :param json_str: the POST body text, that is, the JSON string sent by TeleSign describing the transaction status.
     """
-    your_signature = b64encode(HMAC(b64decode(secret_key), json_str, sha256).digest())
+    your_signature = b64encode(HMAC(b64decode(secret_key), json_str.encode("utf-8"), sha256).digest()).decode("utf-8")
 
     if len(signature) != len(your_signature):
         return False
