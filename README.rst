@@ -28,7 +28,7 @@ Documentation
 -------------
 
 Code documentation is included in the SDK. Complete documentation, quick start guides and reference material
-for the TeleSign API is available at the `TeleSign Developer Center <https://developer.telesign.com/>`_.
+for the TeleSign API is available within the `TeleSign Developer Center <https://developer.telesign.com/>`_.
 
 Installation
 ------------
