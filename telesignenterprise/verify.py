@@ -15,8 +15,8 @@ class VerifyClient(RestClient):
     sent via SMS message, Voice call or Push Notification.
     """
 
-    def __init__(self, customer_id, secret_key, api_host='https://rest-ww.telesign.com', **kwargs):
-        super(VerifyClient, self).__init__(customer_id, secret_key, api_host=api_host, **kwargs)
+    def __init__(self, customer_id, api_key, rest_endpoint='https://rest-ww.telesign.com', **kwargs):
+        super(VerifyClient, self).__init__(customer_id, api_key, rest_endpoint=rest_endpoint, **kwargs)
 
     def sms(self, phone_number, **params):
         """

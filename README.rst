@@ -1,28 +1,19 @@
-========
-TeleSign
-========
+==============================
+TeleSign Enterprise Python SDK
+==============================
 
-TeleSign provides the world’s most comprehensive approach to account security for Web and mobile applications.
+TeleSign is a communications platform as a service (CPaaS) company, founded on security. Since 2005, TeleSign has
+been a trusted partner to the world’s leading websites and mobile applications, helping secure billions of end-user
+accounts. Today, TeleSign’s data-driven, cloud communications platform is changing the way businesses engage with
+customers and prevent fraud.
 
-For more information about TeleSign, visit the `TeleSign website <http://www.TeleSign.com>`_.
-
-TeleSign REST API: Python SDK
------------------------------
-
-**TeleSign web services** conform to the `REST Web Service Design Model
-<http://en.wikipedia.org/wiki/Representational_state_transfer>`_. Services are exposed as URI-addressable resources
-through the set of *RESTful* procedures in our **TeleSign REST API**.
-
-The **TeleSign Python SDK** is a set modules and functions — a *Python Library* that wraps the
-TeleSign REST API, and it simplifies TeleSign application development in the `Python programming language
-<http://pypi.python.org/pypi/>`_. The SDK software is distributed on
-`GitHub <https://github.com/TeleSign/python_telesign>`_ and also as a Python Software Package using the
-`Python Package Index (PyPI) <http://pypi.python.org/pypi/>`_.
+For more information about TeleSign, visit our `website <http://www.TeleSign.com>`_.
 
 Documentation
 -------------
 
-Detailed documentation for TeleSign REST APIs is available in the `Developer Portal <https://developer.telesign.com/>`_.
+Code documentation is included in the SDK. Complete documentation, quick start guides and reference material
+for the TeleSign API is available within the `TeleSign Developer Center <https://developer.telesign.com/>`_.
 
 Installation
 ------------
@@ -33,27 +24,40 @@ To install the TeleSign Enterprise Python SDK:
 
     $ pip install -e ~/path/to/python_telesign_enterprise
 
-Alternatively, you can execute **cd ~/path/to/python_telesign_enterprise && python setup.py install**.
+Authentication
+--------------
+
+You will need a Customer ID and API Key in order to use TeleSign’s REST API. If you are already a customer and need an
+API Key, you can retrieve it from `TelePortal <https://teleportal.telesign.com>`_.
+
+Dependencies
+------------
+
+We make use of popular, feature-rich and well-tested open-source libraries to perform the underlying functionality of
+the SDK. These dependencies are managed by the community accepted package manager. If you are unable to add these
+additional third party dependencies to your project we have ensured that the SDK code is easy to read and can serve as
+sample code. We have also made sure that more complicated functions such as generate_telesign_headers can be easily
+extracted from the SDK and used 'as is' in your project.
 
 Python Code Example: Verify SMS
 -------------------------------
 
-Here's a basic code example with JSON response.
+Here is a basic code example with JSON response.
 
 .. code-block:: python
 
     from __future__ import print_function
     from telesignenterprise.verify import VerifyClient
 
-    customer_id = "customer_id"
-    secret_key = "secret_key"
+    customer_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+    api_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
 
     phone_number = "phone_number"
 
-    verify_client = VerifyClient(customer_id, secret_key)
-    result = verify_client.sms(phone_number)
+    verify_client = VerifyClient(customer_id, api_key)
+    response = verify_client.sms(phone_number)
 
-    print(result.json)
+    print(response.json)
 
 .. code-block:: javascript
 
@@ -66,16 +70,5 @@ Here's a basic code example with JSON response.
      'sub_resource': 'sms',
      'verify': {'code_entered': '', 'code_state': 'UNKNOWN'}}
 
-For more examples, see the examples folder or visit `TeleSign Developer Portal <https://developer.telesign.com/>`_.
-
-Authentication
---------------
-
-You will need a Customer ID and API Key in order to use TeleSign’s REST API. If you are already a customer and need an
-API Key, you can generate one in `TelePortal <https://teleportal.telesign.com>`_.
-
-Testing
--------
-
-The easiest way to run the tests is to install `nose <https://pypi.python.org/pypi/nose>`_ (**pip install nose**) and
-run **nosetests** in the root of the distribution. Tests are located in the *test/* directory.
+For more examples, see the `examples <https://github.com/TeleSign/python_telesign_enterprise/tree/master/examples>`_ folder or
+visit the `TeleSign Developer Center <https://developer.telesign.com/>`_.

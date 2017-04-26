@@ -19,8 +19,8 @@ class PhoneIdClient(RestClient):
     creating accounts and accessing your applications.
     """
 
-    def __init__(self, customer_id, secret_key, api_host='https://rest-ww.telesign.com', **kwargs):
-        super(PhoneIdClient, self).__init__(customer_id, secret_key, api_host=api_host, **kwargs)
+    def __init__(self, customer_id, api_key, rest_endpoint='https://rest-ww.telesign.com', **kwargs):
+        super(PhoneIdClient, self).__init__(customer_id, api_key, rest_endpoint=rest_endpoint, **kwargs)
 
     def standard(self, phone_number, **params):
         """
