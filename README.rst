@@ -14,7 +14,7 @@
     :target: https://github.com/TeleSign/python_telesign/blob/master/LICENSE
 
 ===================
-Telesign Python SDK
+TeleSign Python SDK
 ===================
 
 TeleSign is a communications platform as a service (CPaaS) company, founded on security. Since 2005, TeleSign has
