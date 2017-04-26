@@ -42,8 +42,8 @@ To install the TeleSign Python SDK:
 Authentication
 --------------
 
-You will need a Customer ID and API Key in order to use TeleSign’s API. If you are already a customer you can retrieve
-them from your account dashboard in the `Portal <https://portal.telesign.com>`_. If you are not a customer, sign up
+You will need a Customer ID and API Key in order to use TeleSign’s API. If you already have an account you can retrieve
+them from your account dashboard in the `Portal <https://portal.telesign.com>`_. If you have not signed up yet, sign up
 `here <https://portal.telesign.com/signup>`_.
 
 Dependencies
