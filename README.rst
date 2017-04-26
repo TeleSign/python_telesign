@@ -13,6 +13,10 @@
 .. image:: https://img.shields.io/pypi/l/telesign.svg
     :target: https://github.com/TeleSign/python_telesign/blob/master/LICENSE
 
+===================
+Telesign Python SDK
+===================
+
 TeleSign is a communications platform as a service (CPaaS) company, founded on security. Since 2005, TeleSign has
 been a trusted partner to the world’s leading websites and mobile applications, helping secure billions of end-user
 accounts. Today, TeleSign’s data-driven, cloud communications platform is changing the way businesses engage with
