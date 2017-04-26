@@ -32,5 +32,6 @@ setup(name='telesign',
       author_email='support@telesign.com',
       url="https://github.com/telesign/python_telesign",
       install_requires=['requests'],
+      tests_require=['nose', 'mock', 'pytz', 'coverage', 'codecov'],
       packages=find_packages(exclude=['test', 'test.*', 'examples', 'examples.*']),
       )

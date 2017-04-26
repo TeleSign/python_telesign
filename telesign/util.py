@@ -8,7 +8,7 @@ from random import SystemRandom
 
 def to_utc_rfc3339(a_datetime):
     """
-    Helper function to format a timezone unaware datetime in rfc3339 utc timestamp the easy way.
+    Helper function to format a timezone unaware/UTC datetime in rfc3339 utc timestamp the easy way.
     """
     return "{}Z".format(a_datetime.replace(microsecond=0).isoformat())
 
@@ -17,7 +17,7 @@ def random_with_n_digits(n):
     """
     Helper function to generate a random number n digits in length using a system random.
     """
-    return "".join(SystemRandom().choice('0123456789') for _ in range(n))
+    return "".join(SystemRandom().choice('123456789') for _ in range(n))
 
 
 def verify_telesign_callback_signature(secret_key, signature, json_str):
