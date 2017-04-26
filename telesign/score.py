@@ -10,8 +10,8 @@ class ScoreClient(RestClient):
     Score provides risk information about a specified phone number.
     """
 
-    def __init__(self, customer_id, secret_key, **kwargs):
-        super(ScoreClient, self).__init__(customer_id, secret_key, **kwargs)
+    def __init__(self, customer_id, api_key, **kwargs):
+        super(ScoreClient, self).__init__(customer_id, api_key, **kwargs)
 
     def score(self, phone_number, account_lifecycle_event, **params):
         """

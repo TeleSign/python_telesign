@@ -12,8 +12,8 @@ class VoiceClient(RestClient):
     or you can send verification messages containing time-based, one-time passcodes (TOTP).
     """
 
-    def __init__(self, customer_id, secret_key, **kwargs):
-        super(VoiceClient, self).__init__(customer_id, secret_key, **kwargs)
+    def __init__(self, customer_id, api_key, **kwargs):
+        super(VoiceClient, self).__init__(customer_id, api_key, **kwargs)
 
     def call(self, phone_number, message, message_type, **params):
         """

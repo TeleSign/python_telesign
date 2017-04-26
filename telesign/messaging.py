@@ -12,8 +12,8 @@ class MessagingClient(RestClient):
     or you can send verification messages containing one-time passcodes (OTP).
     """
 
-    def __init__(self, customer_id, secret_key, **kwargs):
-        super(MessagingClient, self).__init__(customer_id, secret_key, **kwargs)
+    def __init__(self, customer_id, api_key, **kwargs):
+        super(MessagingClient, self).__init__(customer_id, api_key, **kwargs)
 
     def message(self, phone_number, message, message_type, **params):
         """

@@ -11,8 +11,8 @@ class AutoVerifyClient(RestClient):
     native mobile applications.
     """
 
-    def __init__(self, customer_id, secret_key, **kwargs):
-        super(AutoVerifyClient, self).__init__(customer_id, secret_key, **kwargs)
+    def __init__(self, customer_id, api_key, **kwargs):
+        super(AutoVerifyClient, self).__init__(customer_id, api_key, **kwargs)
 
     def status(self, external_id, **params):
         """

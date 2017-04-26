@@ -45,35 +45,27 @@ class RestClient(requests.models.RequestEncodingMixin):
             except (Exception, ValueError):
                 self.json = None
 
-    def __init__(self, customer_id, secret_key,
-                 api_host='https://rest-api.telesign.com',
-                 pool_connections=1,
-                 pool_maxsize=5,
+    def __init__(self,
+                 customer_id,
+                 api_key,
+                 rest_endpoint='https://rest-api.telesign.com',
                  proxies=None,
                  timeout=10):
         """
         TeleSign RestClient useful for making generic RESTful requests against our API.
 
         :param customer_id: Your customer_id string associated with your account.
-        :param secret_key: Your secret_key string associated with your account.
-        :param api_host: (optional) Override the default api_host to target another endpoint string.
-        :param pool_connections: (optional) The integer number of urllib3 connection pools to cache.
-        :param pool_maxsize: (optional) The maximum number of connections to save in the pool as integer.
+        :param api_key: Your api_key string associated with your account.
+        :param rest_endpoint: (optional) Override the default rest_endpoint to target another endpoint string.
         :param proxies: (optional) Dictionary mapping protocol or protocol and hostname to the URL of the proxy.
         :param timeout: (optional) How long to wait for the server to send data before giving up, as a float.
         """
         self.customer_id = customer_id
-        self.secret_key = secret_key
+        self.api_key = api_key
 
-        self.api_host = api_host
+        self.api_host = rest_endpoint
 
         self.session = requests.Session()
-        adapter = requests.sessions.HTTPAdapter(
-            pool_connections=pool_connections,
-            pool_maxsize=pool_maxsize
-        )
-        self.session.mount('http://', adapter)
-        self.session.mount('https://', adapter)
 
         self.session.proxies = proxies if proxies else {}
 
@@ -81,7 +73,7 @@ class RestClient(requests.models.RequestEncodingMixin):
 
     @staticmethod
     def generate_telesign_headers(customer_id,
-                                  secret_key,
+                                  api_key,
                                   method_name,
                                   resource,
                                   url_encoded_fields,
@@ -97,7 +89,7 @@ class RestClient(requests.models.RequestEncodingMixin):
         See https://developer.telesign.com/docs/authentication-1 for detailed API documentation.
 
         :param customer_id: Your account customer_id.
-        :param secret_key: Your account secret_key.
+        :param api_key: Your account api_key.
         :param method_name: The HTTP method name of the request as a upper case string, should be one of 'POST', 'GET',
             'PUT' or 'DELETE'.
         :param resource: The partial resource URI to perform the request against, as a string.
@@ -134,7 +126,7 @@ class RestClient(requests.models.RequestEncodingMixin):
 
         string_to_sign = "".join(string_to_sign_builder)
 
-        signer = hmac.new(b64decode(secret_key), string_to_sign.encode("utf-8"), sha256)
+        signer = hmac.new(b64decode(api_key), string_to_sign.encode("utf-8"), sha256)
         signature = b64encode(signer.digest()).decode("utf-8")
 
         authorization = "TSA {customer_id}:{signature}".format(
@@ -209,7 +201,7 @@ class RestClient(requests.models.RequestEncodingMixin):
         url_encoded_fields = self._encode_params(params)
 
         headers = RestClient.generate_telesign_headers(self.customer_id,
-                                                       self.secret_key,
+                                                       self.api_key,
                                                        method_name,
                                                        resource,
                                                        url_encoded_fields,

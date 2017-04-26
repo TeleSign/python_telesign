@@ -11,15 +11,15 @@ from telesign.rest import RestClient
 class TestRest(TestCase):
     def setUp(self):
         self.customer_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
-        self.secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+        self.api_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
 
     def test_rest_client_constructor_basic(self):
 
         client = RestClient(self.customer_id,
-                            self.secret_key)
+                            self.api_key)
 
         self.assertEqual(client.customer_id, self.customer_id)
-        self.assertEqual(client.secret_key, self.secret_key)
+        self.assertEqual(client.api_key, self.api_key)
 
     def test_rest_client_response_constructor_basic(self):
 
@@ -48,7 +48,7 @@ class TestRest(TestCase):
                                          'lA6VIW3840IUwp5QwYJtLgQHeXbV+KW89vv2GoKi+OY=')
 
         actual_headers = RestClient.generate_telesign_headers(self.customer_id,
-                                                              self.secret_key,
+                                                              self.api_key,
                                                               method_name,
                                                               resource,
                                                               body_params_url_encoded,
@@ -69,7 +69,7 @@ class TestRest(TestCase):
                                          'SbILhQhkgBFXokzXQOoraTypjLK2Bv2pK2TlSaRs5ZE=')
 
         actual_headers = RestClient.generate_telesign_headers(self.customer_id,
-                                                              self.secret_key,
+                                                              self.api_key,
                                                               method_name,
                                                               resource,
                                                               body_params_url_encoded,
@@ -89,7 +89,7 @@ class TestRest(TestCase):
                                          'vdUx5SPrVdyroKjSzC+gajBVdDL5pOLhiLx6ohI7r8w=')
 
         actual_headers = RestClient.generate_telesign_headers(self.customer_id,
-                                                              self.secret_key,
+                                                              self.api_key,
                                                               method_name,
                                                               resource,
                                                               '',
@@ -104,7 +104,7 @@ class TestRest(TestCase):
         resource = '/v1/resource'
 
         actual_headers = RestClient.generate_telesign_headers(self.customer_id,
-                                                              self.secret_key,
+                                                              self.api_key,
                                                               method_name,
                                                               resource,
                                                               '',
@@ -123,7 +123,7 @@ class TestRest(TestCase):
         test_resource = '/test/resource'
         test_params = {'test': '123_\u03ff_test'}
 
-        client = RestClient(self.customer_id, self.secret_key, api_host=test_host)
+        client = RestClient(self.customer_id, self.api_key, rest_endpoint=test_host)
         client.session.post = Mock()
 
         expected_post_args = (u'https://test.com/test/resource',)
@@ -145,7 +145,7 @@ class TestRest(TestCase):
         test_resource = '/test/resource'
         test_params = {'test': '123_\u03ff_test'}
 
-        client = RestClient(self.customer_id, self.secret_key, api_host=test_host)
+        client = RestClient(self.customer_id, self.api_key, rest_endpoint=test_host)
         client.session.get = Mock()
 
         expected_get_args = (u'https://test.com/test/resource',)
@@ -167,7 +167,7 @@ class TestRest(TestCase):
         test_resource = '/test/resource'
         test_params = {'test': '123_\u03ff_test'}
 
-        client = RestClient(self.customer_id, self.secret_key, api_host=test_host)
+        client = RestClient(self.customer_id, self.api_key, rest_endpoint=test_host)
         client.session.put = Mock()
 
         expected_put_args = (u'https://test.com/test/resource',)
@@ -189,7 +189,7 @@ class TestRest(TestCase):
         test_resource = '/test/resource'
         test_params = {'test': '123_\u03ff_test'}
 
-        client = RestClient(self.customer_id, self.secret_key, api_host=test_host)
+        client = RestClient(self.customer_id, self.api_key, rest_endpoint=test_host)
         client.session.delete = Mock()
 
         expected_delete_args = (u'https://test.com/test/resource',)

@@ -20,15 +20,15 @@ def random_with_n_digits(n):
     return "".join(SystemRandom().choice('123456789') for _ in range(n))
 
 
-def verify_telesign_callback_signature(secret_key, signature, json_str):
+def verify_telesign_callback_signature(api_key, signature, json_str):
     """
     Verify that a callback was made by TeleSign and was not sent by a malicious client by verifying the signature.
 
-    :param secret_key: the TeleSign API secret_key associated with your account.
+    :param api_key: the TeleSign API api_key associated with your account.
     :param signature: the TeleSign Authorization header value supplied in the callback, as a string.
     :param json_str: the POST body text, that is, the JSON string sent by TeleSign describing the transaction status.
     """
-    your_signature = b64encode(HMAC(b64decode(secret_key), json_str.encode("utf-8"), sha256).digest()).decode("utf-8")
+    your_signature = b64encode(HMAC(b64decode(api_key), json_str.encode("utf-8"), sha256).digest()).decode("utf-8")
 
     if len(signature) != len(your_signature):
         return False

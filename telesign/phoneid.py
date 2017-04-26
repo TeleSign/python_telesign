@@ -11,8 +11,8 @@ class PhoneIdClient(RestClient):
     verification process and evaluate risk.
     """
 
-    def __init__(self, customer_id, secret_key, **kwargs):
-        super(PhoneIdClient, self).__init__(customer_id, secret_key, **kwargs)
+    def __init__(self, customer_id, api_key, **kwargs):
+        super(PhoneIdClient, self).__init__(customer_id, api_key, **kwargs)
 
     def phoneid(self, phone_number, **params):
         """

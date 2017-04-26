@@ -11,7 +11,7 @@ import telesign.util as util
 class TestRest(TestCase):
     def setUp(self):
         self.customer_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
-        self.secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+        self.api_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
 
     def test_to_utc_rfc3339(self):
         utc_rfc3339 = util.to_utc_rfc3339(datetime.fromtimestamp(1493146971.0, tz=UTC))
@@ -32,10 +32,10 @@ class TestRest(TestCase):
         signature = "B97g3N9lPdVaptvifxRau7bzVAC5hhRBZ6HKXABN744="
         json_str = "{'test': 123}"
 
-        self.assertTrue(util.verify_telesign_callback_signature(self.secret_key, signature, json_str))
+        self.assertTrue(util.verify_telesign_callback_signature(self.api_key, signature, json_str))
 
     def test_verify_telesign_callback_signature_incorrect(self):
         incorrect_signature = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB="
         json_str = "{'test': 123}"
 
-        self.assertFalse(util.verify_telesign_callback_signature(self.secret_key, incorrect_signature, json_str))
+        self.assertFalse(util.verify_telesign_callback_signature(self.api_key, incorrect_signature, json_str))
