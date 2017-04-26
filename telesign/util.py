@@ -10,7 +10,7 @@ def to_utc_rfc3339(a_datetime):
     """
     Helper function to format a timezone unaware/UTC datetime in rfc3339 utc timestamp the easy way.
     """
-    return "{}Z".format(a_datetime.replace(microsecond=0).isoformat())
+    return "{date_string}Z".format(date_string=a_datetime.replace(microsecond=0).isoformat())
 
 
 def random_with_n_digits(n):

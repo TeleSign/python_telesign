@@ -110,7 +110,7 @@ class TestRest(TestCase):
                                                               '',
                                                               user_agent='unit_test')
 
-        self.assertIsNot(parsedate_tz(actual_headers.get('Date')), None)
+        self.assertFalse(parsedate_tz(actual_headers.get('Date')) is None)
 
         try:
             UUID(actual_headers.get('x-ts-nonce'))
