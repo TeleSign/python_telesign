@@ -39,13 +39,13 @@ class TestRest(TestCase):
 
     def test_generate_telesign_headers_with_post(self):
         method_name = 'POST'
-        date_rfc2616 = 'Wed, 14 Dec 2016 18:20:12 -0000'
+        date_rfc2616 = 'Wed, 14 Dec 2016 18:20:12 GMT'
         nonce = 'A1592C6F-E384-4CDB-BC42-C3AB970369E9'
         resource = '/v1/resource'
         body_params_url_encoded = 'test=param'
 
         expected_authorization_header = ('TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:'
-                                         'lA6VIW3840IUwp5QwYJtLgQHeXbV+KW89vv2GoKi+OY=')
+                                         '2xVlmbrxLjYrrPun3G3WMNG6Jon4yKcTeOoK9DjXJ/Q=')
 
         actual_headers = RestClient.generate_telesign_headers(self.customer_id,
                                                               self.api_key,
@@ -60,13 +60,13 @@ class TestRest(TestCase):
 
     def test_generate_telesign_headers_unicode_content(self):
         method_name = 'POST'
-        date_rfc2616 = 'Wed, 14 Dec 2016 18:20:12 -0000'
+        date_rfc2616 = 'Wed, 14 Dec 2016 18:20:12 GMT'
         nonce = 'A1592C6F-E384-4CDB-BC42-C3AB970369E9'
         resource = '/v1/resource'
         body_params_url_encoded = 'test=%CF%BF'
 
         expected_authorization_header = ('TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:'
-                                         'SbILhQhkgBFXokzXQOoraTypjLK2Bv2pK2TlSaRs5ZE=')
+                                         'h8d4I0RTxErbxYXuzCOtNqb/f0w3Ck8e5SEkGNj01+8=')
 
         actual_headers = RestClient.generate_telesign_headers(self.customer_id,
                                                               self.api_key,
@@ -81,12 +81,12 @@ class TestRest(TestCase):
 
     def test_generate_telesign_headers_with_get(self):
         method_name = 'GET'
-        date_rfc2616 = 'Wed, 14 Dec 2016 18:20:12 -0000'
+        date_rfc2616 = 'Wed, 14 Dec 2016 18:20:12 GMT'
         nonce = 'A1592C6F-E384-4CDB-BC42-C3AB970369E9'
         resource = '/v1/resource'
 
         expected_authorization_header = ('TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:'
-                                         'vdUx5SPrVdyroKjSzC+gajBVdDL5pOLhiLx6ohI7r8w=')
+                                         'aUm7I+9GKl3ww7PNeeJntCT0iS7b+EmRKEE4LnRzChQ=')
 
         actual_headers = RestClient.generate_telesign_headers(self.customer_id,
                                                               self.api_key,
