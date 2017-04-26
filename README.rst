@@ -49,11 +49,11 @@ them from your account dashboard in the `Portal <https://portal.telesign.com>`_.
 Dependencies
 ------------
 
-We make use of popular third party libraries to perform the underlying functionality of the SDK. These dependencies are
-managed by the community accepted packaging manager. If you're unable to add these additional third party dependencies
-to your project we have ensured that the SDK code is easy to read and can serve as sample code. We have also made sure
-that more complicated functions such as generate_telesign_headers can easily extracted from the SDK and can be used
-'as is' in your project.
+We make use of popular, feature-rich and well-tested open-source libraries to perform the underlying functionality of
+the SDK. These dependencies are managed by the community accepted package manager. If you're unable to add these
+additional third party dependencies to your project we have ensured that the SDK code is easy to read and can serve as
+sample code. We have also made sure that more complicated functions such as generate_telesign_headers can be easily
+extracted from the SDK and used 'as is' in your project.
 
 Python Code Example: Messaging
 ------------------------------
