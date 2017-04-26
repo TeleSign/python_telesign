@@ -86,7 +86,7 @@ class RestClient(requests.models.RequestEncodingMixin):
         Creates the canonicalized string_to_sign and generates the HMAC signature. This is used to authenticate requests
         against the TeleSign REST API.
 
-        See https://developer.telesign.com/docs/authentication-1 for detailed API documentation.
+        See https://developer.telesign.com/docs/authentication for detailed API documentation.
 
         :param customer_id: Your account customer_id.
         :param api_key: Your account api_key.

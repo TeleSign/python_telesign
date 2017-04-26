@@ -1,3 +1,12 @@
+2.1.0 (development)
+- updated and improved README
+- secret_key refactored to api_key to align with docs and portal
+- api_host is now known as rest_endpoint to align with docs and portal
+- fixed python3.x bug with bytes vs str in verify_telesign_callback_signature
+- various doc string updates and fixes
+- removed requests specific config, subclass and customize instead
+- added travis CI, codecov coverage and additional unit tests
+
 2.0.0
 
 - Major refactor and simplification into generic REST client.
