@@ -7,7 +7,7 @@ python:
   - "3.5"
   - "3.6"
 install:
-  - python setup.py test
+  - python setup.py install test
 script: nosetests --with-coverage --cover-package=telesign --cover-inclusive
 after_success:
   - codecov
