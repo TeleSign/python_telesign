@@ -4,6 +4,9 @@
 .. image:: https://img.shields.io/travis/TeleSign/python_telesign.svg
     :target: https://travis-ci.org/TeleSign/python_telesign
 
+.. image:: https://img.shields.io/codecov/c/github/TeleSign/python_telesign.svg
+    :target: https://codecov.io/gh/TeleSign/python_telesign
+
 .. image:: https://img.shields.io/pypi/v/telesign.svg
     :target: https://pypi.python.org/pypi/telesign
 
