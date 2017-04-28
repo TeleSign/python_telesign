@@ -21,7 +21,7 @@ final class MessagingClientTest extends ClientTest {
           "OTP",
           [ "optional_param" => "123" ]
         ],
-        self::EXAMPLE_API_HOST . "/v1/messaging",
+        self::EXAMPLE_REST_ENDPOINT . "/v1/messaging",
         [
           "phone_number" => self::EXAMPLE_PHONE_NUMBER,
           "message" => "Your OTP is 12345",
@@ -36,7 +36,7 @@ final class MessagingClientTest extends ClientTest {
           self::EXAMPLE_REFERENCE_ID,
           [ "optional_param" => "123" ]
         ],
-        self::EXAMPLE_API_HOST . "/v1/messaging/" . self::EXAMPLE_REFERENCE_ID . "?optional_param=123",
+        self::EXAMPLE_REST_ENDPOINT . "/v1/messaging/" . self::EXAMPLE_REFERENCE_ID . "?optional_param=123",
         []
       ]
     ];

@@ -14,8 +14,8 @@ use Psr\Http\Message\RequestInterface;
 final class RestClientTest extends TestCase {
 
   const EXAMPLE_CUSTOMER_ID = Example::CUSTOMER_ID;
-  const EXAMPLE_SECRET_KEY = Example::SECRET_KEY;
-  const EXAMPLE_API_HOST = Example::API_HOST;
+  const EXAMPLE_API_KEY = Example::API_KEY;
+  const EXAMPLE_REST_ENDPOINT = Example::REST_ENDPOINT;
   const EXAMPLE_RESOURCE = "/v1/resource";
   const EXAMPLE_FIELDS = [ "test" => "param" ];
   const EXAMPLE_URL_ENCODED_FIELDS = "test=param";
@@ -28,7 +28,7 @@ final class RestClientTest extends TestCase {
   function testTelesignHeadersMatchExample ($data) {
     $actual_headers = RestClient::generateTelesignHeaders(
       self::EXAMPLE_CUSTOMER_ID,
-      self::EXAMPLE_SECRET_KEY,
+      self::EXAMPLE_API_KEY,
       $data["method_name"],
       self::EXAMPLE_RESOURCE,
       self::EXAMPLE_URL_ENCODED_FIELDS,
@@ -52,7 +52,7 @@ final class RestClientTest extends TestCase {
       [[
         "method_name" => "POST",
         "request" => [
-          "uri" => self::EXAMPLE_API_HOST . self::EXAMPLE_RESOURCE,
+          "uri" => self::EXAMPLE_REST_ENDPOINT . self::EXAMPLE_RESOURCE,
           "body" => self::EXAMPLE_URL_ENCODED_FIELDS,
           "headers" => [
             "authorization" => "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:smUGWEeXtN+WT1s/y1Ssp4Q2Acm/ultPxkgl/GjqSsA=",
@@ -63,7 +63,7 @@ final class RestClientTest extends TestCase {
       [[
         "method_name" => "GET",
         "request" => [
-          "uri" => self::EXAMPLE_API_HOST . self::EXAMPLE_RESOURCE . "?" . self::EXAMPLE_URL_ENCODED_FIELDS,
+          "uri" => self::EXAMPLE_REST_ENDPOINT . self::EXAMPLE_RESOURCE . "?" . self::EXAMPLE_URL_ENCODED_FIELDS,
           "body" => "",
           "headers" => [
             "authorization" => "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:YgzQt6LcuBDSUeTpE4SASXcSAKAm1eL5TWetbxhXJxg=",
@@ -74,7 +74,7 @@ final class RestClientTest extends TestCase {
       [[
         "method_name" => "DELETE",
         "request" => [
-          "uri" => self::EXAMPLE_API_HOST . self::EXAMPLE_RESOURCE . "?" . self::EXAMPLE_URL_ENCODED_FIELDS,
+          "uri" => self::EXAMPLE_REST_ENDPOINT . self::EXAMPLE_RESOURCE . "?" . self::EXAMPLE_URL_ENCODED_FIELDS,
           "body" => "",
           "headers" => [
             "authorization" => "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:ODT8s51qSdrS2pKbtrKIu76gQJf2h0hDz8nJ5ho0/6w=",
@@ -91,7 +91,7 @@ final class RestClientTest extends TestCase {
   function testGeneratesTelesignHeadersAffectedByOptionalArguments ($header_name) {
     $headers = RestClient::generateTelesignHeaders(
       self::EXAMPLE_CUSTOMER_ID,
-      self::EXAMPLE_SECRET_KEY,
+      self::EXAMPLE_API_KEY,
       "POST",
       self::EXAMPLE_RESOURCE,
       self::EXAMPLE_URL_ENCODED_FIELDS
@@ -109,7 +109,7 @@ final class RestClientTest extends TestCase {
     $mock = new MockHandler([ new Response() ]);
 
     $client = new RestClient(
-      self::EXAMPLE_CUSTOMER_ID, self::EXAMPLE_SECRET_KEY, self::EXAMPLE_API_HOST, 10, null, $mock
+      self::EXAMPLE_CUSTOMER_ID, self::EXAMPLE_API_KEY, self::EXAMPLE_REST_ENDPOINT, 10, null, $mock
     );
     $client->get(self::EXAMPLE_RESOURCE);
 
@@ -128,7 +128,7 @@ final class RestClientTest extends TestCase {
     $mock = new MockHandler([ new Response() ]);
 
     $client = new RestClient(
-      self::EXAMPLE_CUSTOMER_ID, self::EXAMPLE_SECRET_KEY, self::EXAMPLE_API_HOST, 10, null, $mock
+      self::EXAMPLE_CUSTOMER_ID, self::EXAMPLE_API_KEY, self::EXAMPLE_REST_ENDPOINT, 10, null, $mock
     );
     $client->{$data["method_name"]}(
       self::EXAMPLE_RESOURCE, self::EXAMPLE_FIELDS, self::EXAMPLE_DATE, self::EXAMPLE_NONCE
@@ -150,7 +150,7 @@ final class RestClientTest extends TestCase {
     $mock = new MockHandler([ new Response() ]);
 
     $client = new RestClient(
-      self::EXAMPLE_CUSTOMER_ID, self::EXAMPLE_SECRET_KEY, self::EXAMPLE_API_HOST, 10, null, $mock
+      self::EXAMPLE_CUSTOMER_ID, self::EXAMPLE_API_KEY, self::EXAMPLE_REST_ENDPOINT, 10, null, $mock
     );
     $response = $client->{$data["method_name"]}(
       self::EXAMPLE_RESOURCE, self::EXAMPLE_FIELDS, self::EXAMPLE_DATE, self::EXAMPLE_NONCE

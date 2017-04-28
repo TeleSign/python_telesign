@@ -21,7 +21,7 @@ final class VoiceClientTest extends ClientTest {
           "OTP",
           [ "optional_param" => "123" ]
         ],
-        "uri" => self::EXAMPLE_API_HOST . "/v1/voice",
+        "uri" => self::EXAMPLE_REST_ENDPOINT . "/v1/voice",
         [
           "phone_number" => self::EXAMPLE_PHONE_NUMBER,
           "message" => "Your OTP is 12345",
@@ -36,7 +36,7 @@ final class VoiceClientTest extends ClientTest {
           self::EXAMPLE_REFERENCE_ID,
           [ "optional_param" => "123" ]
         ],
-        self::EXAMPLE_API_HOST . "/v1/voice/" . self::EXAMPLE_REFERENCE_ID . "?optional_param=123",
+        self::EXAMPLE_REST_ENDPOINT . "/v1/voice/" . self::EXAMPLE_REFERENCE_ID . "?optional_param=123",
         []
       ]
     ];

@@ -20,7 +20,7 @@ final class ScoreClientTest extends ClientTest {
           self::EXAMPLE_ACCOUNT_LIFECYCLE_EVENT,
           [ "optional_param" => "123" ]
         ],
-        self::EXAMPLE_API_HOST . "/v1/score/" . self::EXAMPLE_PHONE_NUMBER,
+        self::EXAMPLE_REST_ENDPOINT . "/v1/score/" . self::EXAMPLE_PHONE_NUMBER,
         [
           "account_lifecycle_event" => self::EXAMPLE_ACCOUNT_LIFECYCLE_EVENT,
           "optional_param" => "123"

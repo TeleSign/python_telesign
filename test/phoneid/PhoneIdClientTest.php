@@ -19,7 +19,7 @@ final class PhoneIdClientTest extends ClientTest {
           self::EXAMPLE_PHONE_NUMBER,
           [ "optional_param" => "123" ]
         ],
-        "uri" => self::EXAMPLE_API_HOST . "/v1/phoneid/" . self::EXAMPLE_PHONE_NUMBER,
+        "uri" => self::EXAMPLE_REST_ENDPOINT . "/v1/phoneid/" . self::EXAMPLE_PHONE_NUMBER,
         [
           "optional_param" => "123"
         ]

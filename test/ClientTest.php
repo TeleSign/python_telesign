@@ -12,8 +12,8 @@ use Psr\Http\Message\RequestInterface;
 abstract class ClientTest extends TestCase {
   
   const EXAMPLE_CUSTOMER_ID = Example::CUSTOMER_ID;
-  const EXAMPLE_SECRET_KEY = Example::SECRET_KEY;
-  const EXAMPLE_API_HOST = Example::API_HOST;
+  const EXAMPLE_API_KEY = Example::API_KEY;
+  const EXAMPLE_REST_ENDPOINT = Example::REST_ENDPOINT;
   
   abstract function getRequestExamples();
   
@@ -23,7 +23,7 @@ abstract class ClientTest extends TestCase {
   function testRequestFormat ($client, $method, $args, $expected_url, $expected_fields) {
     $mock = new MockHandler([ new Response() ]);
     $client = new $client(
-      self::EXAMPLE_CUSTOMER_ID, self::EXAMPLE_SECRET_KEY, self::EXAMPLE_API_HOST, 10, null, $mock
+      self::EXAMPLE_CUSTOMER_ID, self::EXAMPLE_API_KEY, self::EXAMPLE_REST_ENDPOINT, 10, null, $mock
     );
     $client->$method(...$args);
     $request = $mock->getLastRequest();

@@ -20,33 +20,33 @@ use const telesign\sdk\version\VERSION;
 class RestClient {
 
   private $customer_id;
-  private $secret_key;
+  private $api_key;
   private $user_agent;
   private $client;
 
   /**
    * TeleSign RestClient instantiation function
    *
-   * @param string   $customer_id Your customer_id string associated with your account
-   * @param string   $secret_key  Your secret_key string associated with your account
-   * @param string   $api_host    Override the default api_host to target another endpoint string
-   * @param float    $timeout     How long to wait for the server to send data before giving up
-   * @param stirng   $proxy       URL of the proxy
-   * @param callable $handler     Guzzle's HTTP transfer override
+   * @param string   $customer_id   Your customer_id string associated with your account
+   * @param string   $api_key       Your api_key string associated with your account
+   * @param string   $rest_endpoint Override the default rest_endpoint to target another endpoint string
+   * @param float    $timeout       How long to wait for the server to send data before giving up
+   * @param stirng   $proxy         URL of the proxy
+   * @param callable $handler       Guzzle's HTTP transfer override
    */
   function __construct (
     $customer_id,
-    $secret_key,
-    $api_host = "https://rest-api.telesign.com",
+    $api_key,
+    $rest_endpoint = "https://rest-api.telesign.com",
     $timeout = 10,
     $proxy = null,
     $handler = null
   ) {
     $this->customer_id = $customer_id;
-    $this->secret_key = $secret_key;
+    $this->api_key = $api_key;
 
     $this->client = new Client([
-      "base_uri" => $api_host,
+      "base_uri" => $rest_endpoint,
       "timeout" => $timeout,
       "proxy" => $proxy,
       "handler" => $handler
@@ -68,7 +68,7 @@ class RestClient {
    * See https://developer.telesign.com/docs/authentication-1 for detailed API documentation.
    *
    * @param string $customer_id        Your account customer_id
-   * @param string $secret_key         Your account secret_key
+   * @param string $api_key            Your account api_key
    * @param string $method_name        The HTTP method name of the request, should be one of 'POST', 'GET', 'PUT' or
    *                                   'DELETE'
    * @param string $resource           The partial resource URI to perform the request against
@@ -81,7 +81,7 @@ class RestClient {
    */
   static function generateTelesignHeaders (
     $customer_id,
-    $secret_key,
+    $api_key,
     $method_name,
     $resource,
     $url_encoded_fields,
@@ -118,7 +118,7 @@ class RestClient {
     $string_to_sign = join("", $string_to_sign_builder);
 
     $signature = base64_encode(
-      hash_hmac("sha256", utf8_encode($string_to_sign), base64_decode($secret_key), true)
+      hash_hmac("sha256", utf8_encode($string_to_sign), base64_decode($api_key), true)
     );
     $authorization = "TSA $customer_id:$signature";
 
@@ -194,7 +194,7 @@ class RestClient {
 
     $headers = $this->generateTelesignHeaders(
       $this->customer_id,
-      $this->secret_key,
+      $this->api_key,
       $method_name,
       $resource,
       $url_encoded_fields,

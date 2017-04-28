@@ -24,7 +24,7 @@ final class UtilTest extends TestCase {
   }
 
   function testVerifyTelesignCallbackSignature () {
-    $secret_key = Example::SECRET_KEY;
+    $api_key = Example::API_KEY;
     $header_value = "4NzBWLbUiX4doPp5ls4rBNSZdTBO+LBo1adwJeaLt04=";
     $json_str = json_encode([
       "status" => [
@@ -42,7 +42,7 @@ final class UtilTest extends TestCase {
       "reference_id" => "2557312299CC1304904080F4BE17BFB4"
     ]);
 
-    $this->assertTrue(verifyTelesignCallbackSignature($secret_key, $header_value, $json_str));
+    $this->assertTrue(verifyTelesignCallbackSignature($api_key, $header_value, $json_str));
   }
 
 }

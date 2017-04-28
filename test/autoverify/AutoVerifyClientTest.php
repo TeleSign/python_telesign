@@ -18,7 +18,7 @@ final class AutovVrifyClientTest extends ClientTest {
           self::EXAMPLE_REFERENCE_ID,
           [ "optional_param" => "123" ]
         ],
-        self::EXAMPLE_API_HOST . "/v1/mobile/verification/status/" . self::EXAMPLE_REFERENCE_ID . "?optional_param=123",
+        self::EXAMPLE_REST_ENDPOINT . "/v1/mobile/verification/status/" . self::EXAMPLE_REFERENCE_ID . "?optional_param=123",
         []
       ]
     ];
