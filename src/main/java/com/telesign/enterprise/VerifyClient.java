@@ -20,25 +20,25 @@ public class VerifyClient extends RestClient {
     private static final String VERIFY_PUSH_RESOURCE = "/v2/verify/push";
     private static final String VERIFY_STATUS_RESOURCE = "/v1/verify/%s";
 
-    public VerifyClient(String customerId, String secretKey) {
+    public VerifyClient(String customerId, String apiKey) {
 
-        super(customerId, secretKey, "https://rest-ww.telesign.com");
+        super(customerId, apiKey, "https://rest-ww.telesign.com");
     }
 
-    public VerifyClient(String customerId, String secretKey, String apiHost) {
-        super(customerId, secretKey, apiHost);
+    public VerifyClient(String customerId, String apiKey, String restEndpoint) {
+        super(customerId, apiKey, restEndpoint);
     }
 
     public VerifyClient(String customerId,
-                        String secretKey,
-                        String apiHost,
-                        Long connectTimeout,
-                        Long readTimeout,
-                        Long writeTimeout,
+                        String apiKey,
+                        String restEndpoint,
+                        Integer connectTimeout,
+                        Integer readTimeout,
+                        Integer writeTimeout,
                         Proxy proxy,
                         final String proxyUsername,
                         final String proxyPassword) {
-        super(customerId, secretKey, apiHost, connectTimeout, readTimeout, writeTimeout, proxy, proxyUsername, proxyPassword);
+        super(customerId, apiKey, restEndpoint, connectTimeout, readTimeout, writeTimeout, proxy, proxyUsername, proxyPassword);
     }
 
     /**

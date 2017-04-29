@@ -19,25 +19,25 @@ public class TelebureauClient extends RestClient {
     private static final String TELEBUREAU_RETRIEVE_RESOURCE = "/v1/telebureau/event/%s";
     private static final String TELEBUREAU_DELETE_RESOURCE = "/v1/telebureau/event/%s";
 
-    public TelebureauClient(String customerId, String secretKey) {
+    public TelebureauClient(String customerId, String apiKey) {
 
-        super(customerId, secretKey, "https://rest-ww.telesign.com");
+        super(customerId, apiKey, "https://rest-ww.telesign.com");
     }
 
-    public TelebureauClient(String customerId, String secretKey, String apiHost) {
-        super(customerId, secretKey, apiHost);
+    public TelebureauClient(String customerId, String apiKey, String restEndpoint) {
+        super(customerId, apiKey, restEndpoint);
     }
 
     public TelebureauClient(String customerId,
-                            String secretKey,
-                            String apiHost,
-                            Long connectTimeout,
-                            Long readTimeout,
-                            Long writeTimeout,
+                            String apiKey,
+                            String restEndpoint,
+                            Integer connectTimeout,
+                            Integer readTimeout,
+                            Integer writeTimeout,
                             Proxy proxy,
                             final String proxyUsername,
                             final String proxyPassword) {
-        super(customerId, secretKey, apiHost, connectTimeout, readTimeout, writeTimeout, proxy, proxyUsername, proxyPassword);
+        super(customerId, apiKey, restEndpoint, connectTimeout, readTimeout, writeTimeout, proxy, proxyUsername, proxyPassword);
     }
 
     /**

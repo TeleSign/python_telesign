@@ -9,8 +9,8 @@ public class SendCustomVoiceCallInDifferentLanguage {
 
     public static void main(String[] args) {
 
-        String customerId = "customer_id";
-        String secretKey = "secret_key";
+        String customerId = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
+        String apiKey = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
 
         String phoneNumber = "phone_number";
         String language = "fr-FR";
@@ -21,7 +21,7 @@ public class SendCustomVoiceCallInDifferentLanguage {
         params.put("tts_message", ttsMessage);
 
         try {
-            VerifyClient verifyClient = new VerifyClient(customerId, secretKey);
+            VerifyClient verifyClient = new VerifyClient(customerId, apiKey);
             RestClient.TelesignResponse telesignResponse = verifyClient.voice(phoneNumber, params);
         } catch (Exception e) {
             e.printStackTrace();
