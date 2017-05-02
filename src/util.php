@@ -3,7 +3,7 @@
 namespace telesign\sdk\util;
 
 /**
- * Helper function to format a timezone unaware datetime in rfc3339 utc timestamp the easy way
+ * Helper function to format a timezone unaware/UTC datetime in rfc3339 utc timestamp the easy way
  */
 function toUtcRfc3339 ($a_datetime) {
   return \DateTime::createFromFormat(DATE_RFC3339, $a_datetime, new \DateTimeZone("UTC"))->format(DATE_ISO8601);
@@ -16,7 +16,7 @@ function randomWithNDigits ($n) {
   $randomDigits = array($n);
 
   for ($i = 0; $i < $n; ++$i) {
-    $randomDigits[$i] = rand(0, 9);
+    $randomDigits[$i] = rand(1, 9);
   }
 
   return join("", $randomDigits);

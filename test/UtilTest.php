@@ -20,29 +20,24 @@ final class UtilTest extends TestCase {
     $b = randomWithNDigits($n);
 
     $this->assertEquals($n, strlen($a));
+    $this->assertTrue(ctype_digit($a));
     $this->assertNotEquals($a, $b);
   }
 
-  function testVerifyTelesignCallbackSignature () {
+  function testVerifyTelesignCallbackSignatureCorrect () {
     $api_key = Example::API_KEY;
-    $header_value = "4NzBWLbUiX4doPp5ls4rBNSZdTBO+LBo1adwJeaLt04=";
-    $json_str = json_encode([
-      "status" => [
-        "updated_on" => "2016-07-08T20:52:46.417428Z",
-        "code" => 200,
-        "description" => "Delivered to handset"
-      ],
-      "submit_timestamp" => "2016-07-08T20:52:41.203000Z",
-      "errors" => [],
-      "verify" => [
-        "code_state" => "UNKNOWN",
-        "code_entered" => null
-      ],
-      "sub_resource" => "sms",
-      "reference_id" => "2557312299CC1304904080F4BE17BFB4"
-    ]);
+    $header_value = "B97g3N9lPdVaptvifxRau7bzVAC5hhRBZ6HKXABN744=";
+    $json_str = "{'test': 123}";
 
     $this->assertTrue(verifyTelesignCallbackSignature($api_key, $header_value, $json_str));
+  }
+
+  function testVerifyTelesignCallbackSignatureIncorrect () {
+    $api_key = Example::API_KEY;
+    $header_value = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
+    $json_str = "{'test': 123}";
+
+    $this->assertFalse(verifyTelesignCallbackSignature($api_key, $header_value, $json_str));
   }
 
 }
