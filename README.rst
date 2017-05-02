@@ -1,3 +1,6 @@
+.. image:: https://raw.github.com/TeleSign/python_telesign/master/sdk_banner.jpg
+    :target: https://developer.telesign.com
+
 ==============================
 TeleSign Enterprise Python SDK
 ==============================
@@ -68,7 +71,8 @@ Here is a basic code example with JSON response.
         'description': 'Message in progress',
         'updated_on': '2017-02-07T03:13:42.610863Z'},
      'sub_resource': 'sms',
-     'verify': {'code_entered': '', 'code_state': 'UNKNOWN'}}
+     'verify': {'code_entered': '',
+        'code_state': 'UNKNOWN'}}
 
 For more examples, see the `examples <https://github.com/TeleSign/python_telesign_enterprise/tree/master/examples>`_ folder or
 visit the `TeleSign Developer Center <https://developer.telesign.com/>`_.
