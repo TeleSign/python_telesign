@@ -1,3 +1,6 @@
+.. image:: https://raw.github.com/TeleSign/java_telesign_enterprise/master/sdk_banner.jpg
+    :target: https://developer.telesign.com
+
 ============================
 TeleSign Enterprise Java SDK
 ============================
@@ -51,10 +54,10 @@ additional third party dependencies to your project we have ensured that the SDK
 sample code. We have also made sure that more complicated functions such as generateTelesignHeaders can be easily
 extracted from the SDK and used 'as is' in your project.
 
-Java Code Example: Messaging
-----------------------------
+Java Code Example: Verify SMS
+-----------------------------
 
-Here's a basic code example with JSON response.
+Here is a basic code example with JSON response.
 
 .. code-block:: java
 
@@ -62,17 +65,22 @@ Here's a basic code example with JSON response.
     String apiKey = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
 
     String phoneNumber = "phone_number";
-    String message = "You're scheduled for a dentist appointment at 2:30PM.";
-    String messageType = "ARN";
 
-    MessagingClient messagingClient = new MessagingClient(customerId, apiKey);
-    RestClient.TelesignResponse telesignResponse = messagingClient.message(phoneNumber, message, messageType, null);
+    VerifyClient verifyClient = new VerifyClient(customerId, apiKey);
+    RestClient.TelesignResponse telesignResponse = verifyClient.sms(phoneNumber, null);
 
 .. code-block:: javascript
     
-    {'reference_id': 'DGFDF6E11AB86303ASDFD425BE00000657',
-     'status': {'code': 103,
-        'description': 'Call in progress',
-        'updated_on': '2016-12-12T00:39:58.325559Z'}}
+    {'errors': [],
+     'reference_id': '25685A40218006049044A58789044948',
+     'resource_uri': '/v1/verify/25685A40218006049044A58789044948',
+     'status': {'code': 290,
+        'description': 'Message in progress',
+        'updated_on': '2017-02-07T03:13:42.610863Z'},
+     'sub_resource': 'sms',
+     'verify': {'code_entered': '',
+        'code_state': 'UNKNOWN'}}
 
-For more examples, see the examples folder or visit `TeleSign Developer Portal <https://developer.telesign.com/>`_.
+For more examples, see the `examples
+<https://github.com/TeleSign/java_telesign_enterprise/tree/master/src/test/java/com/telesign/enterprise/example>`_
+folder or visit `TeleSign Developer Portal <https://developer.telesign.com/>`_.
