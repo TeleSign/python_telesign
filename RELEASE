@@ -1,0 +1,14 @@
+2.1.0
+
+- updated and improved README
+- secret_key refactored to api_key to align with docs and portal
+- api_host is now known as rest_endpoint to align with docs and portal
+- added travis CI, codecov coverage and additional unit tests
+
+2.0.0
+
+- major refactoring and simplification into generic REST client
+- started managing dependencies with Composer
+- request headers generation routine is now made static
+- added utility functions
+- added examples
