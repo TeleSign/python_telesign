@@ -1,5 +1,11 @@
+.. image:: https://raw.github.com/TeleSign/php_telesign/master/sdk_banner.svg
+    :target: https://developer.telesign.com
+
 .. image:: https://img.shields.io/travis/TeleSign/php_telesign.svg?branch=master
     :target: https://travis-ci.org/TeleSign/php_telesign
+
+.. image:: https://img.shields.io/codecov/c/github/TeleSign/php_telesign.svg
+    :target: https://codecov.io/gh/TeleSign/php_telesign
 
 .. image:: https://img.shields.io/packagist/v/telesign/telesign.svg
     :target: https://packagist.org/packages/telesign/telesign
@@ -7,28 +13,22 @@
 .. image:: https://img.shields.io/github/license/TeleSign/php_telesign.svg
     :target: https://github.com/TeleSign/php_telesign/blob/master/LICENSE
 
-========
-TeleSign
-========
+================
+TeleSign PHP SDK
+================
 
-TeleSign provides the world’s most comprehensive approach to account security for Web and mobile applications.
+TeleSign is a communications platform as a service (CPaaS) company, founded on security. Since 2005, TeleSign has
+been a trusted partner to the world’s leading websites and mobile applications, helping secure billions of end-user
+accounts. Today, TeleSign’s data-driven, cloud communications platform is changing the way businesses engage with
+customers and prevent fraud.
 
-For more information about TeleSign, visit the `TeleSign website <http://www.TeleSign.com>`_.
-
-TeleSign Web Services: PHP SDK
----------------------------------
-
-**TeleSign web services** conform to the `REST Web Service Design Model
-<http://en.wikipedia.org/wiki/Representational_state_transfer>`_. Services are exposed as URI-addressable resources
-through the set of *RESTful* procedures in our **TeleSign REST API**.
-
-The **TeleSign PHP SDK** is a PHP library that provides an interface to `TeleSign web services
-<https://developer.telesign.com/docs/getting-started-with-the-rest-api/>`_.
+For more information about TeleSign, visit our `website <http://www.TeleSign.com>`_.
 
 Documentation
 -------------
 
-Detailed documentation for TeleSign REST APIs is available in the `Developer Portal <https://developer.telesign.com/>`_.
+Code documentation is included in the SDK. Complete documentation, quick start guides and reference material
+for the TeleSign API is available within the `TeleSign Developer Center <https://developer.telesign.com/>`_.
 
 Installation
 ------------
@@ -37,10 +37,26 @@ Installation
 
   $ composer require telesign/telesign
 
+Authentication
+--------------
+
+You will need a Customer ID and API Key in order to use TeleSign’s API. If you already have an account you can retrieve
+them from your account dashboard within the `Portal <https://portal.telesign.com>`_. If you have not signed up yet, sign
+up `here <https://portal.telesign.com/signup>`_.
+
+Dependencies
+------------
+
+We make use of popular, feature-rich and well-tested open-source libraries to perform the underlying functionality of
+the SDK. These dependencies are managed by the community accepted package manager. If you are unable to add these
+additional third party dependencies to your project we have ensured that the SDK code is easy to read and can serve as
+sample code. We have also made sure that more complicated functions such as generateTelesignHeaders can be easily
+extracted from the SDK and used 'as is' in your project.
+
 PHP Code Example: Messaging
 -------------------------------------
 
-Here's a basic code example with JSON response.
+Here's a basic code example with the JSON response.
 
 .. code-block:: php
 
@@ -74,17 +90,5 @@ Here's a basic code example with JSON response.
     [external_id] =>
   )
 
-For more examples, see the examples folder or visit `TeleSign Developer Portal <https://developer.telesign.com/>`_.
-
-Authentication
---------------
-
-You will need a Customer ID and API Key in order to use TeleSign’s REST API. If you are already a customer and need an
-API Key, you can generate one in the `Portal <https://portal.telesign.com>`_.
-
-Testing
--------
-
-.. code-block:: bash
-
-  $ composer test
+For more examples, see the `examples <https://github.com/TeleSign/php_telesign/tree/master/examples>`_ folder or
+visit the `TeleSign Developer Center <https://developer.telesign.com/>`_.
