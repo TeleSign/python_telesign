@@ -5,12 +5,12 @@ namespace telesign\sdk\version;
 use Composer\Script\Event;
 use Composer\Semver\VersionParser;
 
-class Script {
+class Version {
 
   static function bumpVersion (Event $event) {
     $io = $event->getIO();
     
-    if (!is_dir(__DIR__ . "/../../.git")) {
+    if (!is_dir(__DIR__ . "/.git")) {
       $io->writeError("Your local repository is missing.");
       return;
     }
@@ -29,7 +29,7 @@ class Script {
       return;
     }
     
-    file_put_contents(__DIR__ . "/version.php", "<?php
+    file_put_contents(__DIR__ . "/src/version/version.php", "<?php
 
 namespace telesign\\sdk\\version;
 
