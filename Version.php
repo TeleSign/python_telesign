@@ -36,9 +36,11 @@ namespace telesign\\sdk\\version;
 const VERSION = \"$version\";
 ", LOCK_EX);
 
+    $tagName = "v" . ltrim($version, "v");
+
     $result = self::exec([
       "git commit -am \"bump version to $version\"",
-      "git tag $version",
+      "git tag $tagName",
       "git push",
       "git push --tag"
     ], $stdout, $stderr);
