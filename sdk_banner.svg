@@ -25,15 +25,12 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(4.9684718e-7,0.08125996)"
      id="layer5">
     <rect
-       y="-0.081259958"
-       x="-4.9684718e-007"
-       height="21.247927"
-       width="310.43356"
+       height="100%"
+       width="100%"
        id="rect4609"
-       style="fill:#002142;fill-opacity:1;stroke-width:0.17582922" />
+       style="fill:#002b4a" />
   </g>
   <g
      transform="translate(0.25197657,0.17054607)"
