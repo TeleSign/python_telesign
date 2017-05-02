@@ -41,8 +41,8 @@ Authentication
 --------------
 
 You will need a Customer ID and API Key in order to use TeleSign’s API. If you already have an account you can retrieve
-them from your account dashboard within the `Portal <https://portal.telesign.com>`_. If you have not signed up yet, sign
-up `here <https://portal.telesign.com/signup>`_.
+them from your account dashboard within the `Portal <https://portal.telesign.com/login>`_. If you have not signed up
+yet, sign up `here <https://portal.telesign.com/signup>`_.
 
 Dependencies
 ------------
@@ -54,9 +54,9 @@ sample code. We have also made sure that more complicated functions such as gene
 extracted from the SDK and used 'as is' in your project.
 
 PHP Code Example: Messaging
--------------------------------------
+---------------------------
 
-Here's a basic code example with the JSON response.
+Here is a basic code example with the JSON response.
 
 .. code-block:: php
 
