@@ -1,4 +1,4 @@
-.. image:: https://cdn.rawgit.com/TeleSign/php_telesign/master/sdk_banner.svg
+.. image:: https://cdn.rawgit.com/TeleSign/php_telesign/22e1af/sdk_banner.svg
     :target: https://developer.telesign.com
 
 .. image:: https://img.shields.io/travis/TeleSign/php_telesign.svg?branch=master
