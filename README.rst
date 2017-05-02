@@ -1,4 +1,4 @@
-.. image:: https://raw.github.com/TeleSign/python_telesign/master/sdk_banner.jpg
+.. image:: https://raw.github.com/TeleSign/python_telesign/master/sdk_banner.png
     :target: https://developer.telesign.com
 
 ==============================
