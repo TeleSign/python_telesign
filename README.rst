@@ -22,7 +22,7 @@ To install the TeleSign Enterprise Python SDK:
 
 .. code-block:: bash
 
-    $ pip install -e ~/path/to/python_telesign_enterprise
+    $ pip install -e /path/to/python_telesign_enterprise
 
 Authentication
 --------------
