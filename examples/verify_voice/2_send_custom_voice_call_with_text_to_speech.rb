@@ -1,15 +1,15 @@
 require 'telesign'
 require 'telesignenterprise'
 
-customer_id = 'customer_id'
-secret_key = 'secret_key'
+customer_id = 'FFFFFFFF-EEEE-DDDD-1234-AB1234567890'
+api_key = 'EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=='
 
 phone_number = 'phone_number'
 verify_code = Telesign::Util.random_with_n_digits(5)
 verify_code_with_commas = verify_code.chars.join(', ')
 tts_message = "Hello, your code is #{verify_code_with_commas}. Once again, your code is #{verify_code_with_commas}. Goodbye."
 
-verify_client = TelesignEnterprise::VerifyClient.new(customer_id, secret_key)
+verify_client = TelesignEnterprise::VerifyClient.new(customer_id, api_key)
 response = verify_client.voice(phone_number, tts_message: tts_message)
 
 print 'Please enter the verification code you were sent: '

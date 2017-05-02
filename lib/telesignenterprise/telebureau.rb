@@ -12,13 +12,13 @@ module TelesignEnterprise
   class TelebureauClient < Telesign::RestClient
 
     def initialize(customer_id,
-                   secret_key,
-                   api_host: 'https://rest-ww.telesign.com',
+                   api_key,
+                   rest_endpoint: 'https://rest-ww.telesign.com',
                    timeout: nil)
 
       super(customer_id,
-            secret_key,
-            api_host: api_host,
+            api_key,
+            rest_endpoint: rest_endpoint,
             timeout: timeout)
     end
 
