@@ -20,7 +20,7 @@ final class PhoneIdClientTest extends ClientTest {
           self::EXAMPLE_UCID,
           [ "optional_param" => "123" ]
         ],
-        "uri" => self::EXAMPLE_API_HOST . "/v1/phoneid/score/" . self::EXAMPLE_PHONE_NUMBER . "?optional_param=123&ucid=" . self::EXAMPLE_UCID,
+        "uri" => self::EXAMPLE_REST_ENDPOINT . "/v1/phoneid/score/" . self::EXAMPLE_PHONE_NUMBER . "?optional_param=123&ucid=" . self::EXAMPLE_UCID,
         []
       ],
       [
@@ -31,7 +31,7 @@ final class PhoneIdClientTest extends ClientTest {
           self::EXAMPLE_UCID,
           [ "optional_param" => "123" ]
         ],
-        self::EXAMPLE_API_HOST. "/v1/phoneid/contact/" . self::EXAMPLE_PHONE_NUMBER . "?optional_param=123&ucid=" . self::EXAMPLE_UCID,
+        self::EXAMPLE_REST_ENDPOINT. "/v1/phoneid/contact/" . self::EXAMPLE_PHONE_NUMBER . "?optional_param=123&ucid=" . self::EXAMPLE_UCID,
         []
       ],
       [
@@ -42,7 +42,7 @@ final class PhoneIdClientTest extends ClientTest {
           self::EXAMPLE_UCID,
           [ "optional_param" => "123" ]
         ],
-        self::EXAMPLE_API_HOST. "/v1/phoneid/live/" . self::EXAMPLE_PHONE_NUMBER . "?optional_param=123&ucid=" . self::EXAMPLE_UCID,
+        self::EXAMPLE_REST_ENDPOINT. "/v1/phoneid/live/" . self::EXAMPLE_PHONE_NUMBER . "?optional_param=123&ucid=" . self::EXAMPLE_UCID,
         []
       ],
       [
@@ -53,7 +53,7 @@ final class PhoneIdClientTest extends ClientTest {
           self::EXAMPLE_UCID,
           [ "optional_param" => "123" ]
         ],
-        self::EXAMPLE_API_HOST. "/v1/phoneid/number_deactivation/" . self::EXAMPLE_PHONE_NUMBER . "?optional_param=123&ucid=" . self::EXAMPLE_UCID,
+        self::EXAMPLE_REST_ENDPOINT. "/v1/phoneid/number_deactivation/" . self::EXAMPLE_PHONE_NUMBER . "?optional_param=123&ucid=" . self::EXAMPLE_UCID,
         []
       ],
       [
@@ -63,7 +63,7 @@ final class PhoneIdClientTest extends ClientTest {
           self::EXAMPLE_PHONE_NUMBER,
           [ "optional_param" => "123" ]
         ],
-        self::EXAMPLE_API_HOST. "/v1/phoneid/standard/" . self::EXAMPLE_PHONE_NUMBER . "?optional_param=123",
+        self::EXAMPLE_REST_ENDPOINT. "/v1/phoneid/standard/" . self::EXAMPLE_PHONE_NUMBER . "?optional_param=123",
         []
       ]
     ];

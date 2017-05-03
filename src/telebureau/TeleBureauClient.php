@@ -15,8 +15,8 @@ class TelebureauClient extends RestClient {
   const TELEBUREAU_RETRIEVE_RESOURCE = "/v1/telebureau/event/%s";
   const TELEBUREAU_DELETE_RESOURCE = "/v1/telebureau/event/%s";
 
-  function __construct ($customer_id, $secret_key, $api_host = "https://rest-ww.telesign.com", ...$other) {
-    parent::__construct($customer_id, $secret_key, $api_host, ...$other);
+  function __construct ($customer_id, $api_key, $rest_endpoint = "https://rest-ww.telesign.com", ...$other) {
+    parent::__construct($customer_id, $api_key, $rest_endpoint, ...$other);
   }
 
   /**

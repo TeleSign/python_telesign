@@ -24,7 +24,7 @@ final class VerifyClientTest extends ClientTest {
             "verify_code" => self::EXAMPLE_VERIFY_CODE
           ]
         ],
-        self::EXAMPLE_API_HOST. "/v1/verify/sms",
+        self::EXAMPLE_REST_ENDPOINT. "/v1/verify/sms",
         [
           "ucid" => self::EXAMPLE_UCID,
           "verify_code" => self::EXAMPLE_VERIFY_CODE,
@@ -41,7 +41,7 @@ final class VerifyClientTest extends ClientTest {
             "verify_code" => self::EXAMPLE_VERIFY_CODE
           ]
         ],
-        self::EXAMPLE_API_HOST. "/v1/verify/call",
+        self::EXAMPLE_REST_ENDPOINT. "/v1/verify/call",
         [
           "ucid" => self::EXAMPLE_UCID,
           "verify_code" => self::EXAMPLE_VERIFY_CODE,
@@ -58,7 +58,7 @@ final class VerifyClientTest extends ClientTest {
             "verify_code" => self::EXAMPLE_VERIFY_CODE
           ]
         ],
-        self::EXAMPLE_API_HOST. "/v1/verify/smart",
+        self::EXAMPLE_REST_ENDPOINT. "/v1/verify/smart",
         [
           "ucid" => self::EXAMPLE_UCID,
           "verify_code" => self::EXAMPLE_VERIFY_CODE,
@@ -75,7 +75,7 @@ final class VerifyClientTest extends ClientTest {
             "verify_code" => self::EXAMPLE_VERIFY_CODE
           ]
         ],
-        self::EXAMPLE_API_HOST. "/v2/verify/push",
+        self::EXAMPLE_REST_ENDPOINT. "/v2/verify/push",
         [
           "ucid" => self::EXAMPLE_UCID,
           "verify_code" => self::EXAMPLE_VERIFY_CODE,
@@ -91,7 +91,7 @@ final class VerifyClientTest extends ClientTest {
             "optional_param" => "123"
           ]
         ],
-        self::EXAMPLE_API_HOST . "/v1/verify/". self::EXAMPLE_REFERENCE_ID . "?optional_param=123",
+        self::EXAMPLE_REST_ENDPOINT . "/v1/verify/". self::EXAMPLE_REFERENCE_ID . "?optional_param=123",
         []
       ],
     ];

@@ -1,28 +1,22 @@
-========
-TeleSign
-========
+.. image:: https://raw.github.com/TeleSign/php_telesign/master/sdk_banner.png
+    :target: https://developer.telesign.com
 
-TeleSign provides the world’s most comprehensive approach to account security for Web and mobile applications.
+===========================
+TeleSign Enterprise PHP SDK
+===========================
 
-For more information about TeleSign, visit the `TeleSign website <http://www.TeleSign.com>`_.
+TeleSign is a communications platform as a service (CPaaS) company, founded on security. Since 2005, TeleSign has
+been a trusted partner to the world’s leading websites and mobile applications, helping secure billions of end-user
+accounts. Today, TeleSign’s data-driven, cloud communications platform is changing the way businesses engage with
+customers and prevent fraud.
 
-TeleSign Web Services: Enterprise PHP SDK
------------------------------------------
-
-**TeleSign web services** conform to the `REST Web Service Design Model
-<http://en.wikipedia.org/wiki/Representational_state_transfer>`_. Services are exposed as URI-addressable resources
-through the set of *RESTful* procedures in our **TeleSign REST API**.
-
-The **TeleSign PHP SDK** is a PHP library that provides an interface to `TeleSign web services
-<https://developer.telesign.com/docs/getting-started-with-the-rest-api/>`_.
-
-The **TeleSign Enterprise PHP SDK** is a PHP library that provides support for a complementary REST service. The
-`documentation`_ makes it easily distinguishable.
+For more information about TeleSign, visit our `website <http://www.TeleSign.com>`_.
 
 Documentation
 -------------
 
-Detailed documentation for TeleSign REST APIs is available in the `Developer Portal <https://developer.telesign.com/>`_.
+Code documentation is included in the SDK. Complete documentation, quick start guides and reference material
+for the TeleSign API is available within the `TeleSign Developer Center <https://developer.telesign.com/>`_.
 
 Installation
 ------------
@@ -39,10 +33,25 @@ Then you can require it as usual.
 
   $ composer require telesign/telesignenterprise
 
-PHP Code Example: Verify SMS
--------------------------------------
+Authentication
+--------------
 
-Here's a basic code example with JSON response.
+You will need a Customer ID and API Key in order to use TeleSign’s REST API. If you are already a customer and need an
+API Key, you can retrieve it from `TelePortal <https://teleportal.telesign.com>`_.
+
+Dependencies
+------------
+
+We make use of popular, feature-rich and well-tested open-source libraries to perform the underlying functionality of
+the SDK. These dependencies are managed by the community accepted package manager. If you are unable to add these
+additional third party dependencies to your project we have ensured that the SDK code is easy to read and can serve as
+sample code. We have also made sure that more complicated functions such as generateTelesignHeaders can be easily
+extracted from the SDK and used 'as is' in your project.
+
+PHP Code Example: Verify SMS
+----------------------------
+
+Here is a basic code example with JSON response.
 
 .. code-block:: php
 
@@ -50,12 +59,12 @@ Here's a basic code example with JSON response.
 
   use telesign\enterprise\sdk\verify\VerifyClient;
 
-  $customer_id = "customer_id";
-  $secret_key = "secret_key";
+  $customer_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
+  $api_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
 
   $phone_number = "phone_number";
 
-  $verify_client = new VerifyClient($customer_id, $secret_key);
+  $verify_client = new VerifyClient($customer_id, $api_key);
   $response = $verify_client->sms($phone_number);
 
   print_r($response->json);
@@ -86,17 +95,5 @@ Here's a basic code example with JSON response.
 
   )
 
-For more examples, see the examples folder or visit `TeleSign Developer Portal <https://developer.telesign.com/>`_.
-
-Authentication
---------------
-
-You will need a Customer ID and API Key in order to use TeleSign’s REST API. If you are already a customer and need an
-API Key, you can generate one in `TelePortal <https://teleportal.telesign.com>`_.
-
-Testing
--------
-
-.. code-block:: bash
-
-  $ composer test
+For more examples, see the `examples <https://github.com/TeleSign/php_telesign_enterprise/tree/master/examples>`_ folder or
+visit the `TeleSign Developer Center <https://developer.telesign.com/>`_.

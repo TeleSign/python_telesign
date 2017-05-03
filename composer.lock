@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "71960480791acfb5d456cb5c4c14153f",
+    "content-hash": "ee31130ce40a8c09ae0d2ee6527150b5",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -366,16 +366,16 @@
         },
         {
             "name": "telesign/telesign",
-            "version": "v2.0.0",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TeleSign/php_telesign.git",
-                "reference": "75f10a012b291d61f8653abc1020d0dc611fe706"
+                "reference": "98538f2dc9fcb1f0bfab4a21605be40fc5ce64f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TeleSign/php_telesign/zipball/75f10a012b291d61f8653abc1020d0dc611fe706",
-                "reference": "75f10a012b291d61f8653abc1020d0dc611fe706",
+                "url": "https://api.github.com/repos/TeleSign/php_telesign/zipball/98538f2dc9fcb1f0bfab4a21605be40fc5ce64f8",
+                "reference": "98538f2dc9fcb1f0bfab4a21605be40fc5ce64f8",
                 "shasum": ""
             },
             "require": {
@@ -421,7 +421,7 @@
                 "telesign",
                 "voice"
             ],
-            "time": "2017-04-12T09:41:48+00:00"
+            "time": "2017-05-03T12:52:20+00:00"
         }
     ],
     "packages-dev": [

@@ -1,0 +1,14 @@
+2.1.0
+
+- updated and improved README
+- secret_key refactored to api_key to align with docs and portal
+- api_host is now known as rest_endpoint to align with docs and portal
+- various doc string updates and fixes
+
+2.0.0
+
+- Major refactor and simplification into generic REST client.
+- API parameters are now passed as kwargs to endpoint handlers.
+- Now using guzzle to perform http requests.
+- UserAgent is now set to track client usage and help debug issues.
+- generateTelesignHeaders is now static and easily extracted from the SDK if custom behavior/implementation is required.

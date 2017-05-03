@@ -24,7 +24,7 @@ final class TelebureauClientTest extends ClientTest {
             "optional_param" => "123"
           ]
         ],
-        self::EXAMPLE_API_HOST. "/v1/telebureau/event",
+        self::EXAMPLE_REST_ENDPOINT. "/v1/telebureau/event",
         [
           "phone_number" => self::EXAMPLE_PHONE_NUMBER,
           "fraud_type" => self::EXAMPLE_FRAUD_TYPE,
@@ -40,7 +40,7 @@ final class TelebureauClientTest extends ClientTest {
             "optional_param" => "123"
           ]
         ],
-        self::EXAMPLE_API_HOST . "/v1/telebureau/event/". self::EXAMPLE_REFERENCE_ID . "?optional_param=123",
+        self::EXAMPLE_REST_ENDPOINT . "/v1/telebureau/event/". self::EXAMPLE_REFERENCE_ID . "?optional_param=123",
         []
       ],
       [
@@ -52,7 +52,7 @@ final class TelebureauClientTest extends ClientTest {
             "optional_param" => "123"
           ]
         ],
-        self::EXAMPLE_API_HOST . "/v1/telebureau/event/". self::EXAMPLE_REFERENCE_ID . "?optional_param=123",
+        self::EXAMPLE_REST_ENDPOINT . "/v1/telebureau/event/". self::EXAMPLE_REFERENCE_ID . "?optional_param=123",
         []
       ],
     ];
