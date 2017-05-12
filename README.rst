@@ -1,4 +1,4 @@
-.. image:: https://raw.github.com/TeleSign/ruby_telesign/master/sdk_banner.png
+.. image:: https://raw.github.com/TeleSign/ruby_telesign/master/ruby_banner.jpg
     :target: https://developer.telesign.com
 
 ============================
