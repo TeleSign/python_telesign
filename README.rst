@@ -1,4 +1,4 @@
-.. image:: https://raw.github.com/TeleSign/java_telesign/master/sdk_banner.png
+.. image:: https://raw.github.com/TeleSign/java_telesign/master/java_banner_enterprise.jpg
     :target: https://developer.telesign.com
 
 ============================
