@@ -7,6 +7,7 @@ VERIFY_VOICE_RESOURCE = "/v1/verify/call"
 VERIFY_SMART_RESOURCE = "/v1/verify/smart"
 VERIFY_PUSH_RESOURCE = "/v2/verify/push"
 VERIFY_STATUS_RESOURCE = "/v1/verify/{reference_id}"
+VERIFY_COMPLETION_RESOURCE = "/v1/verify/completion/{reference_id}"
 
 
 class VerifyClient(RestClient):
@@ -73,4 +74,14 @@ class VerifyClient(RestClient):
         See https://developer.telesign.com/docs/rest_api-verify-transaction-callback for detailed API documentation.
         """
         return self.get(VERIFY_STATUS_RESOURCE.format(reference_id=reference_id),
+                        **params)
+
+    def completion(self, reference_id, **params):
+        """
+        Notifies TeleSign that a verification was successfully delivered to the user in order to help improve
+        the quality of message delivery routes.
+
+        See https://developer.telesign.com/docs/completion-service-for-verify-products for detailed API documentation.
+        """
+        return self.put(VERIFY_COMPLETION_RESOURCE.format(reference_id=reference_id),
                         **params)
