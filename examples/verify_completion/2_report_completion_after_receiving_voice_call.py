@@ -19,7 +19,7 @@ if verify_code == user_entered_verify_code.strip():
     print("Your code is correct.")
 
     response = verify.completion(reference_id)
-    if response.status_code == 200 and response.json.get('status').get('code') == 1900:
+    if response.ok and response.json.get('status').get('code') == 1900:
         print("Completion successfully reported.")
     else:
         print("Error reporting completion.")
