@@ -5,6 +5,7 @@ import com.telesign.Util;
 import com.telesign.enterprise.VerifyClient;
 
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class SendVoiceCallWithVerificationCode {
 
@@ -22,6 +23,17 @@ public class SendVoiceCallWithVerificationCode {
         try {
             VerifyClient verifyClient = new VerifyClient(customerId, apiKey);
             RestClient.TelesignResponse telesignResponse = verifyClient.voice(phoneNumber, params);
+
+            Scanner s = new Scanner(System.in);
+            System.out.println("Please enter your verification code:");
+            String code = s.next();
+
+            if (verifyCode.equalsIgnoreCase(code)) {
+                System.out.println("Your code is correct.");
+            } else {
+                System.out.println("Your code is incorrect.");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
