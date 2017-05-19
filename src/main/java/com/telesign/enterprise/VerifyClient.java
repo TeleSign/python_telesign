@@ -19,6 +19,7 @@ public class VerifyClient extends RestClient {
     private static final String VERIFY_SMART_RESOURCE = "/v1/verify/smart";
     private static final String VERIFY_PUSH_RESOURCE = "/v2/verify/push";
     private static final String VERIFY_STATUS_RESOURCE = "/v1/verify/%s";
+    private static final String VERIFY_COMPLETION_RESOURCE = "/v1/verify/completion/%s";
 
     public VerifyClient(String customerId, String apiKey) {
 
@@ -121,5 +122,15 @@ public class VerifyClient extends RestClient {
     public TelesignResponse status(String referenceId, Map<String, String> params) throws IOException, GeneralSecurityException {
 
         return this.get(String.format(VERIFY_STATUS_RESOURCE, referenceId), params);
+    }
+
+    /**
+     * Notifies TeleSign that a verification was successfully delivered to the user in order to help improve the
+     * quality of message delivery routes.
+     * <p>
+     * See https://developer.telesign.com/docs/completion-service-for-verify-products for detailed API documentation.
+     */
+    public TelesignResponse completion(String referenceId, Map<String, String> params) throws IOException, GeneralSecurityException {
+        return this.put(String.format(VERIFY_COMPLETION_RESOURCE, referenceId), params);
     }
 }
