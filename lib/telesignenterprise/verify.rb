@@ -5,6 +5,7 @@ VERIFY_VOICE_RESOURCE = '/v1/verify/call'
 VERIFY_SMART_RESOURCE = '/v1/verify/smart'
 VERIFY_PUSH_RESOURCE = '/v2/verify/push'
 VERIFY_STATUS_RESOURCE = '/v1/verify/%{reference_id}'
+VERIFY_COMPLETION_RESOURCE = '/v1/verify/completion/%{reference_id}'
 
 module TelesignEnterprise
 
@@ -77,6 +78,16 @@ module TelesignEnterprise
     def status(reference_id, **params)
 
       self.get(VERIFY_STATUS_RESOURCE % {:reference_id => reference_id},
+               **params)
+    end
+
+    # Notifies TeleSign that a verification was successfully delivered to the user in order to help improve the
+    # quality of message delivery routes.
+    #
+    # See https://developer.telesign.com/docs/completion-service-for-verify-products for detailed API documentation.
+    def completion(reference_id, **params)
+
+      self.put(VERIFY_COMPLETION_RESOURCE % {:reference_id => reference_id},
                **params)
     end
 
