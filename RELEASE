@@ -1,3 +1,6 @@
+2.1.2
+- Added completion endpoint to VerifyClient
+
 2.1.1
 
 - bumped telesign version to include fix
