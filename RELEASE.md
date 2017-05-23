@@ -1,3 +1,8 @@
+## [2.1.1](http://central.maven.org/maven2/com/telesign/telesign/2.1.1/) - 2017-05-23
+- 2016-05-23
+  - Added completion endpoint to VerifyClient
+  - Added console output and verify code input to verify_sms and verify_voice examples
+
 ## [2.1.0](http://central.maven.org/maven2/com/telesign/telesign/2.1.0/) - 2017-04-26
 - 2016-04-28
   - updated and improved README
