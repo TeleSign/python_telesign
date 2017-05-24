@@ -1,4 +1,4 @@
-package com.telesign.enterprise.example.verify_sms;
+package com.telesign.enterprise.example.verify_completion;
 
 import com.telesign.RestClient;
 import com.telesign.Util;
@@ -7,7 +7,7 @@ import com.telesign.enterprise.VerifyClient;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class SendSMSWithVerificationCode {
+public class ReportCompletionAfterReceivingSMS {
 
     public static void main(String[] args) {
 
@@ -24,12 +24,24 @@ public class SendSMSWithVerificationCode {
             VerifyClient verifyClient = new VerifyClient(customerId, apiKey);
             RestClient.TelesignResponse telesignResponse = verifyClient.sms(phoneNumber, params);
 
+            String referenceId = telesignResponse.json.get("reference_id").getAsString();
+
             Scanner s = new Scanner(System.in);
             System.out.println("Please enter your verification code:");
             String code = s.next();
 
             if (verifyCode.equalsIgnoreCase(code)) {
                 System.out.println("Your code is correct.");
+
+                telesignResponse = verifyClient.completion(referenceId, null);
+
+                if (telesignResponse.ok
+                        && telesignResponse.json.getAsJsonObject("status").get("code").getAsInt() == 1900) {
+                    System.out.println("Completion successfully reported.");
+                } else {
+                    System.out.println("Error reporting completion.");
+                }
+
             } else {
                 System.out.println("Your code is incorrect.");
             }
