@@ -9,8 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TeleSign's Voice API allows you to easily send verify_voice messages. You can send alerts, reminders, and notifications,
- * or you can send verification messages containing time-based, one-time passcodes (TOTP).
+ * PhoneID is a set of REST APIs that deliver deep phone number data attributes that help optimize the end user
+ * verification process and evaluate risk.
+ * <p>
+ * TeleSign PhoneID provides a wide range of risk assessment indicators on the number to help confirm user identity,
+ * delivering real-time decision making throughout the number lifecycle and ensuring only legitimate users are
+ * creating accounts and accessing your applications.
  */
 public class PhoneIdClient extends RestClient {
 

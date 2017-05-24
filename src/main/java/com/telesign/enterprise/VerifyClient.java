@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TeleSign's Voice API allows you to easily send verify_voice messages. You can send alerts, reminders, and notifications,
- * or you can send verification messages containing time-based, one-time passcodes (TOTP).
+ * The Verify API delivers phone-based verification and two-factor authentication using a time-based, one-time passcode
+ * sent via SMS message, Voice call or Push Notification.
  */
 public class VerifyClient extends RestClient {
 
