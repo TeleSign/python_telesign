@@ -1,7 +1,9 @@
-.. compound::
+.. image:: https://raw.github.com/TeleSign/php_telesign/master/php_banner.jpg
+    :target: https://developer.telesign.com
 
-  .. image:: https://raw.github.com/TeleSign/php_telesign/master/php_banner.jpg
-      :target: https://developer.telesign.com
+.. raw:: html
+
+    <br>
 
 .. image:: https://img.shields.io/travis/TeleSign/php_telesign.svg?branch=master
     :target: https://travis-ci.org/TeleSign/php_telesign
