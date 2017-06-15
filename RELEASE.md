@@ -1,3 +1,6 @@
+2.2.0
+ - AutoVerify rebranded to AppVerify, please update your integration
+
 2.1.1
  - Added completion endpoint to VerifyClient
  - Added console output and verify code input to verify_sms and verify_voice examples
