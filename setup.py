@@ -31,6 +31,6 @@ setup(name='telesignenterprise',
       author='TeleSign Corp.',
       author_email='support@telesign.com',
       url="https://github.com/telesign/python_telesign",
-      install_requires=['telesign'],
+      install_requires=['telesign <2.2, >=2.1'],
       packages=find_packages(exclude=['test', 'test.*', 'examples', 'examples.*']),
       )
