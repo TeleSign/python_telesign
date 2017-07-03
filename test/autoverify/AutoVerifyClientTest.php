@@ -1,6 +1,6 @@
 <?php
 
-namespace telesign\sdk\autoverify;
+namespace telesign\sdk\appverify;
 
 use telesign\sdk\Example;
 use telesign\sdk\ClientTest;
@@ -12,7 +12,7 @@ final class AutovVrifyClientTest extends ClientTest {
   function getRequestExamples () {
     return [
       [
-        AutoVerifyClient::class,
+        AppVerifyClient::class,
         "status",
         [
           self::EXAMPLE_REFERENCE_ID,
