@@ -5,7 +5,7 @@
 
     <br>
 
-.. image:: https://img.shields.io/travis/TeleSign/php_telesign.svg?branch=master
+.. image:: https://img.shields.io/travis/TeleSign/php_telesign/master.svg
     :target: https://travis-ci.org/TeleSign/php_telesign
 
 .. image:: https://img.shields.io/codecov/c/github/TeleSign/php_telesign.svg
