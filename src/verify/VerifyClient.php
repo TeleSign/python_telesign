@@ -15,6 +15,7 @@ class VerifyClient extends RestClient {
   const VERIFY_SMART_RESOURCE = "/v1/verify/smart";
   const VERIFY_PUSH_RESOURCE = "/v2/verify/push";
   const VERIFY_STATUS_RESOURCE = "/v1/verify/%s";
+  const VERIFY_COMPLETION_RESOURCE = "/v1/verify/completion/%s";
 
   function __construct ($customer_id, $api_key, $rest_endpoint = "https://rest-ww.telesign.com", ...$other) {
     parent::__construct($customer_id, $api_key, $rest_endpoint, ...$other);
@@ -79,6 +80,16 @@ class VerifyClient extends RestClient {
    */
   function status ($reference_id, array $params = []) {
     return $this->get(sprintf(self::VERIFY_STATUS_RESOURCE, $reference_id), $params);
+  }
+  
+  /**
+   * Notifies TeleSign that a verification was successfully delivered to the user in order to help improve
+   * the quality of message delivery routes.
+   *
+   * See https://developer.telesign.com/docs/completion-service-for-verify-products for detailed API documentation.
+   */
+  function completion ($reference_id, array $params = []) {
+    return $this->put(sprintf(self::VERIFY_COMPLETION_RESOURCE, $reference_id), $params);
   }
 
 }
