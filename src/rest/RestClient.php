@@ -166,6 +166,20 @@ class RestClient {
   }
 
   /**
+   * Generic TeleSign REST API PUT handler
+   *
+   * @param string $resource The partial resource URI to perform the request against
+   * @param array  $fields   Query params to perform the DELETE request with
+   * @param string $date     The date and time of the request
+   * @param string $nonce    A unique cryptographic nonce for the request
+   *
+   * @return \telesign\sdk\rest\Response The RestClient Response object
+   */
+  function put (...$args) {
+    return $this->execute("PUT", ...$args);
+  }
+
+  /**
    * Generic TeleSign REST API DELETE handler
    *
    * @param string $resource The partial resource URI to perform the request against
