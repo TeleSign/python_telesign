@@ -94,6 +94,20 @@ final class VerifyClientTest extends ClientTest {
         self::EXAMPLE_REST_ENDPOINT . "/v1/verify/". self::EXAMPLE_REFERENCE_ID . "?optional_param=123",
         []
       ],
+      [
+        VerifyClient::class,
+        "completion",
+        [
+          self::EXAMPLE_REFERENCE_ID,
+          [
+            "optional_param" => "123"
+          ]
+        ],
+        self::EXAMPLE_REST_ENDPOINT . "/v1/verify/completion/". self::EXAMPLE_REFERENCE_ID,
+        [
+          "optional_param" => "123"
+        ]
+      ],
     ];
   }
 
