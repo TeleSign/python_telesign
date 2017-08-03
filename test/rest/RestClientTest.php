@@ -72,6 +72,17 @@ final class RestClientTest extends TestCase {
         ]
       ]],
       [[
+        "method_name" => "PUT",
+        "request" => [
+          "uri" => self::EXAMPLE_REST_ENDPOINT . self::EXAMPLE_RESOURCE,
+          "body" => self::EXAMPLE_URL_ENCODED_FIELDS,
+          "headers" => [
+            "authorization" => "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:ccNQP7Tdwsfqx/Sdz/MmZuhFh+z0z/Bj+OcwDhbTT0s=",
+            "content-type" => "application/x-www-form-urlencoded"
+          ]
+        ]
+      ]],
+      [[
         "method_name" => "DELETE",
         "request" => [
           "uri" => self::EXAMPLE_REST_ENDPOINT . self::EXAMPLE_RESOURCE . "?" . self::EXAMPLE_URL_ENCODED_FIELDS,
