@@ -1,0 +1,47 @@
+{
+  "name": "telesignsdk",
+  "version": "2.0.0",
+  "description": "Official TeleSign SDK for Rest APIs including Messaging (SMS), Score, PhoneID, Voice, and AppVerify",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TeleSign/node_telesign"
+  },
+  "main": "src/TeleSign.js",
+  "scripts": {
+    "test": "node ./test/testClients.js | tap-spec",
+    "coverage": "istanbul cover ./test/*.js"
+  },
+  "dependencies": {
+    "os": "0.1.1",
+    "querystring": "0.2.0",
+    "request": "2.81.0",
+    "urijs": "1.18.10",
+    "uuid-v4.js": "1.0.2"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.5",
+    "proxyquire": "^1.8.0",
+    "sinon": "^3.0.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.7.0"
+  },
+  "keywords": [
+    "Telesign",
+    "sms",
+    "voice",
+    "twofactor",
+    "2factor",
+    "authenticate",
+    "authentication",
+    "phone",
+    "call",
+    "text",
+    "AppVerify",
+    "2FA",
+    "Twilio",
+    "Nexmo"
+  ],
+  "author": "TeleSign Corp.",
+  "email": "sdk@telesign.com",
+  "license": "MIT"
+}

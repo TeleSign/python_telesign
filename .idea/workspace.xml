@@ -1,0 +1,836 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ea49264f-c21f-47d2-974b-d0a96cd8215b" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/appverify/1_get_status_by_xid.js" afterPath="$PROJECT_DIR$/examples/appverify/1_get_status_by_xid.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/messaging/1_send_message.js" afterPath="$PROJECT_DIR$/examples/messaging/1_send_message.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/messaging/2_send_message_with_verification_code.js" afterPath="$PROJECT_DIR$/examples/messaging/2_send_message_with_verification_code.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/phoneid/1_check_phone_type_to_block_voip.js" afterPath="$PROJECT_DIR$/examples/phoneid/1_check_phone_type_to_block_voip.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/phoneid/2_cleansing_updated_number.js" afterPath="$PROJECT_DIR$/examples/phoneid/2_cleansing_updated_number.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/score/1_check_phone_risk_level.js" afterPath="$PROJECT_DIR$/examples/score/1_check_phone_risk_level.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/voice/1_send_voice_call.js" afterPath="$PROJECT_DIR$/examples/voice/1_send_voice_call.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/voice/2_send_voice_call_with_verification_code.js" afterPath="$PROJECT_DIR$/examples/voice/2_send_voice_call_with_verification_code.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/voice/3_send_voice_call_french.js" afterPath="$PROJECT_DIR$/examples/voice/3_send_voice_call_french.js" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <ignored path="$PROJECT_DIR$/.idea/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="1_get_status_by_xid.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/appverify/1_get_status_by_xid.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="95" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="2_cleansing_updated_number.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/phoneid/2_cleansing_updated_number.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="95" lean-forward="false" selection-start-line="5" selection-start-column="95" selection-end-line="5" selection-end-column="95" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="1_check_phone_risk_level.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/score/1_check_phone_risk_level.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="95" lean-forward="false" selection-start-line="5" selection-start-column="95" selection-end-line="5" selection-end-column="95" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="1_send_voice_call.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/voice/1_send_voice_call.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="95" lean-forward="false" selection-start-line="5" selection-start-column="95" selection-end-line="5" selection-end-column="95" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="2_send_voice_call_with_verification_code.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/voice/2_send_voice_call_with_verification_code.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="95" lean-forward="false" selection-start-line="5" selection-start-column="95" selection-end-line="5" selection-end-column="95" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="1_send_message.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/messaging/1_send_message.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="95" lean-forward="false" selection-start-line="5" selection-start-column="95" selection-end-line="5" selection-end-column="95" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="2_send_message_with_verification_code.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/messaging/2_send_message_with_verification_code.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="95" lean-forward="false" selection-start-line="6" selection-start-column="95" selection-end-line="6" selection-end-column="95" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="1_check_phone_type_to_block_voip.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/phoneid/1_check_phone_type_to_block_voip.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="95" lean-forward="false" selection-start-line="5" selection-start-column="95" selection-end-line="5" selection-end-column="95" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TeleSign.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/TeleSign.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="16" lean-forward="false" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="3_send_voice_call_french.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/examples/voice/3_send_voice_call_french.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="24" column="25" lean-forward="true" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>OPTIONAL PARAM</find>
+      <find>mocha</find>
+      <find>generateTeleSignHeaders</find>
+      <find>utf8</find>
+      <find>res</find>
+      <find>user_agent</find>
+      <find>\([A-z]</find>
+      <find>[A-z]\)</find>
+      <find>&quot;\)</find>
+      <find>timeout</find>
+      <find>zip</find>
+      <find>covera</find>
+      <find>let</find>
+      <find>main.js</find>
+      <find>var</find>
+      <find>telesign.RestClient</find>
+      <find>packagejson</find>
+      <find>date</find>
+      <find>querystring</find>
+      <find>os</find>
+      <find>_</find>
+      <find>getMessage</find>
+      <find>python</find>
+      <find>debug</find>
+      <find>phone-number</find>
+      <find>telesign</find>
+      <find>console</find>
+      <find>phone</find>
+      <find>apiKey</find>
+      <find>0000</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>) {</replace>
+      <replace>accountLifecycleEvent</replace>
+      <replace>restEndpoint</replace>
+      <replace>response</replace>
+      <replace>Response</replace>
+      <replace>optional param</replace>
+      <replace>userAgent</replace>
+      <replace>\([A-z]</replace>
+      <replace>\( [A-z]</replace>
+      <replace>\( .*</replace>
+      <replace>&quot;\)</replace>
+      <replace>\(&quot;</replace>
+      <replace>&quot;\ )</replace>
+      <replace>const</replace>
+      <replace>RestClient</replace>
+      <replace>node</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/node_modules/tap-spec</dir>
+      <dir>$PROJECT_DIR$</dir>
+      <dir>$PROJECT_DIR$/examples</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/.npmrc" />
+        <option value="$PROJECT_DIR$/.jscsrc" />
+        <option value="$PROJECT_DIR$/src/main.js" />
+        <option value="$PROJECT_DIR$/examples/AppVerify.js" />
+        <option value="$PROJECT_DIR$/examples/Messaging.js" />
+        <option value="$PROJECT_DIR$/examples/ex-AppVerify.js" />
+        <option value="$PROJECT_DIR$/examples/ex-Messaging.js" />
+        <option value="$PROJECT_DIR$/examples/messaging/ex-Messaging.js" />
+        <option value="$PROJECT_DIR$/examples/messaging/send_message.js" />
+        <option value="$PROJECT_DIR$/examples/messaging/send_message_with_verification_code.js" />
+        <option value="$PROJECT_DIR$/examples/config.js" />
+        <option value="$PROJECT_DIR$/coverage/lcov-report/src/RestClient.js.html" />
+        <option value="$PROJECT_DIR$/examples/base.js" />
+        <option value="$PROJECT_DIR$/examples/telesign_config.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/test/README.md" />
+        <option value="$PROJECT_DIR$/test/test-ProductClients.js" />
+        <option value="$PROJECT_DIR$/test/test-RestClient.js" />
+        <option value="$PROJECT_DIR$/src/RestClient.js" />
+        <option value="$PROJECT_DIR$/src/TeleSign.js" />
+        <option value="$PROJECT_DIR$/src/ScoreClient.js" />
+        <option value="$PROJECT_DIR$/src/VoiceClient.js" />
+        <option value="$PROJECT_DIR$/src/MessagingClient.js" />
+        <option value="$PROJECT_DIR$/src/PhoneIDClient.js" />
+        <option value="$PROJECT_DIR$/src/AppVerifyClient.js" />
+        <option value="$PROJECT_DIR$/examples/telesignClient.js" />
+        <option value="$PROJECT_DIR$/test/testClients.js" />
+        <option value="$PROJECT_DIR$/examples/README.md" />
+        <option value="$PROJECT_DIR$/.travis.yml" />
+        <option value="$PROJECT_DIR$/.npmignore" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/examples/appverify/1_get_status_by_xid.js" />
+        <option value="$PROJECT_DIR$/examples/messaging/1_send_message.js" />
+        <option value="$PROJECT_DIR$/examples/messaging/2_send_message_with_verification_code.js" />
+        <option value="$PROJECT_DIR$/examples/phoneid/1_check_phone_type_to_block_voip.js" />
+        <option value="$PROJECT_DIR$/examples/phoneid/2_cleansing_updated_number.js" />
+        <option value="$PROJECT_DIR$/examples/score/1_check_phone_risk_level.js" />
+        <option value="$PROJECT_DIR$/examples/voice/1_send_voice_call.js" />
+        <option value="$PROJECT_DIR$/examples/voice/2_send_voice_call_with_verification_code.js" />
+        <option value="$PROJECT_DIR$/examples/voice/3_send_voice_call_french.js" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsFlowSettings">
+    <service-enabled>false</service-enabled>
+    <exe-path />
+    <annotation-enable>false</annotation-enable>
+    <other-services-enabled>false</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="23" />
+    <option name="width" value="1280" />
+    <option name="height" value="777" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource ProjectPane="true" />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="node_telesign" type="b2602c69:ProjectViewProjectNode" />
+              <item name="node_telesign" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="node_telesign" type="b2602c69:ProjectViewProjectNode" />
+              <item name="node_telesign" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="node_telesign" type="b2602c69:ProjectViewProjectNode" />
+              <item name="node_telesign" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
+              <item name="appverify" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="node_telesign" type="b2602c69:ProjectViewProjectNode" />
+              <item name="node_telesign" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
+              <item name="messaging" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="node_telesign" type="b2602c69:ProjectViewProjectNode" />
+              <item name="node_telesign" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
+              <item name="phoneid" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="node_telesign" type="b2602c69:ProjectViewProjectNode" />
+              <item name="node_telesign" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
+              <item name="score" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="node_telesign" type="b2602c69:ProjectViewProjectNode" />
+              <item name="node_telesign" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
+              <item name="voice" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="node_telesign" type="b2602c69:ProjectViewProjectNode" />
+              <item name="node_telesign" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <expand>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="node_telesign" type="cbb8eebc:String" user="node_telesign" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="javascript.nodejs.core.library.configured.version" value="6.11.1" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/examples/messaging" />
+      <recent name="$PROJECT_DIR$/examples/appverify" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/examples/voice" />
+      <recent name="$PROJECT_DIR$/examples/phoneid" />
+      <recent name="$PROJECT_DIR$/examples/messaging" />
+      <recent name="$PROJECT_DIR$/examples" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Node.js.3_send_voice_call_french.js">
+    <configuration name="1_get_status_by_xid.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="1_get_status_by_xid.js" working-dir="$PROJECT_DIR$/examples/appverify" />
+    <configuration name="3_send_voice_call_french.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="3_send_voice_call_french.js" working-dir="$PROJECT_DIR$/examples/voice" />
+    <configuration name="testClients.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="testClients.js" working-dir="$PROJECT_DIR$/test" />
+    <list size="3">
+      <item index="0" class="java.lang.String" itemvalue="Node.js.1_get_status_by_xid.js" />
+      <item index="1" class="java.lang.String" itemvalue="Node.js.3_send_voice_call_french.js" />
+      <item index="2" class="java.lang.String" itemvalue="Node.js.testClients.js" />
+    </list>
+    <recent_temporary>
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Node.js.3_send_voice_call_french.js" />
+        <item index="1" class="java.lang.String" itemvalue="Node.js.testClients.js" />
+        <item index="2" class="java.lang.String" itemvalue="Node.js.1_get_status_by_xid.js" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SFStoredExecutionPersistentComponent">
+    <executions>
+      <execution name="Default" sourceToExecute="" />
+    </executions>
+    <lastSelectedExecutionName>Default</lastSelectedExecutionName>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="StructuralSearchPlugin">
+    <replaceConfiguration name="user defined" created="1501181956449" text="){" recursive="false" caseInsensitive="true" type="ECMAScript 6" reformatAccordingToStyle="true" shortenFQN="true" useStaticImport="true" replacement=") {" history="1" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ea49264f-c21f-47d2-974b-d0a96cd8215b" name="Default" comment="" />
+      <created>1501005270308</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1501005270308</updated>
+      <workItem from="1501005272823" duration="1046000" />
+      <workItem from="1501015158939" duration="7888000" />
+      <workItem from="1501520369730" duration="46229000" />
+      <workItem from="1501779044005" duration="25796000" />
+      <workItem from="1502128489788" duration="1890000" />
+      <workItem from="1502298503058" duration="1379000" />
+      <workItem from="1502301701728" duration="3602000" />
+      <workItem from="1502730905824" duration="7344000" />
+      <workItem from="1502839288740" duration="1440000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="96614000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="23" width="1440" height="872" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2560297" sideWeight="0.5018431" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32947233" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24967825" sideWeight="0.49815693" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18393235" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32818532" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.32947233" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/node_modules/aws-sign2/package.json" />
+    <entry file="file://$PROJECT_DIR$/node_modules/telesign/lib/verify.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/utf8/utf8.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/oauth-sign/index.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/request/lib/auth.js" />
+    <entry file="file://$PROJECT_DIR$/package-lock.json" />
+    <entry file="file://$PROJECT_DIR$/node_modules/jssha/externs/sha.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/uuid-v4.js/uuid-v4.js" />
+    <entry file="file://$PROJECT_DIR$/.jscsrc" />
+    <entry file="file://$PROJECT_DIR$/LICENSE.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/config.js" />
+    <entry file="file://$PROJECT_DIR$/src/main.js" />
+    <entry file="file://$PROJECT_DIR$/examples/score.js" />
+    <entry file="file://$PROJECT_DIR$/coverage/lcov-report/src/RestClient.js.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="459" column="0" lean-forward="false" selection-start-line="459" selection-start-column="0" selection-end-line="459" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/phoneid.js" />
+    <entry file="file://$PROJECT_DIR$/coverage/coverage.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-15">
+          <caret line="0" column="44" lean-forward="false" selection-start-line="0" selection-start-column="44" selection-end-line="0" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/coverage/lcov-report/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="36" column="41" lean-forward="true" selection-start-line="36" selection-start-column="41" selection-end-line="36" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="435" column="0" lean-forward="false" selection-start-line="435" selection-start-column="0" selection-end-line="435" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/sinon/pkg/sinon.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-694">
+          <caret line="500" column="54" lean-forward="false" selection-start-line="500" selection-start-column="54" selection-end-line="500" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test-ProductClients.js" />
+    <entry file="file://$PROJECT_DIR$/.eslintrc.js" />
+    <entry file="file://$PROJECT_DIR$/coverage/lcov-report/examples/voice/3_send_voice_call_french.js.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="9" lean-forward="true" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/coverage/lcov-report/prettify.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="0" column="1293" lean-forward="false" selection-start-line="0" selection-start-column="1293" selection-end-line="0" selection-end-column="1293" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/tap-spec/lib/utils/l-trim-list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="48" lean-forward="true" selection-start-line="9" selection-start-column="48" selection-end-line="9" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.npmrc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="17" lean-forward="false" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/istanbul/lib/instrumenter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="378" column="26" lean-forward="false" selection-start-line="378" selection-start-column="26" selection-end-line="378" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MessagingClient.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="66" lean-forward="false" selection-start-line="14" selection-start-column="66" selection-end-line="14" selection-end-column="66" />
+          <folding>
+            <marker date="1502821017000" expanded="true" signature="1763:1771" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PhoneIDClient.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="13" column="66" lean-forward="false" selection-start-line="13" selection-start-column="66" selection-end-line="13" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RestClient.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="172" column="0" lean-forward="false" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ScoreClient.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="63" lean-forward="false" selection-start-line="30" selection-start-column="63" selection-end-line="30" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/VoiceClient.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="5" lean-forward="false" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppVerifyClient.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="35" lean-forward="true" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/telesignClient.js" />
+    <entry file="file://$PROJECT_DIR$/test/testClients.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="11" lean-forward="false" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/README.md">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="31" lean-forward="false" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="255">
+            <caret line="17" column="3" lean-forward="true" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/README.md">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding>
+            <marker date="1502821017000" expanded="true" signature="1226:1395" ph="//..." />
+            <marker date="1502821017000" expanded="true" signature="1697:2152" ph="{...}" />
+            <marker date="1502821017000" expanded="true" signature="1718:1885" ph="{...}" />
+            <marker date="1502821017000" expanded="true" signature="1902:2142" ph="{...}" />
+            <marker date="1502821017000" expanded="true" signature="2338:2513" ph="{...}" />
+            <marker date="1502821017000" expanded="true" signature="2357:2442" ph="{...}" />
+            <marker date="1502821017000" expanded="true" signature="2455:2507" ph="{...}" />
+            <marker date="1502821017000" expanded="true" signature="3239:3674" ph="{...}" />
+            <marker date="1502821017000" expanded="true" signature="3256:3411" ph="{...}" />
+            <marker date="1502821017000" expanded="true" signature="3424:3668" ph="{...}" />
+            <marker date="1502821017000" expanded="true" signature="4412:4457" ph="{...}" />
+            <marker date="1502821017000" expanded="true" signature="4901:4939" ph="{...}" />
+            <marker date="1502821017000" expanded="true" signature="4993:5120" ph="//..." />
+          </folding>
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="855">
+            <caret line="57" column="13" lean-forward="false" selection-start-line="57" selection-start-column="13" selection-end-line="57" selection-end-column="13" />
+            <folding>
+              <marker date="1502821017000" expanded="true" signature="1226:1395" ph="//..." />
+              <marker date="1502821017000" expanded="true" signature="1697:2152" ph="{...}" />
+              <marker date="1502821017000" expanded="true" signature="1718:1885" ph="{...}" />
+              <marker date="1502821017000" expanded="true" signature="1902:2142" ph="{...}" />
+              <marker date="1502821017000" expanded="true" signature="2338:2513" ph="{...}" />
+              <marker date="1502821017000" expanded="true" signature="2357:2442" ph="{...}" />
+              <marker date="1502821017000" expanded="true" signature="2455:2507" ph="{...}" />
+              <marker date="1502821017000" expanded="true" signature="3239:3674" ph="{...}" />
+              <marker date="1502821017000" expanded="true" signature="3256:3411" ph="{...}" />
+              <marker date="1502821017000" expanded="true" signature="3424:3668" ph="{...}" />
+              <marker date="1502821017000" expanded="true" signature="4412:4457" ph="{...}" />
+              <marker date="1502821017000" expanded="true" signature="4901:4939" ph="{...}" />
+              <marker date="1502821017000" expanded="true" signature="4993:5120" ph="//..." />
+            </folding>
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.travis.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="30" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.npmignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="9" lean-forward="true" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="115" lean-forward="false" selection-start-line="2" selection-start-column="79" selection-end-line="2" selection-end-column="115" />
+          <folding>
+            <marker date="1502835814000" expanded="true" signature="3564:3733" ph="//..." />
+            <marker date="1502835814000" expanded="true" signature="4035:4490" ph="{...}" />
+            <marker date="1502835814000" expanded="true" signature="4056:4223" ph="{...}" />
+            <marker date="1502835814000" expanded="true" signature="4240:4480" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="120">
+            <caret line="8" column="55" lean-forward="true" selection-start-line="8" selection-start-column="55" selection-end-line="8" selection-end-column="55" />
+            <folding>
+              <marker date="1502835814000" expanded="true" signature="3564:3733" ph="//..." />
+              <marker date="1502835814000" expanded="true" signature="4035:4490" ph="{...}" />
+              <marker date="1502835814000" expanded="true" signature="4056:4223" ph="{...}" />
+              <marker date="1502835814000" expanded="true" signature="4240:4480" ph="{...}" />
+            </folding>
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="5" lean-forward="true" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TeleSign.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="16" lean-forward="false" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/appverify/1_get_status_by_xid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/messaging/1_send_message.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="95" lean-forward="false" selection-start-line="5" selection-start-column="95" selection-end-line="5" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/messaging/2_send_message_with_verification_code.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="95" lean-forward="false" selection-start-line="6" selection-start-column="95" selection-end-line="6" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/phoneid/1_check_phone_type_to_block_voip.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="95" lean-forward="false" selection-start-line="5" selection-start-column="95" selection-end-line="5" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/phoneid/2_cleansing_updated_number.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="95" lean-forward="false" selection-start-line="5" selection-start-column="95" selection-end-line="5" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/score/1_check_phone_risk_level.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="95" lean-forward="false" selection-start-line="5" selection-start-column="95" selection-end-line="5" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/voice/1_send_voice_call.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="95" lean-forward="false" selection-start-line="5" selection-start-column="95" selection-end-line="5" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/voice/2_send_voice_call_with_verification_code.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="95" lean-forward="false" selection-start-line="5" selection-start-column="95" selection-end-line="5" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/voice/3_send_voice_call_french.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="25" lean-forward="true" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
