@@ -1,4 +1,5 @@
 const Telesign = require('telesignsdk');
+const util = require('util')
 
 /***
  * The Verify API delivers phone-based verification and two-factor authentication using a time-based, one-time passcode
@@ -14,9 +15,9 @@ class Telebureau {
 
         this.rest = new Telesign(customerId, apiKey, restEndpoint, timeout, userAgent).rest;
 
-        this.createResource = "/v1/telebureau/event"
-        this.retrieveResource = "/v1/telebureau/event/${referenceID}"
-        this.deleteResource = "/v1/telebureau/event/${referenceID}"
+        this.createResource = "/v1/telebureau/event";
+        this.retrieveResource = "/v1/telebureau/event/%s";
+        this.deleteResource = "/v1/telebureau/event/%s";
     }
 
     /***
@@ -37,11 +38,11 @@ class Telebureau {
             fraud_type: fraudType,
             occured_at: occuredAt
         };
-        if (optionalParams != null) {
+        if (optionalParams !== null) {
             params = Object.assign(params, optionalParams)
         }
 
-        this.rest.execute(callback, "POST", this.create_resource, params);
+        this.rest.execute(callback, "POST", this.createResource, params);
     }
 
     /***
@@ -56,7 +57,7 @@ class Telebureau {
      * transaction.
      */
     retrieveEvent(callback, referenceID, optionalParams=null) {
-        this.rest.execute(callback, "GET", this.retrieve_resource, optionalParams);
+        this.rest.execute(callback, "GET", util.format(this.retrieveResource, referenceID), optionalParams);
     }
 
     /***
@@ -71,7 +72,7 @@ class Telebureau {
      * transaction.
      */
     deleteEvent(callback, referenceID, optionalParams=null) {
-        this.rest.execute(callback, "DELETE", this.delete_resource, optionalParams);
+        this.rest.execute(callback, "DELETE", util.format(this.deleteResource, referenceID), optionalParams);
     }
 }
 

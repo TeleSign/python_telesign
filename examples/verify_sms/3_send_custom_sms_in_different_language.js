@@ -1,6 +1,6 @@
-const TeleSignSDK = require('../../src/Telesign');
+const TelesignSDK = require('../../src/telesign');
 // NOTE: change this to the following if using npm package
-// var TeleSignSDK = require('telesignenterprisesdk');
+// var TelesignSDK = require('telesignenterprisesdk');
 
 
 console.log("## verify.sms ##");
@@ -10,7 +10,7 @@ const apiKey = "dGVzdCBhcGkga2V5IGZvciBzZGsgZXhhbXBsZXM="; // Todo: find in port
 const phoneNumber = "phone_number";
 const optionalParams = {template: "Votre code de vérification Widgets 'n' More est $$CODE$$."};
 
-const client = new TeleSignSDK(customerId, apiKey);
+const client = new TelesignSDK(customerId, apiKey);
 
 // Callback handler for SMS
 function smsCallback(error, responseBody) {

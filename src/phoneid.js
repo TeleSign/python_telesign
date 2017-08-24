@@ -1,4 +1,5 @@
 const Telesign = require('telesignsdk');
+const util = require('util')
 
 /***
  * The Verify API delivers phone-based verification and two-factor authentication using a time-based, one-time passcode
@@ -14,11 +15,11 @@ class PhoneID {
 
         this.rest = new Telesign(customerId, apiKey, restEndpoint, timeout, userAgent).rest;
 
-        this.standardResource = "/v1/phoneid/standard/${phoneNumber}"
-        this.scoreResource = "/v1/phoneid/score/${phoneNumber}"
-        this.contactResource = "/v1/phoneid/contact/${phoneNumber}"
-        this.liveResource = "/v1/phoneid/live/${phoneNumber}"
-        this.numberDeactivationResource = "/v1/phoneid/number_deactivation/${phoneNumber}"
+        this.standardResource = "/v1/phoneid/standard/%s"
+        this.scoreResource = "/v1/phoneid/score/%s"
+        this.contactResource = "/v1/phoneid/contact/%s"
+        this.liveResource = "/v1/phoneid/live/%s"
+        this.numberDeactivationResource = "/v1/phoneid/number_deactivation/%s"
     }
 
     /***
@@ -40,7 +41,7 @@ class PhoneID {
             params = Object.assign(params, optionalParams)
         }
 
-        this.rest.execute(callback, "GET", this.standardResource, params);
+        this.rest.execute(callback, "GET", util.format(this.standardResource, phoneNumber), params);
     }
 
     /***
@@ -64,7 +65,7 @@ class PhoneID {
             params = Object.assign(params, optionalParams)
         }
 
-        this.rest.execute(callback, "GET", this.scoreResource, params);
+        this.rest.execute(callback, "GET", util.format(this.scoreResource, phoneNumber), params);
     }
 
     /***
@@ -88,7 +89,7 @@ class PhoneID {
             params = Object.assign(params, optionalParams)
         }
 
-        this.rest.execute(callback, "GET", this.contactResource, params);
+        this.rest.execute(callback, "GET", util.format(this.contactResource, phoneNumber), params);
     }
 
     /***
@@ -112,7 +113,7 @@ class PhoneID {
             params = Object.assign(params, optionalParams)
         }
 
-        this.rest.execute(callback, "GET", this.liveResource, params);
+        this.rest.execute(callback, "GET", util.format(this.liveResource, phoneNumber), params);
     }
 
     /***
@@ -136,7 +137,7 @@ class PhoneID {
             params = Object.assign(params, optionalParams)
         }
 
-        this.rest.execute(callback, "GET", this.numberDeactivationResource, params);
+        this.rest.execute(callback, "GET", util.format(this.numberDeactivationResource, phoneNumber), params);
     }
 
 }

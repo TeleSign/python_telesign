@@ -1,7 +1,7 @@
 const readline = require('readline');
-const TeleSignSDK = require('../../src/Telesign');
+const TelesignSDK = require('../../src/telesign');
 // NOTE: change this to the following if using npm package
-// var TeleSignSDK = require('telesignenterprisesdk');
+// var TelesignSDK = require('telesignenterprisesdk');
 
 
 console.log("## verify.sms ##");
@@ -12,7 +12,7 @@ const phoneNumber = "phone_number";
 const optionalParams = {verify_code: "32658"};
 var referenceID = "";
 
-const client = new TeleSignSDK(customerId, apiKey);
+const client = new TelesignSDK(customerId, apiKey);
 
 // Callback for SMS
 function smsCallback(error, responseBody) {
@@ -21,20 +21,34 @@ function smsCallback(error, responseBody) {
             ` => code: ${responseBody['status']['code']}` +
             `, description: ${responseBody['status']['description']}`);
 
-        if (responseBody['status']['code'] === 200) {
+        if (responseBody['status']['code'] < 300) {
             console.log(`ReferenceID for voice call request: ${responseBody['reference_id']}.`)
             referenceID = responseBody['reference_id'];
+
+            // Ask user for input and send completion report
+            if (referenceID !== "") {
+                prompt('Enter the verification code received:\n', function (input) {
+                    if (input === optionalParams['verify_code']) {
+                        console.log('Your code is correct.');
+
+                        // Send completion report for correct code entered
+                        client.verify.completion()
+                    } else {
+                        console.log('Your code is incorrect. input: ' + input + ", code: " + optionalParams['verify_code']);
+                    }
+                    process.exit();
+                });
+            }
+
         } else {
             console.log("Failed to send SMS.")
+            console.log(responseBody);
             process.exit();
         }
     } else {
         console.error("Unable to send SMS. " + error);
     }
 }
-
-// Send SMS request
-client.verify.sms(smsCallback, phoneNumber, optionalParams);
 
 // Method to check user input
 function prompt(question, callback) {
@@ -64,17 +78,5 @@ function completionCallback(error, responseBody) {
     }
 }
 
-// Ask user for input and send completion report
-if (referenceID !== "") {
-    prompt('Enter the verification code received:\n', function (input) {
-        if (input === optionalParams['verify_code']) {
-            console.log('Your code is correct.');
-
-            // Send completion report for correct code entered
-            client.verify.completion()
-        } else {
-            console.log('Your code is incorrect. input: ' + input + ", code: " + verifyCode);
-        }
-        process.exit();
-    });
-}
+// Send SMS request
+client.verify.sms(smsCallback, phoneNumber, optionalParams);
