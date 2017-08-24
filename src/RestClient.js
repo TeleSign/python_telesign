@@ -136,7 +136,7 @@ class RestClient {
         }
         else { // GET method
             if (params != null) {
-                telesignURL = URI(this.restEndpoint + resource).query(params);
+                telesignURL = URI(this.restEndpoint + resource).query(params).toString();
             }
             else {
                 telesignURL = URI(this.restEndpoint + resource).toString();
