@@ -8,20 +8,25 @@ console.log("## phoneid.score ##");
 const customerId = "customer_id"; // Todo: find in portal.telesign.com
 const apiKey = "dGVzdCBhcGkga2V5IGZvciBzZGsgZXhhbXBsZXM="; // Todo: find in portal.telesign.com
 const phoneNumber = "phone_number";
-const optionalParams = {ucid: "BACF"};
+const ucid = "BACF";
 
 const client = new TeleSignSDK(customerId, apiKey);
 
 function phoneidCallback(error, responseBody) {
     if (error === null) {
-        console.log(`PhoneID response for phone number: ${phoneNumber}` +
-            ` => risk level: ${responseBody['risk']['level']}` +
-            `, recommendation: ${responseBody['risk']['recommendation']}`);
+        if (responseBody.hasOwnProperty('risk')) {
+            console.log(`PhoneID response for phone number: ${phoneNumber}` +
+                ` => risk level: ${responseBody['risk']['level']}` +
+                `, recommendation: ${responseBody['risk']['recommendation']}`);
+        } else {
+            console.log(`Phone number score could not be retrieved.`);
+            console.log(responseBody);
+        }
 
     } else {
         console.error("Unable to send phoneID. " + error);
     }
 }
 
-client.phoneid.score(phoneidCallback, phoneNumber, optionalParams);
+client.phoneid.score(phoneidCallback, phoneNumber, ucid);
 

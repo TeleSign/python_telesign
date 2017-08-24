@@ -21,13 +21,7 @@ for the TeleSign API is available within the [TeleSign Developer Center](https:/
 Installation
 ------------
 
-To add the TeleSign Node.js SDK using NPM to your Node.js project:
-
-```
-npm install telesignenterprisesdk -save
-```
-
-If you have already cloned this SDK, you can using the following command
+Once you have cloned this SDK, you can install it using the following command
 ```
 npm install /path/to/sdk -save
 ```
@@ -105,8 +99,6 @@ Send an SMS
 Further reading
 ---------------
 
-* If you are using the trial account, make sure you understand it has some limitations. 
-Use only the phone number you have verified.
 * The definitions of the parameters are best documented in the REST API documentation 
 located [here](https://developer.telesign.com/docs/api-docs).
 * Code examples can be found [here](/examples).

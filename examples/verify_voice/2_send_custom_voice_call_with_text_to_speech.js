@@ -5,11 +5,11 @@ const TeleSignSDK = require('../../src/Telesign');
 
 console.log("## verify.voice ##");
 
-const customerId = "customer_id"; // Todo: find in portal.telesign.com
-const apiKey = "dGVzdCBhcGkga2V5IGZvciBzZGsgZXhhbXBsZXM="; // Todo: find in portal.telesign.com
-const phoneNumber = "phone_number";
-const verifyCode = "1, 2, 3, 4, 5"
-const optionalParams = {tts_message: "Hello, your code is ${verifyCode}. Once again, your code is ${verifyCode}. Goodbye."};
+const customerId = "78747D92-1F7E-11E1-A71A-111111111111";
+const apiKey = "4gS8tDHBSFB22V7suwhMPhb5QQL/9xTQcLOry9GQtodziGZF4WiP5xzEB5IMgjTuYIghWlTskkmb8sj0y+aOgg==";
+const phoneNumber = "13235564074";
+const verifyCode = "27364"
+const optionalParams = {tts_message: `Hello, your code is ${verifyCode}. Once again, your code is ${verifyCode}. Goodbye.`};
 
 const client = new TeleSignSDK(customerId, apiKey);
 
@@ -19,13 +19,21 @@ function voiceCallback(error, responseBody) {
         console.log(`Voice call response for phone number: ${phoneNumber}` +
             ` => code: ${responseBody['status']['code']}` +
             `, description: ${responseBody['status']['description']}`);
+
+        // Ask for user input
+        prompt('Enter the verification code received:\n', function (input) {
+            if (input === verifyCode) {
+                console.log('Your code is correct.');
+            } else {
+                console.log('Your code is incorrect. input: ' + input + ", code: " + verifyCode);
+            }
+            process.exit();
+        });
+
     } else {
         console.error("Unable to send voice. " + error);
     }
 }
-
-// Send voice request
-client.verify.voice(voiceCallback, phoneNumber, optionalParams);
 
 // Method to handle user input
 function prompt(question, callback) {
@@ -40,11 +48,5 @@ function prompt(question, callback) {
     });
 }
 
-// Ask user for input
-prompt('Enter the verification code received:\n', function (input) {
-    if (input === optionalParams['verify_code']) {
-        console.log('Your code is correct.');
-    } else {
-        console.log('Your code is incorrect. input: ' + input + ", code: " + optionalParams['verify_code']);
-    }
-    process.exit();
+// Send voice request
+client.verify.voice(voiceCallback, phoneNumber, optionalParams);

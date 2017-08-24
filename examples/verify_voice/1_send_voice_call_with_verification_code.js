@@ -19,13 +19,21 @@ function voiceCallback(error, responseBody) {
         console.log(`Messaging response for messaging phone number: ${phoneNumber}` +
             ` => code: ${responseBody['status']['code']}` +
             `, description: ${responseBody['status']['description']}`);
+
+        // Ask for user input
+        prompt('Enter the verification code received:\n', function (input) {
+            if (input === optionalParams['verify_code']) {
+                console.log('Your code is correct.');
+            } else {
+                console.log('Your code is incorrect. input: ' + input + ", code: " + optionalParams['verify_code']);
+            }
+            process.exit();
+        });
+
     } else {
         console.error("Unable to send voice call. " + error);
     }
 }
-
-// Send Voice request
-client.verify.voice(voiceCallback, phoneNumber, optionalParams);
 
 // Method to handle user input
 function prompt(question, callback) {
@@ -40,12 +48,5 @@ function prompt(question, callback) {
     });
 }
 
-// Ask for user input
-prompt('Enter the verification code received:\n', function (input) {
-    if (input === optionalParams['verify_code']) {
-        console.log('Your code is correct.');
-    } else {
-        console.log('Your code is incorrect. input: ' + input + ", code: " + optionalParams['verify_code']);
-    }
-    process.exit();
-});
+// Send Voice request
+client.verify.voice(voiceCallback, phoneNumber, optionalParams);

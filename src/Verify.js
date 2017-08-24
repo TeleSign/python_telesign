@@ -1,4 +1,5 @@
 const Telesign = require('telesignsdk');
+const util = require('util')
 
 /***
  * The Verify API delivers phone-based verification and two-factor authentication using a time-based, one-time passcode
@@ -17,8 +18,8 @@ class Verify {
         this.voiceResource = "/v1/verify/call"
         this.smartResource = "/v1/verify/smart"
         this.pushResource = "/v2/verify/push"
-        this.statusResource = "/v1/verify/${referenceID}"
-        this.completionResource = "/v1/verify/completion/${referenceID}"
+        this.statusResource = "/v1/verify/%s"
+        this.completionResource = "/v1/verify/completion/%s"
     }
 
     /***
@@ -36,7 +37,7 @@ class Verify {
         var params = {
             phone_number: phoneNumber,
         };
-        if (optionalParams != null) {
+        if (optionalParams !== null) {
             params = Object.assign(params, optionalParams)
         }
 
@@ -58,7 +59,7 @@ class Verify {
         var params = {
             phone_number: phoneNumber,
         };
-        if (optionalParams != null) {
+        if (optionalParams !== null) {
             params = Object.assign(params, optionalParams)
         }
 
@@ -83,7 +84,7 @@ class Verify {
             phone_number: phoneNumber,
             ucid: ucid
         };
-        if (optionalParams != null) {
+        if (optionalParams !== null) {
             params = Object.assign(params, optionalParams)
         }
 
@@ -108,7 +109,7 @@ class Verify {
             phone_number: phoneNumber,
             ucid: ucid
         };
-        if (optionalParams != null) {
+        if (optionalParams !== null) {
             params = Object.assign(params, optionalParams)
         }
 
@@ -126,7 +127,7 @@ class Verify {
      * transaction.
      */
     status(callback, referenceID, optionalParams=null) {
-        this.rest.execute(callback, "GET", this.statusResource, optionalParams);
+        this.rest.execute(callback, "GET", util.format(this.statusResource, referenceID), optionalParams);
     }
 
     /***
@@ -141,7 +142,7 @@ class Verify {
      * transaction.
      */
     completion(callback, referenceID, optionalParams=null) {
-        this.rest.execute(callback, "PUT", this.completionResource, optionalParams);
+        this.rest.execute(callback, "PUT", util.format(this.completionResource, referenceID), optionalParams);
     }
 
 }
