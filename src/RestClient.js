@@ -169,12 +169,15 @@ class RestClient {
                 console.error(`FATAL ERROR: ${new Date()}`
                     + ` Problems contacting Telesign Servers. Check your internet connection.`);
 
-                callback(err, bodyStr);
-
+                if (callback){
+                    callback(err, bodyStr);
+                }
             }
             if (res) {
                 var body = JSON.parse(bodyStr);
-                callback(err, body);
+                if (callback){
+                    callback(err, body);
+                }
             }
         });
 
