@@ -1,3 +1,6 @@
+2.2.1
+- Fix bug where HTTP GET calls were not including query parameters
+
 2.2.0
 - Re-brand Auto Verify to App Verify and refactor associated names
 

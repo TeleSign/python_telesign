@@ -207,9 +207,14 @@ class RestClient(requests.models.RequestEncodingMixin):
                                                        url_encoded_fields,
                                                        user_agent=self.user_agent)
 
+        if method_function in ['POST', 'PUT']:
+            payload = {'data': url_encoded_fields}
+        else:
+            payload = {'params': url_encoded_fields}
+
         response = self.Response(method_function(resource_uri,
-                                                 data=url_encoded_fields,
                                                  headers=headers,
-                                                 timeout=self.timeout))
+                                                 timeout=self.timeout,
+                                                 **payload))
 
         return response
