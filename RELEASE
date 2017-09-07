@@ -1,3 +1,6 @@
+2.1.2
+- Added requirement to telesign SDK which fixes bug for HTTP GET calls not including query parameters
+
 2.1.1
 - Added completion endpoint to VerifyClient
 
