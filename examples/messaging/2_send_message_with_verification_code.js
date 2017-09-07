@@ -27,6 +27,16 @@ function messageCallback(error, responseBody) {
         console.log(`Messaging response for messaging phone number: ${phoneNumber}` +
             ` => code: ${responseBody['status']['code']}` +
             `, description: ${responseBody['status']['description']}`);
+
+        prompt('Enter the verification code received:\n', function (input) {
+            if (input === verifyCode) {
+                console.log('Your code is correct.');
+            } else {
+                console.log('Your code is incorrect. input: ' + input + ", code: " + verifyCode);
+            }
+            process.exit();
+        });
+
     } else {
         console.error("Unable to send message. " + error);
     }
@@ -45,12 +55,3 @@ function prompt(question, callback) {
         callback(data.toString().trim());
     });
 }
-
-prompt('Enter the verification code received:\n', function (input) {
-    if (input === verifyCode) {
-        console.log('Your code is correct.');
-    } else {
-        console.log('Your code is incorrect. input: ' + input + ", code: " + verifyCode);
-    }
-    process.exit();
-});
