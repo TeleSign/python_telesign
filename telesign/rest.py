@@ -207,7 +207,7 @@ class RestClient(requests.models.RequestEncodingMixin):
                                                        url_encoded_fields,
                                                        user_agent=self.user_agent)
 
-        if method_function in ['POST', 'PUT']:
+        if method_name in ['POST', 'PUT']:
             payload = {'data': url_encoded_fields}
         else:
             payload = {'params': url_encoded_fields}
