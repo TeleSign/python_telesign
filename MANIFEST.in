@@ -1,4 +1,4 @@
-include *.py
-include *.txt
-include *.rst
-include MANIFEST.in
+include LICENSE.txt
+include README.rst
+graft examples
+graft tests
