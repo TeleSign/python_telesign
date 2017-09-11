@@ -16,6 +16,8 @@ python:
 before_install:
   - pip install --quiet codecov
 install:
+  # Install deps with pip so they are cached
+  - pip install --quiet nose pytz requests
   - python setup.py -q install
 script:
   - coverage run setup.py -v test
