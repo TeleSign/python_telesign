@@ -149,7 +149,7 @@ class TestRest(TestCase):
         client.session.get = Mock()
 
         expected_get_args = (u'https://test.com/test/resource',)
-        expected_get_kwargs = {'headers': {}, 'data': 'test=123_%CF%BF_test', 'timeout': client.timeout}
+        expected_get_kwargs = {'headers': {}, 'params': 'test=123_%CF%BF_test', 'timeout': client.timeout}
 
         client.get(test_resource, **test_params)
 
@@ -193,7 +193,7 @@ class TestRest(TestCase):
         client.session.delete = Mock()
 
         expected_delete_args = (u'https://test.com/test/resource',)
-        expected_delete_kwargs = {'headers': {}, 'data': 'test=123_%CF%BF_test', 'timeout': client.timeout}
+        expected_delete_kwargs = {'headers': {}, 'params': 'test=123_%CF%BF_test', 'timeout': client.timeout}
 
         client.delete(test_resource, **test_params)
 
