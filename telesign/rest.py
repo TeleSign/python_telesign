@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from requests import post
 import hmac
 import uuid
 from base64 import b64encode, b64decode
@@ -58,7 +59,8 @@ class RestClient(requests.models.RequestEncodingMixin):
         :param api_key: Your api_key string associated with your account.
         :param rest_endpoint: (optional) Override the default rest_endpoint to target another endpoint string.
         :param proxies: (optional) Dictionary mapping protocol or protocol and hostname to the URL of the proxy.
-        :param timeout: (optional) How long to wait for the server to send data before giving up, as a float.
+        :param timeout: (optional) How long to wait for the server to send data before giving up, as a float,
+                        or as a (connect timeout, read timeout) tuple
         """
         self.customer_id = customer_id
         self.api_key = api_key
