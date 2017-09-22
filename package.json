@@ -6,9 +6,9 @@
     "type": "git",
     "url": "https://github.com/TeleSign/node_telesign_enterprise"
   },
-  "main": "src/TeleSign.js",
+  "main": "src/telesign.js",
   "dependencies": {
-    "telesignsdk": "2.0.0"
+    "telesignsdk": "2.0.1"
   },
   "devDependencies": {
     "istanbul": "^0.4.5",
