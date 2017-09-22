@@ -8,11 +8,7 @@
   },
   "main": "src/telesign.js",
   "dependencies": {
-<<<<<<< Updated upstream
-    "telesignsdk": "2.0.1"
-=======
     "telesignsdk": "^2.0.0"
->>>>>>> Stashed changes
   },
   "devDependencies": {
     "istanbul": "^0.4.5",
