@@ -1,4 +1,10 @@
+---
 language: python
+sudo: false
+cache: pip
+matrix:
+  allow_failures:
+    - python: nightly
 python:
   - "2.6"
   - "2.7"
@@ -6,10 +12,14 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
-install:
-  - pip install .
-script: nosetests --with-coverage --cover-package=telesign --cover-inclusive
+  - "nightly"
 before_install:
-  - pip install nose mock pytz coverage codecov
+  - pip install --quiet codecov
+install:
+  # Install deps with pip so they are cached
+  - pip install --quiet nose pytz requests
+  - python setup.py -q install
+script:
+  - coverage run setup.py -v test
 after_success:
   - codecov

@@ -1,11 +1,16 @@
 from __future__ import unicode_literals
 
-from unittest import TestCase
+import sys
 from email.utils import parsedate_tz
+from unittest import TestCase
 from uuid import UUID
-from mock import Mock, patch
 
 from telesign.rest import RestClient
+
+if sys.version_info < (3, 3):
+    from mock import Mock, patch
+else:
+    from unittest.mock import Mock, patch
 
 
 class TestRest(TestCase):

@@ -1,13 +1,18 @@
-*.egg-info/
-*.pyc
-*.zip
-dist/*
-_build
+# general things to ignore
+.eggs/
+.tox/
 .coverage
-*.swp
+build/
+dist/
+*.egg-info/
+*.egg
+*.py[cod]
+__pycache__/
+*.so
+*~
 
-# PyCharm IDE
-.idea
+# intelliJ IDE
+.idea/
 
 # Other
 .DS_Store
