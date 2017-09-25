@@ -28,15 +28,15 @@ class Telebureau {
      * @param callback: Callback method to handle response.
      * @param phoneNumber: Phone number associated with the event.
      * @param fraudType: The type of fraud committed.
-     * @param occuredAt: Datetime specifying when the fraud event occurred in RFC 3339 format
+     * @param occurredAt: Datetime specifying when the fraud event occurred in RFC 3339 format
      * @param optionalParams: Dictionary of all optional parameters.
      * transaction.
      */
-    createEvent(callback, phoneNumber, fraudType, occuredAt, optionalParams=null) {
+    createEvent(callback, phoneNumber, fraudType, occurredAt, optionalParams=null) {
         var params = {
             phone_number: phoneNumber,
             fraud_type: fraudType,
-            occured_at: occuredAt
+            occurred_at: occurredAt
         };
         if (optionalParams !== null) {
             params = Object.assign(params, optionalParams)
