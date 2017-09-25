@@ -2,8 +2,12 @@ const Telesign = require('telesignsdk');
 const util = require('util')
 
 /***
- * The Verify API delivers phone-based verification and two-factor authentication using a time-based, one-time passcode
- * sent via SMS message, Voice call or Push Notification.
+ * PhoneID is a set of REST APIs that deliver deep phone number data attributes that help optimize the end user
+ * verification process and evaluate risk.
+ *
+ * TeleSign PhoneID provides a wide range of risk assessment indicators on the number to help confirm user identity,
+ * delivering real-time decision making throughout the number lifecycle and ensuring only legitimate users are
+ * creating accounts and accessing your applications.
  */
 class PhoneID {
 
