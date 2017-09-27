@@ -1,6 +1,6 @@
-const TeleSignSDK = require('../../src/Telesign');
+const TelesignSDK = require('../../src/telesign');
 // NOTE: change this to the following if using npm package
-// var TeleSignSDK = require('telesignenterprisesdk');
+// var TelesignSDK = require('telesignenterprisesdk');
 
 
 console.log("## verify.voice ##");
@@ -11,7 +11,7 @@ const phoneNumber = "13235564074";
 const verifyCode = "27364"
 const optionalParams = {tts_message: `Hello, your code is ${verifyCode}. Once again, your code is ${verifyCode}. Goodbye.`};
 
-const client = new TeleSignSDK(customerId, apiKey);
+const client = new TelesignSDK(customerId, apiKey);
 
 // Callback handler for verify voice
 function voiceCallback(error, responseBody) {

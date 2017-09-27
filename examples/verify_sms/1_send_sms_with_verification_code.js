@@ -1,7 +1,7 @@
 const readline = require('readline');
-const TeleSignSDK = require('../../src/Telesign');
+const TelesignSDK = require('../../src/telesign');
 // NOTE: change this to the following if using npm package
-// var TeleSignSDK = require('telesignenterprisesdk');
+// var TelesignSDK = require('telesignenterprisesdk');
 
 
 console.log("## verify.sms ##");
@@ -11,7 +11,7 @@ const apiKey = "dGVzdCBhcGkga2V5IGZvciBzZGsgZXhhbXBsZXM=";
 const phoneNumber = "phone_number";
 const optionalParams = {verify_code: "32658"};
 
-const client = new TeleSignSDK(customerId, apiKey);
+const client = new TelesignSDK(customerId, apiKey);
 
 // Callback for SMS request
 function smsCallback(error, responseBody) {

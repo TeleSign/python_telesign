@@ -1,14 +1,14 @@
 {
   "name": "telesignenterprisesdk",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Official TeleSign SDK for Rest APIs including SMS, Voice, PhoneID, TeleBureau and more",
   "repository": {
     "type": "git",
     "url": "https://github.com/TeleSign/node_telesign_enterprise"
   },
-  "main": "src/Telesign.js",
+  "main": "src/telesign.js",
   "dependencies": {
-    "telesignsdk": "2.0.0"
+    "telesignsdk": "^2.0.0"
   },
   "devDependencies": {
     "istanbul": "^0.4.5",

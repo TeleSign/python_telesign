@@ -1,9 +1,10 @@
 const Telesign = require('telesignsdk');
-const util = require('util')
+const util = require('util');
 
 /***
- * The Verify API delivers phone-based verification and two-factor authentication using a time-based, one-time passcode
- * sent via SMS message, Voice call or Push Notification.
+ * TeleBureau is a service is based on TeleSign's watchlist, which is a proprietary database containing verified phone
+ * numbers of users known to have committed online fraud. TeleSign crowd-sources this information from its customers.
+ * Participation is voluntary, but you have to contribute in order to benefit.
  */
 class Telebureau {
 
@@ -28,15 +29,15 @@ class Telebureau {
      * @param callback: Callback method to handle response.
      * @param phoneNumber: Phone number associated with the event.
      * @param fraudType: The type of fraud committed.
-     * @param occuredAt: Datetime specifying when the fraud event occurred in RFC 3339 format
+     * @param occurredAt: Datetime specifying when the fraud event occurred in RFC 3339 format
      * @param optionalParams: Dictionary of all optional parameters.
      * transaction.
      */
-    createEvent(callback, phoneNumber, fraudType, occuredAt, optionalParams=null) {
-        var params = {
+    createEvent(callback, phoneNumber, fraudType, occurredAt, optionalParams=null) {
+        let params = {
             phone_number: phoneNumber,
             fraud_type: fraudType,
-            occured_at: occuredAt
+            occurred_at: occurredAt
         };
         if (optionalParams !== null) {
             params = Object.assign(params, optionalParams)

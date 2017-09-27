@@ -1,6 +1,6 @@
-const TeleSignSDK = require('../../src/Telesign');
+const TelesignSDK = require('../../src/telesign');
 // NOTE: change this to the following if using npm package
-// var TeleSignSDK = require('telesignenterprisesdk');
+// var TelesignSDK = require('telesignenterprisesdk');
 
 
 console.log("## verify.voice ##");
@@ -13,7 +13,7 @@ const optionalParams = {
     language: "fr-FR"
 };
 
-const client = new TeleSignSDK(customerId, apiKey);
+const client = new TelesignSDK(customerId, apiKey);
 
 // Callback handler for voice
 function voiceCallback(error, responseBody) {

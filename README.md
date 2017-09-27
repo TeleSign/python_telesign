@@ -66,11 +66,11 @@ timeout variables.
 Setup Telesign Client
 
 ```javascript
-    const TeleSignSDK = require('telesignenterprisesdk');
+    const TelesignSDK = require('telesignenterprisesdk');
     
     const customerId = "customer_id"; // Todo: find in portal.telesign.com
     const apiKey = "dGVzdCBhcGkga2V5IGZvciBzZGsgZXhhbXBsZXM="; // Todo: find in portal.telesign.com
-    const client = new TeleSignSDK(customerId, apiKey);
+    const client = new TelesignSDK(customerId, apiKey);
     
 ```
 

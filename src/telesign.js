@@ -1,8 +1,8 @@
-const Verify = require('./Verify.js');
-const PhoneID = require('./PhoneID.js');
-const TeleBureau = require('./TeleBureau.js');
+const Verify = require('./verify.js');
+const PhoneID = require('./phoneid.js');
+const Telebureau = require('./telebureau.js');
 
-module.exports = class TeleSign {
+module.exports = class Telesign {
     constructor(customerId,
                 apiKey,
                 restEndpoint = "https://rest-ww.telesign.com",
@@ -11,6 +11,6 @@ module.exports = class TeleSign {
 
         this.verify = new Verify(customerId, apiKey, restEndpoint, timeout, useragent);
         this.phoneid = new PhoneID(customerId, apiKey, restEndpoint, timeout, useragent);
-        this.telebureau = new TeleBureau(customerId, apiKey, restEndpoint, timeout, useragent);
+        this.telebureau = new Telebureau(customerId, apiKey, restEndpoint, timeout, useragent);
     }
 };
