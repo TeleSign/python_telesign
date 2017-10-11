@@ -25,7 +25,7 @@ This library can be installed as a Composer package. You only have to add its co
 
 .. code-block:: bash
 
-  $ composer repositories.telesign/telesignenterprise vcs ssh://git@github.com/TeleSign/php_telesign_enterprise
+  $ composer config repositories.telesign/telesignenterprise vcs ssh://git@github.com/TeleSign/php_telesign_enterprise
 
 Then you can require it as usual.
 
