@@ -84,15 +84,15 @@ class RestClient {
 
         var urlencoded = "";
         if (urlEncodedFields != null && urlEncodedFields.length > 0) {
-            urlencoded = os.EOL + urlEncodedFields;
+            urlencoded = "\n" + urlEncodedFields;
         }
         var stringToSignBuilder = methodName +
-            os.EOL + contentType +
-            os.EOL + date +
-            os.EOL + "x-ts-auth-method:" + authMethod +
-            os.EOL + "x-ts-nonce:" + nonce +
+            "\n" + contentType +
+            "\n" + date +
+            "\n" + "x-ts-auth-method:" + authMethod +
+            "\n" + "x-ts-nonce:" + nonce +
             urlencoded +
-            os.EOL + resource;
+            "\n" + resource;
 
         var signedStrUTF8 = stringToSignBuilder.toString('utf8');
         var decodedAPIKey = Buffer.from(apiKey, 'base64');
