@@ -62,7 +62,7 @@ Examples
 Example: You can run the 1_send_message.js with the following command
 
 ```
-node examples/appverify/1_send_message.js
+node examples/messaging/1_send_message.js
 ```
 
 Sample code: Messaging (SMS)
