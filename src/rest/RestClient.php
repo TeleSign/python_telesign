@@ -19,10 +19,10 @@ use const telesign\sdk\version\VERSION;
  */
 class RestClient {
 
-  private $customer_id;
-  private $api_key;
-  private $user_agent;
-  private $client;
+  protected $customer_id;
+  protected $api_key;
+  protected $user_agent;
+  protected $client;
 
   /**
    * TeleSign RestClient instantiation function
@@ -98,7 +98,7 @@ class RestClient {
     }
 
     $content_type = in_array($method_name, ["POST", "PUT"]) ? "application/x-www-form-urlencoded" : "";
-
+    
     $auth_method = "HMAC-SHA256";
 
     $string_to_sign_builder = [
@@ -203,7 +203,7 @@ class RestClient {
    *
    * @return \telesign\sdk\rest\Response The RestClient Response object
    */
-  private function execute ($method_name, $resource, $fields = [], $date = null, $nonce = null) {
+  protected function execute ($method_name, $resource, $fields = [], $date = null, $nonce = null) {
     $url_encoded_fields = http_build_query($fields, null, "&");
 
     $headers = $this->generateTelesignHeaders(
