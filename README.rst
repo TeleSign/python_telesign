@@ -33,6 +33,8 @@ Then you can require it as usual.
 
   $ composer require telesign/telesignenterprise
 
+PHP **5.6+** is required for the TeleSign Enterprise PHP SDK.
+
 Authentication
 --------------
 
