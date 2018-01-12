@@ -33,6 +33,8 @@ If you have already cloned this SDK, you can using the following command
 npm install /path/to/sdk -save
 ```
 
+Node.js **6+** is required for the TeleSign Node.js SDK.
+
 Authentication
 --------------
 
