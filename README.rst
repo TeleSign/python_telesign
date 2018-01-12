@@ -41,6 +41,8 @@ Installation
 
   $ composer require telesign/telesign
 
+PHP **5.6+** is required for the TeleSign PHP SDK.
+
 Authentication
 --------------
 
