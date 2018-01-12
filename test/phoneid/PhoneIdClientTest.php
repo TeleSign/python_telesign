@@ -9,7 +9,7 @@ final class PhoneIdClientTest extends ClientTest {
 
   const EXAMPLE_REFERENCE_ID = Example::REFERENCE_ID;
   const EXAMPLE_PHONE_NUMBER = Example::PHONE_NUMBER;
-
+  
   function getRequestExamples () {
     return [
       [
@@ -21,7 +21,7 @@ final class PhoneIdClientTest extends ClientTest {
         ],
         "uri" => self::EXAMPLE_REST_ENDPOINT . "/v1/phoneid/" . self::EXAMPLE_PHONE_NUMBER,
         [
-          "optional_param" => "123"
+          '{"optional_param":"123"}' => ""
         ]
       ]
     ];
