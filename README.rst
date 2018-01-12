@@ -39,6 +39,8 @@ To add the TeleSign Java SDK to your Maven project:
         <systemPath>${project.basedir}/path/to/jar/telesignenterprise-(insert latest version).jar</systemPath>
     </dependency>
 
+JDK **7+** is required for the TeleSign Enterprise Java SDK.
+
 Authentication
 --------------
 
