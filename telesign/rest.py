@@ -49,7 +49,7 @@ class RestClient(requests.models.RequestEncodingMixin):
     def __init__(self,
                  customer_id,
                  api_key,
-                 rest_endpoint='https://rest-api.telesign.com',
+                 rest_endpoint='http://127.0.0.1:8080',
                  proxies=None,
                  timeout=10):
         """
@@ -81,7 +81,8 @@ class RestClient(requests.models.RequestEncodingMixin):
                                   url_encoded_fields,
                                   date_rfc2616=None,
                                   nonce=None,
-                                  user_agent=None):
+                                  user_agent=None,
+                                  content_type=None):
         """
         Generates the TeleSign REST API headers used to authenticate requests.
 
@@ -99,6 +100,7 @@ class RestClient(requests.models.RequestEncodingMixin):
         :param date_rfc2616: The date and time of the request formatted in rfc 2616, as a string.
         :param nonce: A unique cryptographic nonce for the request, as a string.
         :param user_agent: (optional) User Agent associated with the request, as a string.
+        :param content_type: (optional) ContentType of the request, as a string.
         :return: The TeleSign authentication headers.
         """
         if date_rfc2616 is None:
@@ -106,8 +108,9 @@ class RestClient(requests.models.RequestEncodingMixin):
 
         if nonce is None:
             nonce = str(uuid.uuid4())
-
-        content_type = "application/x-www-form-urlencoded" if method_name in ("POST", "PUT") else ""
+        
+        if not content_type:
+            content_type = "application/x-www-form-urlencoded" if method_name in ("POST", "PUT") else ""
 
         auth_method = "HMAC-SHA256"
 
