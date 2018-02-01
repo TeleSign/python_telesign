@@ -87,7 +87,8 @@ class RestClient {
     $url_encoded_fields,
     $date = null,
     $nonce = null,
-    $user_agent = null
+    $user_agent = null,
+    $content_type = null
   ) {
     if (!$date) {
       $date = gmdate("D, d M Y H:i:s T");
@@ -96,8 +97,10 @@ class RestClient {
     if (!$nonce) {
       $nonce = Uuid::uuid4()->toString();
     }
-
-    $content_type = in_array($method_name, ["POST", "PUT"]) ? "application/x-www-form-urlencoded" : "";
+    
+    if (!$content_type) {
+        $content_type = in_array($method_name, ["POST", "PUT"]) ? "application/x-www-form-urlencoded" : "";
+    }
     
     $auth_method = "HMAC-SHA256";
 
