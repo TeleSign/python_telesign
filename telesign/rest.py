@@ -49,7 +49,7 @@ class RestClient(requests.models.RequestEncodingMixin):
     def __init__(self,
                  customer_id,
                  api_key,
-                 rest_endpoint='http://127.0.0.1:8080',
+                 rest_endpoint='https://rest-api.telesign.com',
                  proxies=None,
                  timeout=10):
         """
