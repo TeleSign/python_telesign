@@ -14,6 +14,7 @@ class PhoneIDClient extends RestClient {
         super(customerId, apiKey, restEndpoint, timeout, useragent);
 
         this.phoneid_resource = "/v1/phoneid/";
+        this.contentType = "application/json";
     }
 
     /***
@@ -28,15 +29,7 @@ class PhoneIDClient extends RestClient {
      * transaction.
      * @param originatingIP: IP address of request origination host
      */
-    phoneID(callback, phoneNumber, accountLifecycleEvent = null, originatingIP = null) {
-        var params = {};
-        if (originatingIP != null) {
-            params.originating_ip = originatingIP;
-        }
-        if (accountLifecycleEvent != null) {
-            params.account_lifecycle_event = accountLifecycleEvent;
-        }
-
+    phoneID(callback, phoneNumber, params = null) {
         this.execute(callback, "POST", this.phoneid_resource + encodeURI(phoneNumber), params);
     }
 }

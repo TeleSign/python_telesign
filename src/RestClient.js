@@ -23,6 +23,7 @@ class RestClient {
         this.apiKey = apiKey;
         this.restEndpoint = (restEndpoint === null ? "https://rest-api.telesign.com" : restEndpoint);
         this.timeout = timeout;
+        this.contentType = "application/x-www-form-urlencoded";
 
         try {
             if (userAgent === null) {
@@ -65,7 +66,8 @@ class RestClient {
                                    apiKey,
                                    methodName,
                                    resource,
-                                   urlEncodedFields,
+                                   contentType,
+                                   encodedFields,
                                    date = null,
                                    nonce = null,
                                    userAgent = null) {
@@ -79,12 +81,12 @@ class RestClient {
         }
 
         var contentType = (methodName == "POST" || methodName == "PUT") ?
-            "application/x-www-form-urlencoded" : "";
+            contentType : "";
         var authMethod = "HMAC-SHA256";
 
         var urlencoded = "";
-        if (urlEncodedFields != null && urlEncodedFields.length > 0) {
-            urlencoded = "\n" + urlEncodedFields;
+        if (encodedFields != null && encodedFields.length > 0) {
+            urlencoded = "\n" + encodedFields;
         }
         var stringToSignBuilder = methodName +
             "\n" + contentType +
@@ -128,10 +130,14 @@ class RestClient {
      */
     execute(callback, methodName, resource, params = null) {
         var telesignURL = this.restEndpoint + resource;
-        var bodyData = null;
+        var bodyData = this.contentType=="application/json" ? "{}" : null;
         if (methodName == "POST" || methodName == "PUT") {
             if (params != null && Object.keys(params).length > 0) {
+              if (this.contentType == "application/x-www-form-urlencoded") {
                 bodyData = querystring.stringify(params);
+              } else {
+                bodyData = JSON.stringify(params);
+              }
             }
         }
         else { // GET method
@@ -147,6 +153,7 @@ class RestClient {
             this.apiKey,
             methodName,
             resource,
+            this.contentType,
             bodyData,
             null,
             null,

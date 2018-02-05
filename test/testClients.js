@@ -41,6 +41,7 @@ test('Test generate Telesign headers with POST', (assert) => {
     const nonce = 'A1592C6F-E384-4CDB-BC42-C3AB970369E9';
     const resource = '/v1/resource';
     const bodyParamsURLEncoded = 'test=param';
+    const contentType = "application/x-www-form-urlencoded";
 
     const expectedAuthorizationHeader =
         'TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:vXw/XzywdhgfEG2/zWLaFp7oXmjLB8iJDMndvDbZMjk=';
@@ -49,6 +50,7 @@ test('Test generate Telesign headers with POST', (assert) => {
         apiKey,
         method,
         resource,
+        contentType,
         bodyParamsURLEncoded,
         date,
         nonce,
@@ -66,6 +68,7 @@ test('Test generate telesign headers unicode content', (assert) => {
     const nonce = 'A1592C6F-E384-4CDB-BC42-C3AB970369E9';
     const resource = '/v1/resource';
     const bodyParamsURLEncoded = 'test=%CF%BF';
+    const contentType = "application/x-www-form-urlencoded";
 
     const expectedAuthorizationHeader =
         'TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:lPpGXw4jTRdaEp2obzYAD5rR+2aWDInJ8ThLbq0nTGU=';
@@ -74,6 +77,7 @@ test('Test generate telesign headers unicode content', (assert) => {
         apiKey,
         method,
         resource,
+        contentType,
         bodyParamsURLEncoded,
         date,
         nonce,
@@ -91,6 +95,7 @@ test('Test generate telesign headers with GET', (assert) => {
     date = 'Wed, 14 Dec 2016 18:20:12 GMT';
     nonce = 'A1592C6F-E384-4CDB-BC42-C3AB970369E9';
     resource = '/v1/resource';
+    contentType = "application/x-www-form-urlencoded";
 
     expectedAuthorizationHeader =
         'TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:wscyrZZtA7kdXu0i4D5KXyDmBcwH52JF1feiEKp+ir0=';
@@ -99,6 +104,7 @@ test('Test generate telesign headers with GET', (assert) => {
         apiKey,
         method,
         resource,
+        contentType,
         '',
         date,
         nonce,
