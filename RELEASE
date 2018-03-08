@@ -1,3 +1,6 @@
+2.2.2
+- Added support for application/json content-type
+
 2.2.1
 - Fix bug where HTTP GET calls were not including query parameters
 

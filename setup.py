@@ -11,7 +11,7 @@ mock = ['mock'] if needs_mock else []
 
 here = path.abspath(path.dirname(__file__))
 
-version = "2.2.1"
+version = "2.2.2"
 
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
