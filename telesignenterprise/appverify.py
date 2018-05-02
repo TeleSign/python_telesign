@@ -47,7 +47,7 @@ class AppVerifyClient(RestClient):
         """
         If a call is unsuccessful, the device will not receive the call.
         If there is a prefix sent by TeleSign in the initiate request and it cannot be matched
-        to the CLI of the verification call, you can use use the Finalize CallerID Unknown endpoint
+        to the CLI of the verification call, you can use the Finalize CallerID Unknown endpoint
         to report the issue to TeleSign for troubleshooting.
 
         See https://enterprise.telesign.com/docs/app-verify-api for detailed API documentation.
