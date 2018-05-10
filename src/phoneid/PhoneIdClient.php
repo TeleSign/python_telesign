@@ -26,7 +26,7 @@ class PhoneIdClient extends RestClient {
   }
   
   protected function execute ($method_name, $resource, $fields = [], $date = null, $nonce = null) {
-    $json_fields = json_encode($fields);
+    $json_fields = json_encode($fields, JSON_FORCE_OBJECT);
     
     $content_type = in_array($method_name, ["POST", "PUT"]) ? "application/json" : "";
     

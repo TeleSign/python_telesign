@@ -1,3 +1,6 @@
+2.2.3
+ - Fixes #15 the default case for PhoneID
+
 2.2.2
 
 - Added support for application/json content-type

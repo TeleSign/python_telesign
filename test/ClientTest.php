@@ -31,8 +31,12 @@ abstract class ClientTest extends TestCase {
     $this->assertInstanceOf(RequestInterface::class, $request);
     $this->assertEquals($expected_url, $request->getUri());
 
-    parse_str($request->getBody()->getContents(), $actual_fields);
-
+    if ($request->getHeaderLine('Content-Type') == "application/json") {
+      $actual_fields = $request->getBody()->getContents();
+    } else {
+      parse_str($request->getBody()->getContents(), $actual_fields );
+    }
+    
     $this->assertEquals($expected_fields, $actual_fields);
   }
   
