@@ -2,4 +2,4 @@
 
 namespace telesign\sdk\version;
 
-const VERSION = "2.2.2";
+const VERSION = "v2.2.4";
