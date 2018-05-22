@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from telesign.rest import RestClient
+from telesign.phoneid import PhoneIdClient as _PhoneIdClient
 
 PHONEID_STANDARD_RESOURCE = "/v1/phoneid/standard/{phone_number}"
 PHONEID_SCORE_RESOURCE = "/v1/phoneid/score/{phone_number}"
@@ -9,7 +9,7 @@ PHONEID_LIVE_RESOURCE = "/v1/phoneid/live/{phone_number}"
 PHONEID_NUMBER_DEACTIVATION_RESOURCE = "/v1/phoneid/number_deactivation/{phone_number}"
 
 
-class PhoneIdClient(RestClient):
+class PhoneIdClient(_PhoneIdClient):
     """
     PhoneID is a set of REST APIs that deliver deep phone number data attributes that help optimize the end user
     verification process and evaluate risk.
