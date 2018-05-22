@@ -46,7 +46,7 @@ class PhoneIdClient extends RestClient {
 
     return new Response($this->client->request($method_name, $resource, [
       "headers" => $headers,
-      $option => $json_fields,
+      $option => in_array($method_name, [ "POST", "PUT"]) ? $json_fields : $fields,
       "http_errors" => false
     ]));
   }

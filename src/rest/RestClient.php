@@ -31,7 +31,7 @@ class RestClient {
    * @param string   $api_key       Your api_key string associated with your account
    * @param string   $rest_endpoint Override the default rest_endpoint to target another endpoint string
    * @param float    $timeout       How long to wait for the server to send data before giving up
-   * @param stirng   $proxy         URL of the proxy
+   * @param string   $proxy         URL of the proxy
    * @param callable $handler       Guzzle's HTTP transfer override
    */
   function __construct (
