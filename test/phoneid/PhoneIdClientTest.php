@@ -65,6 +65,25 @@ final class PhoneIdClientTest extends ClientTest {
         ],
         self::EXAMPLE_REST_ENDPOINT. "/v1/phoneid/standard/" . self::EXAMPLE_PHONE_NUMBER . "?optional_param=123",
         []
+      ],
+      [
+      PhoneIdClient::class,
+        "phoneid",
+        [
+          self::EXAMPLE_PHONE_NUMBER,
+          [ "optional_param" => "123" ]
+        ],
+        "uri" => self::EXAMPLE_REST_ENDPOINT . "/v1/phoneid/" . self::EXAMPLE_PHONE_NUMBER,
+        '{"optional_param":"123"}'
+      ],
+      [
+        PhoneIdClient::class,
+        "phoneid",
+        [
+          self::EXAMPLE_PHONE_NUMBER,
+        ],
+        "uri" => self::EXAMPLE_REST_ENDPOINT . "/v1/phoneid/" . self::EXAMPLE_PHONE_NUMBER,
+        "{}",
       ]
     ];
   }
