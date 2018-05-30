@@ -162,7 +162,8 @@ class RestClient {
         var requestParams = {
             headers: headers,
             uri: telesignURL,
-            method: methodName
+            method: methodName,
+            timeout: this.timeout
         };
 
         if (bodyData != null) {
