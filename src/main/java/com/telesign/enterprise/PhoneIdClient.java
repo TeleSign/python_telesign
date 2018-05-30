@@ -1,7 +1,5 @@
 package com.telesign.enterprise;
 
-import com.telesign.RestClient;
-
 import java.io.IOException;
 import java.net.Proxy;
 import java.security.GeneralSecurityException;
@@ -16,7 +14,7 @@ import java.util.Map;
  * delivering real-time decision making throughout the number lifecycle and ensuring only legitimate users are
  * creating accounts and accessing your applications.
  */
-public class PhoneIdClient extends RestClient {
+public class PhoneIdClient extends com.telesign.PhoneIdClient {
 
     private static final String PHONEID_STANDARD_RESOURCE = "/v1/phoneid/standard/%s";
     private static final String PHONEID_SCORE_RESOURCE = "/v1/phoneid/score/%s";
