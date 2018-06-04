@@ -1,13 +1,13 @@
 from __future__ import unicode_literals
 
-from telesign.rest import RestClient
+from telesign.appverify import AppVerifyClient as _AppVerifyClient
 
 
 APP_VERIFY_INITIATE_RESOURCE = '/v1/verify/auto/voice/initiate'
 APP_VERIFY_FINALIZE_RESOURCE = '/v1/verify/auto/voice/finalize'
 
 
-class AppVerifyClient(RestClient):
+class AppVerifyClient(_AppVerifyClient):
     """
     The TeleSign App Verify web service enables customers to verify devices
     through a voice call by a verification code provided in the caller ID.
@@ -15,7 +15,6 @@ class AppVerifyClient(RestClient):
 
     def __init__(self, customer_id, api_key, rest_endpoint='https://rest-ww.telesign.com', **kwargs):
         super(AppVerifyClient, self).__init__(customer_id, api_key, rest_endpoint=rest_endpoint, **kwargs)
-
 
     def initiate(self, phone_number, **params):
         """
