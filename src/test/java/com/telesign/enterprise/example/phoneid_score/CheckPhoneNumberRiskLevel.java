@@ -1,7 +1,7 @@
 package com.telesign.enterprise.example.phoneid_score;
 
 import com.telesign.RestClient;
-import com.telesign.enterprise.PhoneIdClient;
+import com.telesign.enterprise.ScoreClient;
 
 public class CheckPhoneNumberRiskLevel {
 
@@ -11,11 +11,11 @@ public class CheckPhoneNumberRiskLevel {
         String apiKey = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
 
         String phoneNumber = "phone_number";
-        String ucid = "BACF";
+        String accountLifecycleEvent = "create";
 
         try {
-            PhoneIdClient phoneIdClient = new PhoneIdClient(customerId, apiKey);
-            RestClient.TelesignResponse telesignResponse = phoneIdClient.score(phoneNumber, ucid, null);
+            ScoreClient scoreClient = new ScoreClient(customerId, apiKey);
+            RestClient.TelesignResponse telesignResponse = scoreClient.score(phoneNumber, accountLifecycleEvent, null);
 
             if (telesignResponse.ok) {
                 System.out.println(String.format("Phone number %s has a '%s' risk level and the recommendation is to '%s' the transaction.",
