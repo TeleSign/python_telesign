@@ -2,7 +2,7 @@
 
 namespace telesign\enterprise\sdk\phoneid;
 
-use telesign\sdk\rest\RestClient;
+use telesign\sdk\phoneid\PhoneIdClient as _PhoneIdClient;
 
 /**
  * PhoneID is a set of REST APIs that deliver deep phone number data attributes that help optimize the end user
@@ -12,7 +12,7 @@ use telesign\sdk\rest\RestClient;
  * delivering real-time decision making throughout the number lifecycle and ensuring only legitimate users are
  * creating accounts and accessing your applications.
  */
-class PhoneIdClient extends RestClient {
+class PhoneIdClient extends _PhoneIdClient {
 
   const PHONEID_STANDARD_RESOURCE = "/v1/phoneid/standard/%s";
   const PHONEID_SCORE_RESOURCE = "/v1/phoneid/score/%s";
