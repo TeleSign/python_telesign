@@ -1,5 +1,5 @@
 .. image:: https://raw.github.com/TeleSign/python_telesign/master/python_banner.jpg
-    :target: https://developer.telesign.com
+    :target: https://standard.telesign.com
 
 .. image:: https://img.shields.io/travis/TeleSign/python_telesign.svg
     :target: https://travis-ci.org/TeleSign/python_telesign
@@ -28,7 +28,7 @@ Documentation
 -------------
 
 Code documentation is included in the SDK. Complete documentation, quick start guides and reference material
-for the TeleSign API is available within the `TeleSign Developer Center <https://developer.telesign.com/>`_.
+for the TeleSign API is available within the `TeleSign Standard Documentation <https://standard.telesign.com/>`_.
 
 Installation
 ------------
@@ -87,4 +87,4 @@ Here is a basic code example with the JSON response.
         'updated_on': '2016-12-12T00:39:58.325559Z'}}
 
 For more examples, see the `examples <https://github.com/TeleSign/python_telesign/tree/master/examples>`_ folder or
-visit the `TeleSign Developer Center <https://developer.telesign.com/>`_.
+visit the `TeleSign Standard Documentation <https://standard.telesign.com/>`_.
