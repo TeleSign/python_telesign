@@ -16,7 +16,7 @@ Documentation
 -------------
 
 Code documentation is included in the SDK. Complete documentation, quick start guides and reference material
-for the TeleSign API is available within the [TeleSign Developer Center](https://developer.telesign.com/).
+for the TeleSign API is available within the [TeleSign Standard Documentation](https://standard.telesign.com/).
 
 
 Installation
@@ -121,6 +121,5 @@ Further reading
 
 * If you are using the trial account, make sure you understand it has some limitations. 
 Use only the phone number you have verified.
-* The definitions of the parameters are best documented in the REST API documentation 
-located [here](https://developer.telesign.com/docs/api-docs).
+* For documentation, see the [TeleSign Standard Documentation](https://standard.telesign.com).
 * Code examples can be found [here](/examples).
