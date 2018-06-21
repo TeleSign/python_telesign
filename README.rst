@@ -1,5 +1,5 @@
 .. image:: https://raw.github.com/TeleSign/php_telesign/master/php_banner_enterprise.jpg
-    :target: https://developer.telesign.com
+    :target: https://enterprise.telesign.com
 
 ===========================
 TeleSign Enterprise PHP SDK
@@ -16,7 +16,7 @@ Documentation
 -------------
 
 Code documentation is included in the SDK. Complete documentation, quick start guides and reference material
-for the TeleSign API is available within the `TeleSign Developer Center <https://developer.telesign.com/>`_.
+for the TeleSign API is available within the `TeleSign Enterprise Documentation <https://enterprise.telesign.com/>`_.
 
 Installation
 ------------
@@ -98,4 +98,4 @@ Here is a basic code example with JSON response.
   )
 
 For more examples, see the `examples <https://github.com/TeleSign/php_telesign_enterprise/tree/master/examples>`_ folder or
-visit the `TeleSign Developer Center <https://developer.telesign.com/>`_.
+visit the `TeleSign Developer Center <https://enterprise.telesign.com/>`_.
