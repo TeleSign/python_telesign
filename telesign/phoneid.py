@@ -31,7 +31,7 @@ class PhoneIdClient(RestClient):
 
         json_fields = json.dumps(params)
 
-        content_type = "application/json" if method_name in ("POST", "PUT") else ""
+        content_type = "application/json" if method_name in ("POST", "PUT", "DELETE") else ""
 
         headers = self.generate_telesign_headers(self.customer_id,
                                                  self.api_key,
@@ -41,8 +41,9 @@ class PhoneIdClient(RestClient):
                                                  user_agent=self.user_agent,
                                                  content_type=content_type)
 
-        if method_name in ['POST', 'PUT']:
+        if method_name in ['POST', 'PUT', 'DELETE']:
             payload = {'data': json_fields}
+
         else:
             payload = {'params': json_fields}
 

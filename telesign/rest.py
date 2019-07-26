@@ -41,6 +41,8 @@ class RestClient(requests.models.RequestEncodingMixin):
             self.body = requests_response.text
             self.ok = requests_response.ok
 
+            print(requests_response.request.body)
+
             try:
                 self.json = requests_response.json()
             except (Exception, ValueError):
@@ -108,9 +110,9 @@ class RestClient(requests.models.RequestEncodingMixin):
 
         if nonce is None:
             nonce = str(uuid.uuid4())
-        
+
         if not content_type:
-            content_type = "application/x-www-form-urlencoded" if method_name in ("POST", "PUT") else ""
+            content_type = "application/x-www-form-urlencoded" if method_name in ("POST", "PUT", "DELETE") else ""
 
         auth_method = "HMAC-SHA256"
 
