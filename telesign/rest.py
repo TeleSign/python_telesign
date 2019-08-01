@@ -41,8 +41,6 @@ class RestClient(requests.models.RequestEncodingMixin):
             self.body = requests_response.text
             self.ok = requests_response.ok
 
-            print(requests_response.request.body)
-
             try:
                 self.json = requests_response.json()
             except (Exception, ValueError):
@@ -214,7 +212,7 @@ class RestClient(requests.models.RequestEncodingMixin):
                                                        url_encoded_fields,
                                                        user_agent=self.user_agent)
 
-        if method_name in ['POST', 'PUT']:
+        if method_name in ['POST', 'PUT', 'DELETE']:
             payload = {'data': url_encoded_fields}
         else:
             payload = {'params': url_encoded_fields}
