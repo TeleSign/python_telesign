@@ -39,7 +39,7 @@ To install the TeleSign Python SDK:
 
     $ pip install telesign
 
-Python **2.7+** is required for the TeleSign Python SDK.
+Python **2.7+** or Python **3.7+** is required to use the TeleSign Python SDK.
 
 Authentication
 --------------
