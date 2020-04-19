@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-remi = ["php56", "php70", "php71"]
+remi = ["php56", "php70", "php71", "php72", "php73", "php74"]
 
 composer = <<-SHELL
   EXPECTED_SIGNATURE=$(curl https://composer.github.io/installer.sig)
@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     if ! yum info remi-release
     then
-      curl -O http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+      curl -O http://rpms.remirepo.net/enterprise/remi-release-7.rpm
       yum -y install ./remi-release-7.rpm
     fi
   SHELL
