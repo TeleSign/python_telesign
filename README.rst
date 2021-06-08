@@ -1,6 +1,22 @@
 .. image:: https://raw.github.com/TeleSign/php_telesign/master/php_banner_enterprise.jpg
     :target: https://enterprise.telesign.com
 
+.. raw:: html
+
+    <br>
+
+.. image:: https://img.shields.io/travis/com/TeleSign/php_telesign_enterprise
+    :target: https://www.travis-ci.com/github/TeleSign/php_telesign_enterprise
+
+.. image:: https://img.shields.io/codecov/c/github/TeleSign/php_telesign_enterprise.svg
+    :target: https://codecov.io/gh/TeleSign/php_telesign
+
+.. image:: https://img.shields.io/packagist/v/telesign/telesignenterprise.svg
+    :target: https://packagist.org/packages/telesign/telesignenterprise
+
+.. image:: https://img.shields.io/github/license/TeleSign/php_telesign_enterprise.svg
+    :target: https://github.com/TeleSign/php_telesign_enterprise/blob/master/LICENSE
+
 ===========================
 TeleSign Enterprise PHP SDK
 ===========================
@@ -33,7 +49,7 @@ Then you can require it as usual.
 
   $ composer require telesign/telesignenterprise
 
-PHP **5.6+** is required for the TeleSign Enterprise PHP SDK.
+PHP **7.2+** is required for the TeleSign Enterprise PHP SDK.
 
 Authentication
 --------------
