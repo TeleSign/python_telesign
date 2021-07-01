@@ -11,7 +11,7 @@ mock = ['mock'] if needs_mock else []
 
 here = path.abspath(path.dirname(__file__))
 
-version = "2.2.2"
+version = "2.2.3"
 
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
@@ -36,7 +36,7 @@ setup(name='telesign',
           "Programming Language :: Python :: 3.6",
       ],
       long_description=long_description,
-      keywords='telesign, sms, voice, mobile, authentication, identity, messaging',
+      keywords='telesign, sms, voice, mobile, authentication, identity, messaging, kes',
       author='TeleSign Corp.',
       author_email='support@telesign.com',
       url="https://github.com/telesign/python_telesign",
