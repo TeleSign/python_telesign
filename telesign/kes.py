@@ -18,8 +18,6 @@ class KESClient(RestClient):
                                         api_key=api_key,
                                         rest_endpoint=KES_HOST,
                                         **kwargs)
-        self.customer_id = customer_id
-        self.hmac_method = HMAC_METHOD
 
     def _execute(self, method_function, method_name, resource, **params):
         resource_uri = "{api_host}{resource}".format(api_host=self.api_host, resource=resource)
@@ -47,4 +45,4 @@ class KESClient(RestClient):
 
         See https://enterprise-beta.telesign.com/api-reference/apis/known-events-share-api for Beta API documentation.
         """
-        return self._execute(resource=KES_RESOURCE, **params)
+        return self.post(resource=KES_RESOURCE, **params)
