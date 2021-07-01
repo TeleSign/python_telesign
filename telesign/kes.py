@@ -5,7 +5,6 @@ from telesign.rest import RestClient
 
 KES_HOST = "https://data.telesign.com"
 KES_RESOURCE = "/kes"
-HMAC_METHOD = "hmac-sha256"
 
 
 class KESClient(RestClient):
@@ -31,7 +30,7 @@ class KESClient(RestClient):
                                                        content_type='application/json')
         payload = {'data': ""}
         if method_name in ['POST', 'PUT']:
-            payload['data'] = dumps(params)
+            payload['data'] = json_fields
 
         response = self.Response(method_function(resource_uri,
                                                  headers=headers,
