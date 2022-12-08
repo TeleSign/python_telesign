@@ -1,5 +1,8 @@
+.. image:: https://raw.github.com/TeleSign/python_telesign/master/python_banner.jpg
+    :target: https://standard.telesign.com
+
 .. image:: https://img.shields.io/travis/TeleSign/python_telesign.svg
-    :target: https://travis-ci.org/TeleSign/python_telesign˚
+    :target: https://travis-ci.org/TeleSign/python_telesign
 
 .. image:: https://img.shields.io/codecov/c/github/TeleSign/python_telesign.svg
     :target: https://codecov.io/gh/TeleSign/python_telesign
@@ -10,41 +13,78 @@
 .. image:: https://img.shields.io/pypi/l/telesign.svg
     :target: https://github.com/TeleSign/python_telesign/blob/master/LICENSE
 
-# Telesign Self-service Python SDK
+===================
+TeleSign Python SDK
+===================
 
-[Telesign](https://telesign.com) connects, protects, and defends the customer experience with intelligence from billions of digital interactions and mobile signals. Through developer-friendly APIs that deliver user verification, digital identity, and omnichannel communications, we help the world's largest brands secure onboarding, maintain account integrity, prevent fraud, and streamline omnichannel engagement.
+TeleSign is a communications platform as a service (CPaaS) company, founded on security. Since 2005, TeleSign has
+been a trusted partner to the world’s leading websites and mobile applications, helping secure billions of end-user
+accounts. Today, TeleSign’s data-driven, cloud communications platform is changing the way businesses engage with
+customers and prevent fraud.
 
-## Requirements
+For more information about TeleSign, visit our `website <http://www.TeleSign.com>`_.
 
-* **Python 2.7+** or **Python 3.7+**
-* ***_(Optional)_*** **pip** This package manager isn't required to use this SDK, but it is required to use the installation instructions below.  
+Documentation
+-------------
 
-> NOTE:
-> 
-> These instructions are for MacOS. They will need to be adapted if you are installing on Windows.
+Code documentation is included in the SDK. Complete documentation, quick start guides and reference material
+for the TeleSign API is available within the `TeleSign Standard Documentation <https://standard.telesign.com/>`_.
 
-## Installation
+Installation
+------------
 
-Follow these steps to add this SDK as a dependency to your project.
+To install the TeleSign Python SDK:
 
-1. *(Optional)* Create a new directory for your Python project. Skip this step if you already have created a project. If you plan to create multiple Python projects that use Telesign, we recommend that you group them within a `telesign_integrations` directory.
-```
-    cd ~/code/local
-    mkdir telesign_integrations
-    cd telesign_integrations
-    mkdir {your project name}
-    cd {your project name}
-```
-2. Install the SDK as a dependency in the top-level directory of your project using the command below. Once the SDK is installed, you should see a message in the terminal notifying you that you have successfully installed the SDK.
+.. code-block:: bash
 
-    `pip install telesign`
+    $ pip install telesign
 
-## Authentication
+Python **2.7+** or Python **3.7+** is required to use the TeleSign Python SDK.
 
-If you use a Telesign SDK to make your request, authentication is handled behind-the-scenes for you. All you need to provide is your Customer ID and API Key. The SDKs apply Digest authentication whenever they make a request to a Telesign service where it is supported. When Digest authentication is not supported, the SDKs apply Basic authentication.
+Authentication
+--------------
 
-## What's next
+You will need a Customer ID and API Key in order to use TeleSign’s API. If you already have an account you can retrieve
+them from your account dashboard within the `Portal <https://portal.telesign.com/login>`_. If you have not signed up
+yet, sign up `here <https://portal.telesign.com/signup>`_.
 
-* Learn to send a request to Telesign with code with one of our [tutorials](https://developer.telesign.com/enterprise/docs/tutorials).  
-* Browse our [Developer Portal](https://developer.telesign.com) for tutorials, how-to guides, reference content, and more.
-* Check out our [sample code](https://github.com/TeleSign/sample_code) on GitHub.
+Dependencies
+------------
+
+We make use of popular, feature-rich and well-tested open-source libraries to perform the underlying functionality of
+the SDK. These dependencies are managed by the community accepted package manager. If you are unable to add these
+additional third party dependencies to your project we have ensured that the SDK code is easy to read and can serve as
+sample code. We have also made sure that more complicated functions such as generate_telesign_headers can be easily
+extracted from the SDK and used 'as is' in your project.
+
+Python Code Example: Messaging
+------------------------------
+
+Here is a basic code example with the JSON response.
+
+.. code-block:: python
+
+    from __future__ import print_function
+    from telesign.messaging import MessagingClient
+
+    customer_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+    api_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+
+    phone_number = "phone_number"
+    message = "You're scheduled for a dentist appointment at 2:30PM."
+    message_type = "ARN"
+
+    messaging_client = MessagingClient(customer_id, api_key)
+    response = messaging_client.message(phone_number, message, message_type)
+
+    print(response.json)
+
+.. code-block:: javascript
+    
+    {'reference_id': 'DGFDF6E11AB86303ASDFD425BE00000657',
+     'status': {'code': 103,
+        'description': 'Call in progress',
+        'updated_on': '2016-12-12T00:39:58.325559Z'}}
+
+For more examples, see the `examples <https://github.com/TeleSign/python_telesign/tree/master/examples>`_ folder or
+visit the `TeleSign Standard Documentation <https://standard.telesign.com/>`_.
