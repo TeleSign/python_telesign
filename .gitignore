@@ -14,5 +14,8 @@ __pycache__/
 # intelliJ IDE
 .idea/
 
+# Visual Studio Code
+.vscode/
+
 # Other
 .DS_Store
