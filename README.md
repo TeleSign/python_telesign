@@ -1,6 +1,4 @@
-[![pypi v2.2.2](https://img.shields.io/pypi/v/telesign.svg)](https://pypi.python.org/pypi/telesign)
-
-[![license: MIT](https://img.shields.io/pypi/l/telesign.svg)](https://github.com/TeleSign/python_telesign/blob/master/LICENSE.txt)
+[![pypi v2.2.2](https://img.shields.io/pypi/v/telesign.svg)](https://pypi.python.org/pypi/telesign) [![license: MIT](https://img.shields.io/pypi/l/telesign.svg)](https://github.com/TeleSign/python_telesign/blob/master/LICENSE.txt)
 
 # Telesign Self-service Python SDK
 
@@ -9,7 +7,7 @@
 ## Requirements
 
 * **Python 2.7+** or **Python 3.7+**
-* *(Optional)* **pip** - This package manager isn't required to use this SDK, but it is required to use the installation instructions below.  
+* **pip** *(optional)* - This package manager isn't required to use this SDK, but it is required to use the installation instructions below.  
 
 > **NOTE:**
 > 
