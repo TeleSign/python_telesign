@@ -1,4 +1,4 @@
-[![pypi v2.2.2](https://img.shields.io/pypi/v/telesign.svg)](https://pypi.python.org/pypi/telesign) [![license: MIT](https://img.shields.io/pypi/l/telesign.svg)](https://github.com/TeleSign/python_telesign/blob/master/LICENSE.txt)
+[![pypi](https://img.shields.io/pypi/v/telesign.svg)](https://pypi.python.org/pypi/telesign) [![license](https://img.shields.io/pypi/l/telesign.svg)](https://github.com/TeleSign/python_telesign/blob/master/LICENSE.txt)
 
 # Telesign Self-service Python SDK
 
