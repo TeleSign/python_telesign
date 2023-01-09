@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 
-from requests import post
 import hmac
 import uuid
 from base64 import b64encode, b64decode
@@ -11,6 +10,7 @@ from platform import python_version
 import requests
 
 import telesign
+from telesign.util import AuthMethod
 
 
 class RestClient(requests.models.RequestEncodingMixin):
@@ -51,7 +51,8 @@ class RestClient(requests.models.RequestEncodingMixin):
                  api_key,
                  rest_endpoint='https://rest-api.telesign.com',
                  proxies=None,
-                 timeout=10):
+                 timeout=10,
+                 auth_method=None):
         """
         TeleSign RestClient useful for making generic RESTful requests against our API.
 
@@ -73,6 +74,8 @@ class RestClient(requests.models.RequestEncodingMixin):
 
         self.timeout = timeout
 
+        self.auth_method = auth_method
+
     @staticmethod
     def generate_telesign_headers(customer_id,
                                   api_key,
@@ -82,7 +85,8 @@ class RestClient(requests.models.RequestEncodingMixin):
                                   date_rfc2616=None,
                                   nonce=None,
                                   user_agent=None,
-                                  content_type=None):
+                                  content_type=None,
+                                  auth_method=None):
         """
         Generates the TeleSign REST API headers used to authenticate requests.
 
@@ -101,6 +105,7 @@ class RestClient(requests.models.RequestEncodingMixin):
         :param nonce: A unique cryptographic nonce for the request, as a string.
         :param user_agent: (optional) User Agent associated with the request, as a string.
         :param content_type: (optional) ContentType of the request, as a string.
+        :param auth_method: (optional) Authentication type ex: Basic, HMAC etc
         :return: The TeleSign authentication headers.
         """
         if date_rfc2616 is None:
@@ -112,31 +117,39 @@ class RestClient(requests.models.RequestEncodingMixin):
         if not content_type:
             content_type = "application/x-www-form-urlencoded" if method_name in ("POST", "PUT") else ""
 
-        auth_method = "HMAC-SHA256"
+        # Default auth_method is Digest if not explicitly specified
+        if auth_method == AuthMethod.BASIC.value:
+            usr_apikey = "{customer_id}:{api_key}".format(customer_id=customer_id,
+                                                          api_key=api_key)
+            b64val = b64encode(usr_apikey.encode())
+            authorization = "{auth_method} {b64val}".format(auth_method=AuthMethod.BASIC.value,
+                                                            b64val=b64val.decode())
+        else:
+            auth_method = AuthMethod.HMAC_SHA256.value
 
-        string_to_sign_builder = ["{method}".format(method=method_name)]
+            string_to_sign_builder = ["{method}".format(method=method_name)]
 
-        string_to_sign_builder.append("\n{content_type}".format(content_type=content_type))
+            string_to_sign_builder.append("\n{content_type}".format(content_type=content_type))
 
-        string_to_sign_builder.append("\n{date}".format(date=date_rfc2616))
+            string_to_sign_builder.append("\n{date}".format(date=date_rfc2616))
 
-        string_to_sign_builder.append("\nx-ts-auth-method:{auth_method}".format(auth_method=auth_method))
+            string_to_sign_builder.append("\nx-ts-auth-method:{auth_method}".format(auth_method=auth_method))
 
-        string_to_sign_builder.append("\nx-ts-nonce:{nonce}".format(nonce=nonce))
+            string_to_sign_builder.append("\nx-ts-nonce:{nonce}".format(nonce=nonce))
 
-        if content_type and url_encoded_fields:
-            string_to_sign_builder.append("\n{fields}".format(fields=url_encoded_fields))
+            if content_type and url_encoded_fields:
+                string_to_sign_builder.append("\n{fields}".format(fields=url_encoded_fields))
 
-        string_to_sign_builder.append("\n{resource}".format(resource=resource))
+            string_to_sign_builder.append("\n{resource}".format(resource=resource))
 
-        string_to_sign = "".join(string_to_sign_builder)
+            string_to_sign = "".join(string_to_sign_builder)
 
-        signer = hmac.new(b64decode(api_key), string_to_sign.encode("utf-8"), sha256)
-        signature = b64encode(signer.digest()).decode("utf-8")
+            signer = hmac.new(b64decode(api_key), string_to_sign.encode("utf-8"), sha256)
+            signature = b64encode(signer.digest()).decode("utf-8")
 
-        authorization = "TSA {customer_id}:{signature}".format(
-            customer_id=customer_id,
-            signature=signature)
+            authorization = "TSA {customer_id}:{signature}".format(
+                customer_id=customer_id,
+                signature=signature)
 
         headers = {
             "Authorization": authorization,
@@ -151,69 +164,84 @@ class RestClient(requests.models.RequestEncodingMixin):
 
         return headers
 
-    def post(self, resource, **params):
+    def post(self, resource, body=None, **query_params):
         """
         Generic TeleSign REST API POST handler.
 
         :param resource: The partial resource URI to perform the request against, as a string.
-        :param params: Body params to perform the POST request with, as a dictionary.
+        :param body: (optional) A dictionary sent as a part of request body.
+        :param query_params: query_params to perform the POST request with, as a dictionary.
         :return: The RestClient Response object.
         """
-        return self._execute(self.session.post, 'POST', resource, **params)
+        return self._execute(self.session.post, 'POST', resource, body, **query_params)
 
-    def get(self, resource, **params):
+    def get(self, resource, body=None, **query_params):
         """
         Generic TeleSign REST API GET handler.
 
         :param resource: The partial resource URI to perform the request against, as a string.
-        :param params: Body params to perform the GET request with, as a dictionary.
+        :param body: (optional) A dictionary sent as a part of request body.
+        :param query_params: query_params to perform the GET request with, as a dictionary.
         :return: The RestClient Response object.
         """
-        return self._execute(self.session.get, 'GET', resource, **params)
+        return self._execute(self.session.get, 'GET', resource, body, **query_params)
 
-    def put(self, resource, **params):
+    def put(self, resource, body=None, **query_params):
         """
         Generic TeleSign REST API PUT handler.
 
         :param resource: The partial resource URI to perform the request against, as a string.
-        :param params: Body params to perform the PUT request with, as a dictionary.
+        :param body: (optional) A dictionary sent as a part of request body.
+        :param query_params: query_params to perform the PUT request with, as a dictionary.
         :return: The RestClient Response object.
         """
-        return self._execute(self.session.put, 'PUT', resource, **params)
+        return self._execute(self.session.put, 'PUT', resource, body, **query_params)
 
-    def delete(self, resource, **params):
+    def delete(self, resource, body=None, **query_params):
         """
         Generic TeleSign REST API DELETE handler.
 
         :param resource: The partial resource URI to perform the request against, as a string.
-        :param params: Body params to perform the DELETE request with, as a dictionary.
+        :param body: (optional) A dictionary sent as a part of request body.
+        :param query_params: query_params to perform the DELETE request with, as a dictionary.
         :return: The RestClient Response object.
         """
-        return self._execute(self.session.delete, 'DELETE', resource, **params)
+        return self._execute(self.session.delete, 'DELETE', resource, body, **query_params)
 
-    def _execute(self, method_function, method_name, resource, **params):
+    def _execute(self, method_function, method_name, resource, body=None, **query_params):
         """
         Generic TeleSign REST API request handler.
 
         :param method_function: The Requests HTTP request function to perform the request.
         :param method_name: The HTTP method name, as an upper case string.
         :param resource: The partial resource URI to perform the request against, as a string.
-        :param params: Body params to perform the HTTP request with, as a dictionary.
+        :param body: (optional) A dictionary sent as a part of request body.
+        :param query_params: query_params to perform the HTTP request with, as a dictionary.
         :return: The RestClient Response object.
         """
         resource_uri = "{api_host}{resource}".format(api_host=self.api_host, resource=resource)
 
-        url_encoded_fields = self._encode_params(params)
+        url_encoded_fields = self._encode_params(query_params)
+        if body:
+            content_type = "application/json"
+        else:
+            content_type = None  # set later
 
         headers = RestClient.generate_telesign_headers(self.customer_id,
                                                        self.api_key,
                                                        method_name,
                                                        resource,
                                                        url_encoded_fields,
-                                                       user_agent=self.user_agent)
+                                                       user_agent=self.user_agent,
+                                                       content_type=content_type,
+                                                       auth_method=self.auth_method)
 
         if method_name in ['POST', 'PUT']:
-            payload = {'data': url_encoded_fields}
+            payload = {}
+            if body:
+                payload['json'] = body
+            if query_params:
+                payload['data'] = url_encoded_fields
         else:
             payload = {'params': url_encoded_fields}
 
