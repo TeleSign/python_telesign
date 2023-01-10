@@ -108,9 +108,9 @@ class RestClient(requests.models.RequestEncodingMixin):
 
         if nonce is None:
             nonce = str(uuid.uuid4())
-        
+
         if not content_type:
-            content_type = "application/x-www-form-urlencoded" if method_name in ("POST", "PUT") else ""
+            content_type = "application/x-www-form-urlencoded" if method_name in ("POST", "PUT", "DELETE") else ""
 
         auth_method = "HMAC-SHA256"
 
@@ -212,7 +212,7 @@ class RestClient(requests.models.RequestEncodingMixin):
                                                        url_encoded_fields,
                                                        user_agent=self.user_agent)
 
-        if method_name in ['POST', 'PUT']:
+        if method_name in ['POST', 'PUT', 'DELETE']:
             payload = {'data': url_encoded_fields}
         else:
             payload = {'params': url_encoded_fields}
