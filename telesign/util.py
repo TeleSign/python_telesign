@@ -4,6 +4,7 @@ from hmac import HMAC
 from base64 import b64decode, b64encode
 from hashlib import sha256
 from random import SystemRandom
+from enum import Enum
 
 
 def to_utc_rfc3339(a_datetime):
@@ -40,3 +41,8 @@ def verify_telesign_callback_signature(api_key, signature, json_str):
             signatures_equal = False
 
     return signatures_equal
+
+
+class AuthMethod(Enum):
+    BASIC = "Basic"
+    HMAC_SHA256 = "HMAC-SHA256"

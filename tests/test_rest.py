@@ -6,6 +6,7 @@ from unittest import TestCase
 from uuid import UUID
 
 from telesign.rest import RestClient
+from telesign.util import AuthMethod
 
 if sys.version_info < (3, 3):
     from mock import Mock, patch
@@ -104,6 +105,29 @@ class TestRest(TestCase):
 
         self.assertEqual(expected_authorization_header, actual_headers['Authorization'])
 
+    def test_generate_telesign_headers_with_post_basic_authentication(self):
+        method_name = 'POST'
+        date_rfc2616 = 'Wed, 14 Dec 2016 18:20:12 GMT'
+        nonce = 'A1592C6F-E384-4CDB-BC42-C3AB970369E9'
+        resource = '/v1/resource'
+
+        expected_authorization_header =  ('Basic RkZGRkZGRkYtRUVFRS1ERERELTEyMzQtQUIxMjM'
+                                          '0NTY3ODkwOkVYQU1QTEUtLS0tVEU4c1RnZzQ1eXVzdW1vTjZCWXNCVmto'
+                                          'K3lSSjVjemdzbkNlaFphT1lsZFBKZG1GaDZOZVg4a3VuWjJ6VTFZV2FV'
+                                          'dy8wd1Y2eGZ3PT0=')
+
+        actual_headers = RestClient.generate_telesign_headers(self.customer_id,
+                                                              self.api_key,
+                                                              method_name,
+                                                              resource,
+                                                              '',
+                                                              date_rfc2616=date_rfc2616,
+                                                              nonce=nonce,
+                                                              user_agent='unit_test',
+                                                              auth_method=AuthMethod.BASIC.value)
+
+        self.assertEqual(expected_authorization_header, actual_headers['Authorization'])
+
     def test_generate_telesign_headers_default_date_and_nonce(self):
         method_name = 'GET'
         resource = '/v1/resource'
@@ -135,6 +159,28 @@ class TestRest(TestCase):
         expected_post_kwargs = {'headers': {}, 'data': 'test=123_%CF%BF_test', 'timeout': client.timeout}
 
         client.post(test_resource, **test_params)
+
+        self.assertEqual(client.session.post.call_count, 1, "client.session.post not called")
+
+        post_args, post_kwargs = client.session.post.call_args
+        self.assertEqual(post_args, expected_post_args,
+                         "client.session.post.call_args args do not match expected")
+        self.assertEqual(post_kwargs, expected_post_kwargs,
+                         "client.session.post.call_args kwargs do not match expected")
+
+    @patch('telesign.rest.RestClient.generate_telesign_headers', return_value={})
+    def test_post_body(self, mock_generate_telesign_headers):
+        test_host = 'https://test.com'
+        test_resource = '/test/resource'
+        test_params = {'test': '123_\u03ff_test'}
+
+        client = RestClient(self.customer_id, self.api_key, rest_endpoint=test_host)
+        client.session.post = Mock()
+
+        expected_post_args = (u'https://test.com/test/resource',)
+        expected_post_kwargs = {'headers': {}, 'json': test_params, 'timeout': client.timeout}
+
+        client.post(test_resource, body=test_params)
 
         self.assertEqual(client.session.post.call_count, 1, "client.session.post not called")
 
@@ -209,3 +255,25 @@ class TestRest(TestCase):
                          "client.session.delete.call_args args do not match expected")
         self.assertEqual(delete_kwargs, expected_delete_kwargs,
                          "client.session.delete.call_args kwargs do not match expected")
+
+    @patch('telesign.rest.RestClient.generate_telesign_headers', return_value={})
+    def test_post_basic_auth(self, mock_generate_telesign_headers):
+        test_host = 'https://test.com'
+        test_resource = '/test/resource'
+        test_params = {'test': '123_\u03ff_test'}
+
+        client = RestClient(self.customer_id, self.api_key, rest_endpoint=test_host, auth_method=AuthMethod.BASIC.value)
+        client.session.post = Mock()
+
+        expected_post_args = (u'https://test.com/test/resource',)
+        expected_post_kwargs = {'headers': {}, 'data': 'test=123_%CF%BF_test', 'timeout': client.timeout}
+
+        client.post(test_resource, **test_params)
+
+        self.assertEqual(client.session.post.call_count, 1, "client.session.post not called")
+
+        post_args, post_kwargs = client.session.post.call_args
+        self.assertEqual(post_args, expected_post_args,
+                         "client.session.post.call_args args do not match expected")
+        self.assertEqual(post_kwargs, expected_post_kwargs,
+                         "client.session.post.call_args kwargs do not match expected")
