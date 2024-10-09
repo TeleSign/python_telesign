@@ -1,17 +1,17 @@
 .. image:: https://raw.github.com/TeleSign/python_telesign/master/python_banner.jpg
-    :target: https://standard.telesign.com
+       :target: https://standard.telesign.com
 
 .. image:: https://img.shields.io/travis/TeleSign/python_telesign.svg
-    :target: https://travis-ci.org/TeleSign/python_telesign
+       :target: https://travis-ci.org/TeleSign/python_telesign
 
 .. image:: https://img.shields.io/codecov/c/github/TeleSign/python_telesign.svg
-    :target: https://codecov.io/gh/TeleSign/python_telesign
+       :target: https://codecov.io/gh/TeleSign/python_telesign
 
 .. image:: https://img.shields.io/pypi/v/telesign.svg
-    :target: https://pypi.python.org/pypi/telesign
+       :target: https://pypi.python.org/pypi/telesign
 
 .. image:: https://img.shields.io/pypi/l/telesign.svg
-    :target: https://github.com/TeleSign/python_telesign/blob/master/LICENSE
+       :target: https://github.com/TeleSign/python_telesign/blob/master/LICENSE
 
 ===================
 TeleSign Python SDK
@@ -80,7 +80,7 @@ Here is a basic code example with the JSON response.
     print(response.json)
 
 .. code-block:: javascript
-    
+       
     {'reference_id': 'DGFDF6E11AB86303ASDFD425BE00000657',
      'status': {'code': 103,
         'description': 'Call in progress',
