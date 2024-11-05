@@ -5,8 +5,8 @@ from telesign.phoneid import PhoneIdClient
 
 class TestPhoneId(TestCase):
     def setUp(self):
-        self.customer_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
-        self.api_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+        self.customer_id = os.getenv('CUSTOMER_ID', 'FFFFFFFF-EEEE-DDDD-1234-AB1234567890')
+        self.api_key = os.getenv('API_KEY', 'EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==')
         self.phone_number_test = "11234567890"
 
     def test_phoneid_constructor(self):
