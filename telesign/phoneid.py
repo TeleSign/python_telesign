@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import json
 
-from rest import RestClient
+from telesign.rest import RestClient
 
 PHONEID_RESOURCE = "/v1/phoneid/{phone_number}"
 
