@@ -8,6 +8,7 @@ from hashlib import sha256
 from platform import python_version
 
 import requests
+import json
 
 import telesign
 from telesign.util import AuthMethod
@@ -118,14 +119,14 @@ class RestClient(requests.models.RequestEncodingMixin):
             content_type = "application/x-www-form-urlencoded" if method_name in ("POST", "PUT") else ""
 
         # Default auth_method is Digest if not explicitly specified
-        if auth_method == AuthMethod.BASIC.value:
+        if auth_method == AuthMethod.BASIC:
             usr_apikey = "{customer_id}:{api_key}".format(customer_id=customer_id,
                                                           api_key=api_key)
             b64val = b64encode(usr_apikey.encode())
-            authorization = "{auth_method} {b64val}".format(auth_method=AuthMethod.BASIC.value,
+            authorization = "{auth_method} {b64val}".format(auth_method=AuthMethod.BASIC,
                                                             b64val=b64val.decode())
         else:
-            auth_method = AuthMethod.HMAC_SHA256.value
+            auth_method = AuthMethod.HMAC_SHA256
 
             string_to_sign_builder = ["{method}".format(method=method_name)]
 
@@ -164,7 +165,7 @@ class RestClient(requests.models.RequestEncodingMixin):
 
         return headers
 
-    def post(self, resource, body=None, **query_params):
+    def post(self, resource, body=None, json_fields=None, **query_params):
         """
         Generic TeleSign REST API POST handler.
 
@@ -173,9 +174,9 @@ class RestClient(requests.models.RequestEncodingMixin):
         :param query_params: query_params to perform the POST request with, as a dictionary.
         :return: The RestClient Response object.
         """
-        return self._execute(self.session.post, 'POST', resource, body, **query_params)
+        return self._execute(self.session.post, 'POST', resource, body, json_fields, **query_params)
 
-    def get(self, resource, body=None, **query_params):
+    def get(self, resource, body=None, json_fields=None, **query_params):
         """
         Generic TeleSign REST API GET handler.
 
@@ -184,9 +185,9 @@ class RestClient(requests.models.RequestEncodingMixin):
         :param query_params: query_params to perform the GET request with, as a dictionary.
         :return: The RestClient Response object.
         """
-        return self._execute(self.session.get, 'GET', resource, body, **query_params)
+        return self._execute(self.session.get, 'GET', resource, body, json_fields, **query_params)
 
-    def put(self, resource, body=None, **query_params):
+    def put(self, resource, body=None, json_fields=None, **query_params):
         """
         Generic TeleSign REST API PUT handler.
 
@@ -195,9 +196,9 @@ class RestClient(requests.models.RequestEncodingMixin):
         :param query_params: query_params to perform the PUT request with, as a dictionary.
         :return: The RestClient Response object.
         """
-        return self._execute(self.session.put, 'PUT', resource, body, **query_params)
+        return self._execute(self.session.put, 'PUT', resource, body, json_fields, **query_params)
 
-    def delete(self, resource, body=None, **query_params):
+    def delete(self, resource, body=None, json_fields=None, **query_params):
         """
         Generic TeleSign REST API DELETE handler.
 
@@ -206,9 +207,9 @@ class RestClient(requests.models.RequestEncodingMixin):
         :param query_params: query_params to perform the DELETE request with, as a dictionary.
         :return: The RestClient Response object.
         """
-        return self._execute(self.session.delete, 'DELETE', resource, body, **query_params)
+        return self._execute(self.session.delete, 'DELETE', resource, body, json_fields, **query_params)
 
-    def _execute(self, method_function, method_name, resource, body=None, **query_params):
+    def _execute(self, method_function, method_name, resource, body=None, json_fields=None, **query_params):
         """
         Generic TeleSign REST API request handler.
 
@@ -222,7 +223,11 @@ class RestClient(requests.models.RequestEncodingMixin):
         resource_uri = "{api_host}{resource}".format(api_host=self.api_host, resource=resource)
 
         url_encoded_fields = self._encode_params(query_params)
-        if body:
+        if json_fields:
+            fields = json.dumps(json_fields)
+            url_encoded_fields = fields
+
+        if body or json_fields:
             content_type = "application/json"
         else:
             content_type = None  # set later
@@ -235,13 +240,14 @@ class RestClient(requests.models.RequestEncodingMixin):
                                                        user_agent=self.user_agent,
                                                        content_type=content_type,
                                                        auth_method=self.auth_method)
-
         if method_name in ['POST', 'PUT']:
             payload = {}
             if body:
                 payload['json'] = body
             if query_params:
                 payload['data'] = url_encoded_fields
+            if json_fields:
+                payload = {'data': url_encoded_fields}
         else:
             payload = {'params': url_encoded_fields}
 
