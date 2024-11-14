@@ -119,14 +119,14 @@ class RestClient(requests.models.RequestEncodingMixin):
             content_type = "application/x-www-form-urlencoded" if method_name in ("POST", "PUT") else ""
 
         # Default auth_method is Digest if not explicitly specified
-        if auth_method == AuthMethod.BASIC:
+        if auth_method == AuthMethod.BASIC.value:
             usr_apikey = "{customer_id}:{api_key}".format(customer_id=customer_id,
                                                           api_key=api_key)
             b64val = b64encode(usr_apikey.encode())
-            authorization = "{auth_method} {b64val}".format(auth_method=AuthMethod.BASIC,
+            authorization = "{auth_method} {b64val}".format(auth_method=AuthMethod.BASIC.value,
                                                             b64val=b64val.decode())
         else:
-            auth_method = AuthMethod.HMAC_SHA256
+            auth_method = AuthMethod.HMAC_SHA256.value
 
             string_to_sign_builder = ["{method}".format(method=method_name)]
 
