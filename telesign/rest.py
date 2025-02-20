@@ -198,6 +198,9 @@ class RestClient(requests.models.RequestEncodingMixin):
         """
         return self._execute(self.session.put, 'PUT', resource, body, json_fields, **query_params)
 
+    def set_endpoint(self, rest_endpoint):
+        self.api_host = rest_endpoint
+
     def delete(self, resource, body=None, json_fields=None, **query_params):
         """
         Generic TeleSign REST API DELETE handler.
