@@ -24,10 +24,6 @@ class RestClient(requests.models.RequestEncodingMixin):
 
     See https://developer.telesign.com for detailed API documentation.
     """
-    user_agent = "TeleSignSDK/python-{sdk_version} Python/{python_version} Requests/{requests_version}".format(
-        sdk_version=telesign.__version__,
-        python_version=python_version(),
-        requests_version=requests.__version__)
 
     class Response(object):
         """
@@ -51,6 +47,9 @@ class RestClient(requests.models.RequestEncodingMixin):
                  customer_id,
                  api_key,
                  rest_endpoint='https://rest-api.telesign.com',
+                 source="python_telesign",
+                 sdk_version_origin=None,
+                 sdk_version_dependency=None,
                  proxies=None,
                  timeout=10,
                  auth_method=None):
@@ -76,6 +75,17 @@ class RestClient(requests.models.RequestEncodingMixin):
         self.timeout = timeout
 
         self.auth_method = auth_method
+
+        current_version_sdk = telesign.__version__ if source == "python_telesign" else sdk_version_origin
+
+        self.user_agent = "TeleSignSDK/python Python/{python_version} Requests/{requests_version} OriginatingSDK/{source} SDKVersion/{sdk_version}".format(
+        python_version=python_version(),
+        requests_version=requests.__version__,
+        source=source,
+        sdk_version=current_version_sdk)
+
+        if source != "python_telesign":
+            self.user_agent = self.user_agent + " DependencySDKVersion/{sdk_version_dependency}".format(sdk_version_dependency=sdk_version_dependency)
 
     @staticmethod
     def generate_telesign_headers(customer_id,

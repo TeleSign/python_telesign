@@ -18,6 +18,7 @@ class TestRest(TestCase):
     def setUp(self):
         self.customer_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
         self.api_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+        self.rest_endpoint = "https://rest-api.telesign.com"
 
     def test_rest_client_constructor_basic(self):
 
@@ -42,6 +43,19 @@ class TestRest(TestCase):
         self.assertEqual(response.body, requests_response.text)
         self.assertEqual(response.ok, requests_response.ok)
         self.assertEqual(response.json, requests_response.json())
+
+    def test_rest_client_response_constructor_from_full_service(self):
+
+        client = RestClient(self.customer_id,
+                            self.api_key,
+                            self.rest_endpoint,
+                            "python_telesign_enterprise",
+                            "1.0.0",
+                            "2.0.0")
+
+        self.assertIn("OriginatingSDK/python_telesign_enterprise", client.user_agent)
+        self.assertIn("SDKVersion/1.0.0", client.user_agent)
+        self.assertIn("DependencySDKVersion/2.0.0", client.user_agent)
 
     def test_generate_telesign_headers_with_post(self):
         method_name = 'POST'
