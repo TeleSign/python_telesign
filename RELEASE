@@ -1,3 +1,15 @@
+2.2.7
+- Added tracking to requests
+
+2.2.6
+- Add setters for URL
+
+2.2.5
+- Fixing auth issue that was causing requests to fail
+
+2.2.4
+- Resolved an issue causing PhoneID requests to fail
+
 2.2.3
 - Added support for Intelligence(basic auth) API
 
