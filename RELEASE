@@ -1,3 +1,6 @@
+2.3.0
+- Added patch method to the RestClient class to facilitate Update Verification Process action
+
 2.2.7
 - Added tracking to requests
 

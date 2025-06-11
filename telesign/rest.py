@@ -221,6 +221,18 @@ class RestClient(requests.models.RequestEncodingMixin):
         :return: The RestClient Response object.
         """
         return self._execute(self.session.delete, 'DELETE', resource, body, json_fields, **query_params)
+    
+    def patch(self, resource, body=None, json_fields=None, **query_params):
+        """
+        Generic TeleSign REST API PATCH handler.
+
+        :param resource: The partial resource URI to perform the request against, as a string.
+        :param body: (optional) A dictionary sent as a part of request body.
+        :param json_fields: (optional) A dictionary sent as a JSON body.
+        :param query_params: query_params to perform the PATCH request with, as a dictionary.
+        :return: The RestClient Response object.
+        """
+        return self._execute(self.session.patch, 'PATCH', resource, body, json_fields, **query_params)
 
     def _execute(self, method_function, method_name, resource, body=None, json_fields=None, **query_params):
         """
