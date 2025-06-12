@@ -78,7 +78,7 @@ class RestClient(requests.models.RequestEncodingMixin):
 
         current_version_sdk = telesign.__version__ if source == "python_telesign" else sdk_version_origin
 
-        self.user_agent = "TelesignSDK/python Python/{python_version} Requests/{requests_version} OriginatingSDK/{source} SDKVersion/{sdk_version}".format(
+        self.user_agent = "TeleSignSDK/python Python/{python_version} Requests/{requests_version} OriginatingSDK/{source} SDKVersion/{sdk_version}".format(
         python_version=python_version(),
         requests_version=requests.__version__,
         source=source,
