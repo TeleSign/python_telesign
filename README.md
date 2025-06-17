@@ -39,4 +39,25 @@ If you use a Telesign SDK to make your request, authentication is handled behind
 * Browse our [Developer Portal](https://developer.telesign.com) for tutorials, how-to guides, reference content, and more.
 * Check out our [sample code](https://github.com/TeleSign/sample_code) on GitHub.
 
+## HTTP Keep-Alive and Connection Errors
+
+TeleSign endpoints close idle HTTP keep-alive connections after 499 seconds. If you attempt to reuse a connection older than this, you may get a 'connection reset by peer' error.
+
+To avoid this, you can use the `pool_recycle` parameter when creating a client (default: 480 seconds):
+
+```python
+from telesignenterprise.verify import VerifyClient
+client = VerifyClient(CUSTOMER_ID, API_KEY, pool_recycle=300)
+```
+
+This will automatically refresh the HTTP session before it becomes stale.
+
+### Troubleshooting
+- If you encounter connection errors (e.g., 'connection reset by peer'), set `pool_recycle` to a value less than 499 (e.g., 300-480).
+- Alternatively, you can force the header `Connection: close` on each request to disable keep-alive:
+
+```python
+client.session.headers.update({"Connection": "close"})
+```
+
 
