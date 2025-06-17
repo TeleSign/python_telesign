@@ -256,6 +256,17 @@ class RestClient(requests.models.RequestEncodingMixin):
                 self.session.close()
             self.session = self._create_session()
 
+    def _create_session(self):
+        session = requests.Session()
+        self._session_created_at = time.time()
+        return session
+
+    def _ensure_session(self):
+        if self._session_created_at is None or (time.time() - self._session_created_at > self.pool_recycle):
+            if self.session:
+                self.session.close()
+            self.session = self._create_session()
+
     def _execute(self, method_function, method_name, resource, body=None, json_fields=None, **query_params):
         """
         Generic Telesign REST API request handler.
