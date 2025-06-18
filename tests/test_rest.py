@@ -291,3 +291,22 @@ class TestRest(TestCase):
                          "client.session.post.call_args args do not match expected")
         self.assertEqual(post_kwargs, expected_post_kwargs,
                          "client.session.post.call_args kwargs do not match expected")
+
+    def test_session_adapter_is_httpadapter(self):
+        client = RestClient(self.customer_id, self.api_key)
+        https_adapter = client.session.adapters["https://"]
+        import requests
+        self.assertIsInstance(https_adapter, requests.adapters.HTTPAdapter)
+
+    @patch("time.time")
+    def test_session_refresh_on_pool_recycle(self, mock_time):
+        # Simulate time to force session recycling
+        mock_time.return_value = 1000
+        client = RestClient(self.customer_id, self.api_key, pool_recycle=10)
+        created_at_first = client._session_created_at
+        # Advance time beyond the threshold
+        mock_time.return_value = 1012
+        # Force a request (any method calls _ensure_session)
+        client._ensure_session()
+        created_at_second = client._session_created_at
+        self.assertNotEqual(created_at_first, created_at_second)

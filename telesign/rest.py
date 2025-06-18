@@ -6,6 +6,7 @@ from base64 import b64encode, b64decode
 from email.utils import formatdate
 from hashlib import sha256
 from platform import python_version
+import time
 
 import requests
 import json
@@ -52,7 +53,8 @@ class RestClient(requests.models.RequestEncodingMixin):
                  sdk_version_dependency=None,
                  proxies=None,
                  timeout=10,
-                 auth_method=None):
+                 auth_method=None,
+                 pool_recycle=480):
         """
         Telesign RestClient useful for making generic RESTful requests against our API.
 
@@ -62,13 +64,22 @@ class RestClient(requests.models.RequestEncodingMixin):
         :param proxies: (optional) Dictionary mapping protocol or protocol and hostname to the URL of the proxy.
         :param timeout: (optional) How long to wait for the server to send data before giving up, as a float,
                         or as a (connect timeout, read timeout) tuple
+        :param pool_recycle: (optional) Time in seconds to recycle the HTTP session to avoid stale connections (default 480).
+            If a session is older than this value, it will be closed and a new session will be created automatically before each request.
+            This helps prevent errors due to HTTP keep-alive connections being closed by the server after inactivity.
+
+        HTTP Keep-Alive behavior:
+            TeleSign endpoints close idle HTTP keep-alive connections after 499 seconds. If you attempt to reuse a connection older than this, you may get a 'connection reset by peer' error.
+            By default, pool_recycle=480 ensures sessions are refreshed before this limit.
         """
         self.customer_id = customer_id
         self.api_key = api_key
 
         self.api_host = rest_endpoint
 
-        self.session = requests.Session()
+        self.pool_recycle = pool_recycle
+        self._session_created_at = None
+        self.session = self._create_session()
 
         self.session.proxies = proxies if proxies else {}
 
@@ -234,6 +245,28 @@ class RestClient(requests.models.RequestEncodingMixin):
         """
         return self._execute(self.session.patch, 'PATCH', resource, body, json_fields, **query_params)
 
+    def _create_session(self):
+        session = requests.Session()
+        self._session_created_at = time.time()
+        return session
+
+    def _ensure_session(self):
+        if self._session_created_at is None or (time.time() - self._session_created_at > self.pool_recycle):
+            if self.session:
+                self.session.close()
+            self.session = self._create_session()
+
+    def _create_session(self):
+        session = requests.Session()
+        self._session_created_at = time.time()
+        return session
+
+    def _ensure_session(self):
+        if self._session_created_at is None or (time.time() - self._session_created_at > self.pool_recycle):
+            if self.session:
+                self.session.close()
+            self.session = self._create_session()
+
     def _execute(self, method_function, method_name, resource, body=None, json_fields=None, **query_params):
         """
         Generic Telesign REST API request handler.
@@ -245,6 +278,7 @@ class RestClient(requests.models.RequestEncodingMixin):
         :param query_params: query_params to perform the HTTP request with, as a dictionary.
         :return: The RestClient Response object.
         """
+        self._ensure_session()
         resource_uri = "{api_host}{resource}".format(api_host=self.api_host, resource=resource)
 
         url_encoded_fields = self._encode_params(query_params)
