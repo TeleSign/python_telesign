@@ -300,13 +300,13 @@ class TestRest(TestCase):
 
     @patch("time.time")
     def test_session_refresh_on_pool_recycle(self, mock_time):
-        # Simula el tiempo para forzar el reciclado
+        # Simulate time to force session recycling
         mock_time.return_value = 1000
         client = RestClient(self.customer_id, self.api_key, pool_recycle=10)
         created_at_first = client._session_created_at
-        # Avanza el tiempo más allá del umbral
+        # Advance time beyond the threshold
         mock_time.return_value = 1012
-        # Forzar un request (cualquier método llama _ensure_session)
+        # Force a request (any method calls _ensure_session)
         client._ensure_session()
         created_at_second = client._session_created_at
         self.assertNotEqual(created_at_first, created_at_second)

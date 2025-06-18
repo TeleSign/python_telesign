@@ -1,3 +1,7 @@
+2.3.1
+- Adds automatic HTTP session recycling (`pool_recycle`).
+- Improves keep-alive connection handling.
+
 2.3.0
 - Added PATCH method to the RestClient class to facilitate Update Verification Process action
 
