@@ -5,7 +5,6 @@ from telesign.rest import RestClient
 from telesign.util import AuthMethod
 
 INTELLIGENCE_BASE_URL = "https://detect.telesign.com"
-INTELLIGENCE_ENDPOINT_PATH = "/intelligence"
 
 
 class IntelligenceClient(RestClient):
@@ -24,16 +23,3 @@ class IntelligenceClient(RestClient):
             auth_method=AuthMethod.BASIC.value,
             **kwargs
         )
-
-    def intelligence(self, params):
-        """
-        Telesign Intelligence is like a credit check for digital profiles.
-
-        You submit a phone number, IP, and email to the service, the individual
-        identifiers are each evaluated, and then a score is returned telling you how risky
-        that user is. You decide whether to proceed based on the score.
-
-        See https://developer.telesign.com/enterprise/docs/intelligence-overview
-        for detailed API documentation.
-        """
-        return self.post(INTELLIGENCE_ENDPOINT_PATH, body=params, query_params=None)
