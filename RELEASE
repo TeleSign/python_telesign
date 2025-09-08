@@ -1,3 +1,7 @@
+3.0.0
+- Removed all functionality and methods for the Legacy Intelligence Use Case API
+- Removed all functionality and methods for App Verify SDK
+
 2.3.1
 - Adds automatic HTTP session recycling (`pool_recycle`).
 - Improves keep-alive connection handling.
