@@ -6,12 +6,9 @@ from setuptools import setup, find_packages
 
 EXCLUDE_FROM_PACKAGES = ['tests']
 
-needs_mock = sys.version_info < (3, 3)
-mock = ['mock'] if needs_mock else []
-
 here = path.abspath(path.dirname(__file__))
 
-version = "3.0.0"
+version = "3.0.1"
 
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
@@ -34,6 +31,12 @@ setup(name='telesign',
           "Programming Language :: Python :: 3.4",
           "Programming Language :: Python :: 3.5",
           "Programming Language :: Python :: 3.6",
+          "Programming Language :: Python :: 3.7",
+          "Programming Language :: Python :: 3.8",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
       ],
       long_description=long_description,
       keywords='telesign, sms, voice, mobile, authentication, identity, messaging',
@@ -42,6 +45,6 @@ setup(name='telesign',
       url="https://github.com/telesign/python_telesign",
       install_requires=['requests'],
       test_suite='nose.collector',
-      tests_require=['nose', 'pytz'] + mock,
+      tests_require=['nose', 'pytz'],
       packages=find_packages(exclude=EXCLUDE_FROM_PACKAGES),
       )

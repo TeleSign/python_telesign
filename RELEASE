@@ -1,3 +1,8 @@
+3.0.1
+- Removed deprecated pkg_resources.declare_namespace() usage.
+- Cleaned up old mock dependency logic.
+- Updated classifiers to Python 3.7–3.12.
+
 3.0.0
 - Removed all functionality and methods for the Legacy Intelligence Use Case API
 - Removed all functionality and methods for App Verify SDK
