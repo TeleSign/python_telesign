@@ -1,25 +1,35 @@
-from __future__ import unicode_literals
-
 from telesign.rest import RestClient
 
-SCORE_RESOURCE = "/v1/score/{phone_number}"
-
+DETECT_HOST = "https://detect.telesign.com"
+INTELLIGENCE_RESOURCE = "/intelligence/phone"
 
 class ScoreClient(RestClient):
     """
-    Score provides risk information about a specified phone number.
+    ScoreClient for TeleSign Intelligence Cloud.
+    Supports POST /intelligence/phone endpoint(Cloud migration).
     """
 
-    def __init__(self, customer_id, api_key, **kwargs):
-        super(ScoreClient, self).__init__(customer_id, api_key, **kwargs)
+    def __init__(self, customer_id, api_key, rest_endpoint=DETECT_HOST, **kwargs):
+        super(ScoreClient, self).__init__(customer_id, api_key, rest_endpoint, **kwargs)
 
     def score(self, phone_number, account_lifecycle_event, **params):
         """
-        Score is an API that delivers reputation scoring based on phone number intelligence, traffic patterns, machine
-        learning, and a global data consortium.
-
-        See https://developer.telesign.com/docs/score-api for detailed API documentation.
+        Obtain a risk recommendation for a phone number using Telesign Intelligence Cloud API.
+        Required parameters:
+          - phone_number
+          - account_lifecycle_event ("create", "sign-in", "transact", "update", "delete")
+        Optional parameters: account_id, device_id, email_address, external_id, originating_ip, etc.
         """
-        return self.post(SCORE_RESOURCE.format(phone_number=phone_number),
-                         account_lifecycle_event=account_lifecycle_event,
-                         **params)
+        if not phone_number:
+            raise ValueError("phone_number cannot be null or empty")
+
+        if not account_lifecycle_event:
+            raise ValueError("account_lifecycle_event cannot be null or empty")
+
+        params["phone_number"] = phone_number
+        params["account_lifecycle_event"] = account_lifecycle_event
+
+        return self.post(
+            INTELLIGENCE_RESOURCE, 
+            **params
+        )
