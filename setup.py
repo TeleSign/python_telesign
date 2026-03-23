@@ -1,17 +1,21 @@
-import sys
-from codecs import open
 from os import path
-
 from setuptools import setup, find_packages
 
 EXCLUDE_FROM_PACKAGES = ["tests"]
 
 here = path.abspath(path.dirname(__file__))
 
-version = "4.0.0"
+version = "4.0.1"
 
-with open(path.join(here, "README.rst"), encoding="utf-8") as f:
-    long_description = f.read()
+version_path = path.join(here, "telesign", "_version.py")
+with open(version_path, "w") as f:
+    f.write('"""Auto-generated version file"""\n__version__ = "{}"\n'.format(version))
+
+try:
+    with open(path.join(here, "README.rst"), encoding="utf-8") as f:
+        long_description = f.read()
+except (IOError, Exception):
+    long_description = ""
 
 setup(
     name="telesign",
