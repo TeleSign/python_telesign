@@ -1,3 +1,6 @@
+4.0.1
+- Added fix for pkg_resources removed from setuptools 82
+
 4.0.0
 - Added support for Intelligence Cloud to use new endpoint
 
