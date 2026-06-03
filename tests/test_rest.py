@@ -5,6 +5,8 @@ from email.utils import parsedate_tz
 from unittest import TestCase
 from uuid import UUID
 
+import requests
+
 from telesign.rest import RestClient
 from telesign.util import AuthMethod
 
@@ -269,6 +271,50 @@ class TestRest(TestCase):
                          "client.session.delete.call_args args do not match expected")
         self.assertEqual(delete_kwargs, expected_delete_kwargs,
                          "client.session.delete.call_args kwargs do not match expected")
+    
+    @patch('requests.Session.patch')
+    @patch('telesign.rest.RestClient.generate_telesign_headers', return_value={})
+    def test_patch(self, mock_generate_telesign_headers, mock_patch):
+        test_host = 'https://test.com'
+        test_resource = '/test/resource'
+        test_params = {'test': '123_\u03ff_test'}
+
+        client = RestClient(self.customer_id, self.api_key, rest_endpoint=test_host)
+
+        expected_patch_args = ('https://test.com/test/resource',)
+        expected_patch_kwargs = {'headers': {}, 'params': 'test=123_%CF%BF_test', 'timeout': client.timeout}
+
+        client.patch(test_resource, **test_params)
+
+        self.assertEqual(client.session.patch.call_count, 1, "client.session.patch not called")
+
+        patch_args, patch_kwargs = client.session.patch.call_args
+        self.assertEqual(patch_args, expected_patch_args,
+                         "client.session.patch.call_args args do not match expected")
+        self.assertEqual(patch_kwargs, expected_patch_kwargs,
+                         "client.session.patch.call_args kwargs do not match expected")
+        
+    @patch("time.time")
+    def test_create_session(self, mock_time):
+        mock_time.return_value = 1000
+        client = RestClient(self.customer_id, self.api_key)
+        
+        self.assertIsNotNone(client.session)
+        self.assertEqual(client._session_created_at, 1000)
+        self.assertIsInstance(client.session, requests.Session)
+
+    @patch("time.time")
+    def test_ensure_session(self, mock_time):
+        mock_time.return_value = 1000
+        client = RestClient(self.customer_id, self.api_key, pool_recycle=10)
+        initial_session = client.session
+        initial_created_at = client._session_created_at
+        
+        mock_time.return_value = 1012
+        client._ensure_session()
+        
+        self.assertIsNot(client.session, initial_session)
+        self.assertNotEqual(client._session_created_at, initial_created_at)
 
     @patch('telesign.rest.RestClient.generate_telesign_headers', return_value={})
     def test_post_basic_auth(self, mock_generate_telesign_headers):
@@ -295,7 +341,6 @@ class TestRest(TestCase):
     def test_session_adapter_is_httpadapter(self):
         client = RestClient(self.customer_id, self.api_key)
         https_adapter = client.session.adapters["https://"]
-        import requests
         self.assertIsInstance(https_adapter, requests.adapters.HTTPAdapter)
 
     @patch("time.time")
@@ -310,3 +355,5 @@ class TestRest(TestCase):
         client._ensure_session()
         created_at_second = client._session_created_at
         self.assertNotEqual(created_at_first, created_at_second)
+
+    
