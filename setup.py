@@ -5,7 +5,7 @@ EXCLUDE_FROM_PACKAGES = ["tests"]
 
 here = path.abspath(path.dirname(__file__))
 
-version = "4.0.1"
+version = "4.1.0"
 
 version_path = path.join(here, "telesign", "_version.py")
 with open(version_path, "w") as f:
