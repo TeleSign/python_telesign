@@ -1,75 +1,109 @@
 from __future__ import unicode_literals
+
 import json
 import os
-from unittest import TestCase, mock
+import pytest
+from unittest.mock import Mock, patch
+
 from telesign.messaging import MessagingClient
 
-class TestMessaging(TestCase):
-    def setUp(self):
-        self.customer_id = os.getenv('CUSTOMER_ID', 'FFFFFFFF-EEEE-DDDD-1234-AB1234567890')
-        self.api_key = os.getenv('API_KEY', 'EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==')
-        self.phone_number_test = os.getenv('PHONE_NUMBER', 'phone_number')
-        self.client = MessagingClient(self.customer_id, self.api_key)
 
-    def test_messaging_constructor(self):
-        self.assertEqual(self.client.customer_id, self.customer_id)
-        self.assertEqual(self.client.api_key, self.api_key)
+@pytest.fixture
+def messaging_client():
+    customer_id = os.getenv("CUSTOMER_ID", "FFFFFFFF-EEEE-DDDD-1234-AB1234567890")
+    api_key = os.getenv(
+        "API_KEY",
+        "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==",
+    )
+    return MessagingClient(customer_id, api_key)
 
-    @mock.patch('telesign.rest.requests.Session.post')
-    def test_messaging_message(self, mock_post):
-        expected_response = {
-            "reference_id": "0123456789ABCDEF0123456789ABCDEF",
-            "external_id": None,
-            "status": {
-                "code": 290,
-                "description": "Message in progress"
-            }
-        }
-        mock_response = mock.Mock(
+
+@pytest.fixture
+def customer_id():
+    return os.getenv("CUSTOMER_ID", "FFFFFFFF-EEEE-DDDD-1234-AB1234567890")
+
+
+@pytest.fixture
+def api_key():
+    return os.getenv(
+        "API_KEY",
+        "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==",
+    )
+
+
+@pytest.fixture
+def phone_number():
+    return os.getenv("PHONE_NUMBER", "phone_number")
+
+
+def test_messaging_constructor(messaging_client, customer_id, api_key):
+    assert messaging_client.customer_id == customer_id
+    assert messaging_client.api_key == api_key
+
+
+def test_messaging_message(messaging_client, phone_number):
+    expected_response = {
+        "reference_id": "0123456789ABCDEF0123456789ABCDEF",
+        "external_id": None,
+        "status": {"code": 290, "description": "Message in progress"},
+    }
+
+    with patch("telesign.rest.requests.Session.post") as mock_post:
+        mock_response = Mock(
             status_code=200,
-            headers={'Content-Type': 'application/json'},
+            headers={"Content-Type": "application/json"},
             ok=True,
-            text=json.dumps(expected_response)
+            text=json.dumps(expected_response),
         )
         mock_response.json.return_value = expected_response
         mock_post.return_value = mock_response
-        
-        response = self.client.message(self.phone_number_test, "Hello, this is a test message!", "ARN")
+
+        response = messaging_client.message(
+            phone_number, "Hello, this is a test message!", "ARN"
+        )
+
+        mock_post.assert_called_once()
 
         called_url = mock_post.call_args[0][0]
-        self.assertIn('/v1/messaging', called_url)
-        called_kwargs = mock_post.call_args[1] if mock_post.call_args else {}
-        called_data = called_kwargs.get('data', '')
+        called_kwargs = mock_post.call_args[1]
 
-        self.assertTrue(called_data, "POST data is empty, expected form parameters")
-        self.assertEqual(response.headers.get('Content-Type'), 'application/json', "Content-Type args do not match expected")
-        self.assertEqual(response.status_code, 200, "Status code args do not match expected")
-        self.assertEqual(response.json, expected_response, "Response does not match expected mock response")
-        
-    @mock.patch('telesign.rest.requests.Session.get')
-    def test_messaging_status(self, mock_get):
-        expected_response = {
-            "status": {
-                "updated_on": "2026-05-29T17:38:49.049000Z",
-                "code": 203,
-                "description": "Delivered to gateway"
-            },
-            "reference_id": "0123456789ABCDEF0123456789ABCDEF"
-        }
-        mock_response = mock.Mock(
+        assert "/v1/messaging" in called_url
+        assert called_kwargs.get("data")
+
+        assert response.headers.get("Content-Type") == "application/json"
+        assert response.status_code == 200
+        assert response.json == expected_response
+
+
+def test_messaging_status(messaging_client):
+    reference_id = "0123456789ABCDEF0123456789ABCDEF"
+
+    expected_response = {
+        "status": {
+            "updated_on": "2026-05-29T17:38:49.049000Z",
+            "code": 203,
+            "description": "Delivered to gateway",
+        },
+        "reference_id": reference_id,
+    }
+
+    with patch("telesign.rest.requests.Session.get") as mock_get:
+        mock_response = Mock(
             status_code=200,
-            headers={'Content-Type': 'application/json'},
+            headers={"Content-Type": "application/json"},
             ok=True,
-            text=json.dumps(expected_response)
+            text=json.dumps(expected_response),
         )
         mock_response.json.return_value = expected_response
         mock_get.return_value = mock_response
 
-        response = self.client.status("0123456789ABCDEF0123456789ABCDEF")
+        response = messaging_client.status(reference_id)
+
+        mock_get.assert_called_once()
 
         called_url = mock_get.call_args[0][0]
-        self.assertIn('/v1/messaging/0123456789ABCDEF0123456789ABCDEF', called_url)
 
-        self.assertEqual(response.headers.get('Content-Type'), 'application/json', "Content-Type args do not match expected")
-        self.assertEqual(response.status_code, 200, "Status code args do not match expected")
-        self.assertEqual(response.json, expected_response, "Response does not match expected mock response")
+        assert called_url.endswith(f"/v1/messaging/{reference_id}")
+        assert response.headers.get("Content-Type") == "application/json"
+        assert response.status_code == 200
+        assert response.json == expected_response
