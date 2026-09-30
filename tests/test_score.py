@@ -7,7 +7,6 @@ from urllib.parse import quote
 from unittest.mock import Mock, patch
 
 from telesign.score import ScoreClient
-from urllib.parse import quote
 
 
 @pytest.fixture

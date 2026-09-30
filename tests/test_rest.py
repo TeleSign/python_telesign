@@ -7,8 +7,6 @@ from email.utils import parsedate_tz
 from uuid import UUID
 from unittest.mock import Mock, patch
 
-import requests
-
 from telesign.rest import RestClient
 from telesign.util import AuthMethod
 
