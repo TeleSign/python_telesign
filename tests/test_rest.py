@@ -1,359 +1,387 @@
 from __future__ import unicode_literals
 
-import sys
-from email.utils import parsedate_tz
-from unittest import TestCase
-from uuid import UUID
-
 import requests
+import pytest
+
+from email.utils import parsedate_tz
+from uuid import UUID
+from unittest.mock import Mock, patch
 
 from telesign.rest import RestClient
 from telesign.util import AuthMethod
 
-if sys.version_info < (3, 3):
-    from mock import Mock, patch
-else:
-    from unittest.mock import Mock, patch
-
-
-class TestRest(TestCase):
-    def setUp(self):
-        self.customer_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
-        self.api_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
-        self.rest_endpoint = "https://rest-api.telesign.com"
-
-    def test_rest_client_constructor_basic(self):
-
-        client = RestClient(self.customer_id,
-                            self.api_key)
-
-        self.assertEqual(client.customer_id, self.customer_id)
-        self.assertEqual(client.api_key, self.api_key)
-
-    def test_rest_client_response_constructor_basic(self):
-
-        requests_response = Mock(status_code=200,
-                                 headers={'Header': 'Value'},
-                                 text="{'test': 123}",
-                                 ok=True)
-
-        requests_response.json.return_value = {'test': 123}
-
-        response = RestClient.Response(requests_response)
-        self.assertEqual(response.status_code, requests_response.status_code)
-        self.assertEqual(response.headers, requests_response.headers)
-        self.assertEqual(response.body, requests_response.text)
-        self.assertEqual(response.ok, requests_response.ok)
-        self.assertEqual(response.json, requests_response.json())
-
-    def test_rest_client_response_constructor_from_full_service(self):
-
-        client = RestClient(self.customer_id,
-                            self.api_key,
-                            self.rest_endpoint,
-                            "python_telesign_enterprise",
-                            "1.0.0",
-                            "2.0.0")
-
-        self.assertIn("OriginatingSDK/python_telesign_enterprise", client.user_agent)
-        self.assertIn("SDKVersion/1.0.0", client.user_agent)
-        self.assertIn("DependencySDKVersion/2.0.0", client.user_agent)
-
-    def test_generate_telesign_headers_with_post(self):
-        method_name = 'POST'
-        date_rfc2616 = 'Wed, 14 Dec 2016 18:20:12 GMT'
-        nonce = 'A1592C6F-E384-4CDB-BC42-C3AB970369E9'
-        resource = '/v1/resource'
-        body_params_url_encoded = 'test=param'
-
-        expected_authorization_header = ('TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:'
-                                         '2xVlmbrxLjYrrPun3G3WMNG6Jon4yKcTeOoK9DjXJ/Q=')
-
-        actual_headers = RestClient.generate_telesign_headers(self.customer_id,
-                                                              self.api_key,
-                                                              method_name,
-                                                              resource,
-                                                              body_params_url_encoded,
-                                                              date_rfc2616=date_rfc2616,
-                                                              nonce=nonce,
-                                                              user_agent='unit_test')
-
-        self.assertEqual(expected_authorization_header, actual_headers['Authorization'])
-
-    def test_generate_telesign_headers_unicode_content(self):
-        method_name = 'POST'
-        date_rfc2616 = 'Wed, 14 Dec 2016 18:20:12 GMT'
-        nonce = 'A1592C6F-E384-4CDB-BC42-C3AB970369E9'
-        resource = '/v1/resource'
-        body_params_url_encoded = 'test=%CF%BF'
-
-        expected_authorization_header = ('TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:'
-                                         'h8d4I0RTxErbxYXuzCOtNqb/f0w3Ck8e5SEkGNj01+8=')
-
-        actual_headers = RestClient.generate_telesign_headers(self.customer_id,
-                                                              self.api_key,
-                                                              method_name,
-                                                              resource,
-                                                              body_params_url_encoded,
-                                                              date_rfc2616=date_rfc2616,
-                                                              nonce=nonce,
-                                                              user_agent='unit_test')
-
-        self.assertEqual(expected_authorization_header, actual_headers['Authorization'])
-
-    def test_generate_telesign_headers_with_get(self):
-        method_name = 'GET'
-        date_rfc2616 = 'Wed, 14 Dec 2016 18:20:12 GMT'
-        nonce = 'A1592C6F-E384-4CDB-BC42-C3AB970369E9'
-        resource = '/v1/resource'
-
-        expected_authorization_header = ('TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:'
-                                         'aUm7I+9GKl3ww7PNeeJntCT0iS7b+EmRKEE4LnRzChQ=')
-
-        actual_headers = RestClient.generate_telesign_headers(self.customer_id,
-                                                              self.api_key,
-                                                              method_name,
-                                                              resource,
-                                                              '',
-                                                              date_rfc2616=date_rfc2616,
-                                                              nonce=nonce,
-                                                              user_agent='unit_test')
-
-        self.assertEqual(expected_authorization_header, actual_headers['Authorization'])
-
-    def test_generate_telesign_headers_with_post_basic_authentication(self):
-        method_name = 'POST'
-        date_rfc2616 = 'Wed, 14 Dec 2016 18:20:12 GMT'
-        nonce = 'A1592C6F-E384-4CDB-BC42-C3AB970369E9'
-        resource = '/v1/resource'
-
-        expected_authorization_header =  ('Basic RkZGRkZGRkYtRUVFRS1ERERELTEyMzQtQUIxMjM'
-                                          '0NTY3ODkwOkVYQU1QTEUtLS0tVEU4c1RnZzQ1eXVzdW1vTjZCWXNCVmto'
-                                          'K3lSSjVjemdzbkNlaFphT1lsZFBKZG1GaDZOZVg4a3VuWjJ6VTFZV2FV'
-                                          'dy8wd1Y2eGZ3PT0=')
-
-        actual_headers = RestClient.generate_telesign_headers(self.customer_id,
-                                                              self.api_key,
-                                                              method_name,
-                                                              resource,
-                                                              '',
-                                                              date_rfc2616=date_rfc2616,
-                                                              nonce=nonce,
-                                                              user_agent='unit_test',
-                                                              auth_method=AuthMethod.BASIC.value)
-
-        self.assertEqual(expected_authorization_header, actual_headers['Authorization'])
-
-    def test_generate_telesign_headers_default_date_and_nonce(self):
-        method_name = 'GET'
-        resource = '/v1/resource'
-
-        actual_headers = RestClient.generate_telesign_headers(self.customer_id,
-                                                              self.api_key,
-                                                              method_name,
-                                                              resource,
-                                                              '',
-                                                              user_agent='unit_test')
-
-        self.assertFalse(parsedate_tz(actual_headers.get('Date')) is None)
-
-        try:
-            UUID(actual_headers.get('x-ts-nonce'))
-        except (TypeError, ValueError):
-            self.fail("x-ts-nonce is not a UUID")
-
-    @patch('telesign.rest.RestClient.generate_telesign_headers', return_value={})
-    def test_post(self, mock_generate_telesign_headers):
-        test_host = 'https://test.com'
-        test_resource = '/test/resource'
-        test_params = {'test': '123_\u03ff_test'}
-
-        client = RestClient(self.customer_id, self.api_key, rest_endpoint=test_host)
-        client.session.post = Mock()
-
-        expected_post_args = (u'https://test.com/test/resource',)
-        expected_post_kwargs = {'headers': {}, 'data': 'test=123_%CF%BF_test', 'timeout': client.timeout}
-
-        client.post(test_resource, **test_params)
-
-        self.assertEqual(client.session.post.call_count, 1, "client.session.post not called")
-
-        post_args, post_kwargs = client.session.post.call_args
-        self.assertEqual(post_args, expected_post_args,
-                         "client.session.post.call_args args do not match expected")
-        self.assertEqual(post_kwargs, expected_post_kwargs,
-                         "client.session.post.call_args kwargs do not match expected")
-
-    @patch('telesign.rest.RestClient.generate_telesign_headers', return_value={})
-    def test_post_body(self, mock_generate_telesign_headers):
-        test_host = 'https://test.com'
-        test_resource = '/test/resource'
-        test_params = {'test': '123_\u03ff_test'}
-
-        client = RestClient(self.customer_id, self.api_key, rest_endpoint=test_host)
-        client.session.post = Mock()
-
-        expected_post_args = (u'https://test.com/test/resource',)
-        expected_post_kwargs = {'headers': {}, 'json': test_params, 'timeout': client.timeout}
-
-        client.post(test_resource, body=test_params)
-
-        self.assertEqual(client.session.post.call_count, 1, "client.session.post not called")
-
-        post_args, post_kwargs = client.session.post.call_args
-        self.assertEqual(post_args, expected_post_args,
-                         "client.session.post.call_args args do not match expected")
-        self.assertEqual(post_kwargs, expected_post_kwargs,
-                         "client.session.post.call_args kwargs do not match expected")
-
-    @patch('telesign.rest.RestClient.generate_telesign_headers', return_value={})
-    def test_get(self, mock_generate_telesign_headers):
-        test_host = 'https://test.com'
-        test_resource = '/test/resource'
-        test_params = {'test': '123_\u03ff_test'}
-
-        client = RestClient(self.customer_id, self.api_key, rest_endpoint=test_host)
-        client.session.get = Mock()
-
-        expected_get_args = (u'https://test.com/test/resource',)
-        expected_get_kwargs = {'headers': {}, 'params': 'test=123_%CF%BF_test', 'timeout': client.timeout}
-
-        client.get(test_resource, **test_params)
-
-        self.assertEqual(client.session.get.call_count, 1, "client.session.get not called")
-
-        get_args, get_kwargs = client.session.get.call_args
-        self.assertEqual(get_args, expected_get_args,
-                         "client.session.get.call_args args do not match expected")
-        self.assertEqual(get_kwargs, expected_get_kwargs,
-                         "client.session.get.call_args kwargs do not match expected")
-
-    @patch('telesign.rest.RestClient.generate_telesign_headers', return_value={})
-    def test_put(self, mock_generate_telesign_headers):
-        test_host = 'https://test.com'
-        test_resource = '/test/resource'
-        test_params = {'test': '123_\u03ff_test'}
-
-        client = RestClient(self.customer_id, self.api_key, rest_endpoint=test_host)
-        client.session.put = Mock()
-
-        expected_put_args = (u'https://test.com/test/resource',)
-        expected_put_kwargs = {'headers': {}, 'data': 'test=123_%CF%BF_test', 'timeout': client.timeout}
-
-        client.put(test_resource, **test_params)
-
-        self.assertEqual(client.session.put.call_count, 1, "client.session.put not called")
-
-        put_args, put_kwargs = client.session.put.call_args
-        self.assertEqual(put_args, expected_put_args,
-                         "client.session.put.call_args args do not match expected")
-        self.assertEqual(put_kwargs, expected_put_kwargs,
-                         "client.session.put.call_args kwargs do not match expected")
-
-    @patch('telesign.rest.RestClient.generate_telesign_headers', return_value={})
-    def test_delete(self, mock_generate_telesign_headers):
-        test_host = 'https://test.com'
-        test_resource = '/test/resource'
-        test_params = {'test': '123_\u03ff_test'}
-
-        client = RestClient(self.customer_id, self.api_key, rest_endpoint=test_host)
-        client.session.delete = Mock()
-
-        expected_delete_args = (u'https://test.com/test/resource',)
-        expected_delete_kwargs = {'headers': {}, 'params': 'test=123_%CF%BF_test', 'timeout': client.timeout}
-
-        client.delete(test_resource, **test_params)
-
-        self.assertEqual(client.session.delete.call_count, 1, "client.session.delete not called")
-
-        delete_args, delete_kwargs = client.session.delete.call_args
-        self.assertEqual(delete_args, expected_delete_args,
-                         "client.session.delete.call_args args do not match expected")
-        self.assertEqual(delete_kwargs, expected_delete_kwargs,
-                         "client.session.delete.call_args kwargs do not match expected")
-    
-    @patch('requests.Session.patch')
-    @patch('telesign.rest.RestClient.generate_telesign_headers', return_value={})
-    def test_patch(self, mock_generate_telesign_headers, mock_patch):
-        test_host = 'https://test.com'
-        test_resource = '/test/resource'
-        test_params = {'test': '123_\u03ff_test'}
-
-        client = RestClient(self.customer_id, self.api_key, rest_endpoint=test_host)
-
-        expected_patch_args = ('https://test.com/test/resource',)
-        expected_patch_kwargs = {'headers': {}, 'params': 'test=123_%CF%BF_test', 'timeout': client.timeout}
-
-        client.patch(test_resource, **test_params)
-
-        self.assertEqual(client.session.patch.call_count, 1, "client.session.patch not called")
-
-        patch_args, patch_kwargs = client.session.patch.call_args
-        self.assertEqual(patch_args, expected_patch_args,
-                         "client.session.patch.call_args args do not match expected")
-        self.assertEqual(patch_kwargs, expected_patch_kwargs,
-                         "client.session.patch.call_args kwargs do not match expected")
-        
-    @patch("time.time")
-    def test_create_session(self, mock_time):
-        mock_time.return_value = 1000
-        client = RestClient(self.customer_id, self.api_key)
-        
-        self.assertIsNotNone(client.session)
-        self.assertEqual(client._session_created_at, 1000)
-        self.assertIsInstance(client.session, requests.Session)
-
-    @patch("time.time")
-    def test_ensure_session(self, mock_time):
-        mock_time.return_value = 1000
-        client = RestClient(self.customer_id, self.api_key, pool_recycle=10)
-        initial_session = client.session
-        initial_created_at = client._session_created_at
-        
-        mock_time.return_value = 1012
-        client._ensure_session()
-        
-        self.assertIsNot(client.session, initial_session)
-        self.assertNotEqual(client._session_created_at, initial_created_at)
-
-    @patch('telesign.rest.RestClient.generate_telesign_headers', return_value={})
-    def test_post_basic_auth(self, mock_generate_telesign_headers):
-        test_host = 'https://test.com'
-        test_resource = '/test/resource'
-        test_params = {'test': '123_\u03ff_test'}
-
-        client = RestClient(self.customer_id, self.api_key, rest_endpoint=test_host, auth_method=AuthMethod.BASIC.value)
-        client.session.post = Mock()
-
-        expected_post_args = (u'https://test.com/test/resource',)
-        expected_post_kwargs = {'headers': {}, 'data': 'test=123_%CF%BF_test', 'timeout': client.timeout}
-
-        client.post(test_resource, **test_params)
-
-        self.assertEqual(client.session.post.call_count, 1, "client.session.post not called")
-
-        post_args, post_kwargs = client.session.post.call_args
-        self.assertEqual(post_args, expected_post_args,
-                         "client.session.post.call_args args do not match expected")
-        self.assertEqual(post_kwargs, expected_post_kwargs,
-                         "client.session.post.call_args kwargs do not match expected")
-
-    def test_session_adapter_is_httpadapter(self):
-        client = RestClient(self.customer_id, self.api_key)
-        https_adapter = client.session.adapters["https://"]
-        self.assertIsInstance(https_adapter, requests.adapters.HTTPAdapter)
-
-    @patch("time.time")
-    def test_session_refresh_on_pool_recycle(self, mock_time):
-        # Simulate time to force session recycling
-        mock_time.return_value = 1000
-        client = RestClient(self.customer_id, self.api_key, pool_recycle=10)
-        created_at_first = client._session_created_at
-        # Advance time beyond the threshold
-        mock_time.return_value = 1012
-        # Force a request (any method calls _ensure_session)
-        client._ensure_session()
-        created_at_second = client._session_created_at
-        self.assertNotEqual(created_at_first, created_at_second)
-
-    
+
+@pytest.fixture
+def customer_id():
+    return "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
+
+
+@pytest.fixture
+def api_key():
+    return "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
+
+
+@pytest.fixture
+def rest_endpoint():
+    return "https://rest-api.telesign.com"
+
+
+@pytest.fixture
+def rest_client(customer_id, api_key):
+    return RestClient(customer_id, api_key)
+
+
+def test_rest_client_constructor_basic(rest_client, customer_id, api_key):
+    assert rest_client.customer_id == customer_id
+    assert rest_client.api_key == api_key
+
+
+def test_rest_client_response_constructor_basic():
+    requests_response = Mock(
+        status_code=200,
+        headers={"Header": "Value"},
+        text="{'test': 123}",
+        ok=True,
+    )
+
+    requests_response.json.return_value = {"test": 123}
+
+    response = RestClient.Response(requests_response)
+
+    assert response.status_code == requests_response.status_code
+    assert response.headers == requests_response.headers
+    assert response.body == requests_response.text
+    assert response.ok == requests_response.ok
+    assert response.json == requests_response.json()
+
+
+def test_rest_client_response_constructor_from_full_service(
+    customer_id,
+    api_key,
+    rest_endpoint,
+):
+    client = RestClient(
+        customer_id,
+        api_key,
+        rest_endpoint,
+        "python_telesign_enterprise",
+        "1.0.0",
+        "2.0.0",
+    )
+
+    assert "OriginatingSDK/python_telesign_enterprise" in client.user_agent
+    assert "SDKVersion/1.0.0" in client.user_agent
+    assert "DependencySDKVersion/2.0.0" in client.user_agent
+
+
+def test_generate_telesign_headers_with_post(customer_id, api_key):
+    expected_authorization_header = (
+        "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:"
+        "2xVlmbrxLjYrrPun3G3WMNG6Jon4yKcTeOoK9DjXJ/Q="
+    )
+
+    actual_headers = RestClient.generate_telesign_headers(
+        customer_id,
+        api_key,
+        "POST",
+        "/v1/resource",
+        "test=param",
+        date_rfc2616="Wed, 14 Dec 2016 18:20:12 GMT",
+        nonce="A1592C6F-E384-4CDB-BC42-C3AB970369E9",
+        user_agent="unit_test",
+    )
+
+    assert actual_headers["Authorization"] == expected_authorization_header
+
+
+def test_generate_telesign_headers_unicode_content(customer_id, api_key):
+    expected_authorization_header = (
+        "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:"
+        "h8d4I0RTxErbxYXuzCOtNqb/f0w3Ck8e5SEkGNj01+8="
+    )
+
+    actual_headers = RestClient.generate_telesign_headers(
+        customer_id,
+        api_key,
+        "POST",
+        "/v1/resource",
+        "test=%CF%BF",
+        date_rfc2616="Wed, 14 Dec 2016 18:20:12 GMT",
+        nonce="A1592C6F-E384-4CDB-BC42-C3AB970369E9",
+        user_agent="unit_test",
+    )
+
+    assert actual_headers["Authorization"] == expected_authorization_header
+
+
+def test_generate_telesign_headers_with_get(customer_id, api_key):
+    expected_authorization_header = (
+        "TSA FFFFFFFF-EEEE-DDDD-1234-AB1234567890:"
+        "aUm7I+9GKl3ww7PNeeJntCT0iS7b+EmRKEE4LnRzChQ="
+    )
+
+    actual_headers = RestClient.generate_telesign_headers(
+        customer_id,
+        api_key,
+        "GET",
+        "/v1/resource",
+        "",
+        date_rfc2616="Wed, 14 Dec 2016 18:20:12 GMT",
+        nonce="A1592C6F-E384-4CDB-BC42-C3AB970369E9",
+        user_agent="unit_test",
+    )
+
+    assert actual_headers["Authorization"] == expected_authorization_header
+
+
+def test_generate_telesign_headers_with_post_basic_authentication(
+    customer_id,
+    api_key,
+):
+    expected_authorization_header = (
+        "Basic RkZGRkZGRkYtRUVFRS1ERERELTEyMzQtQUIxMjM"
+        "0NTY3ODkwOkVYQU1QTEUtLS0tVEU4c1RnZzQ1eXVzdW1vTjZCWXNCVmto"
+        "K3lSSjVjemdzbkNlaFphT1lsZFBKZG1GaDZOZVg4a3VuWjJ6VTFZV2FV"
+        "dy8wd1Y2eGZ3PT0="
+    )
+
+    actual_headers = RestClient.generate_telesign_headers(
+        customer_id,
+        api_key,
+        "POST",
+        "/v1/resource",
+        "",
+        date_rfc2616="Wed, 14 Dec 2016 18:20:12 GMT",
+        nonce="A1592C6F-E384-4CDB-BC42-C3AB970369E9",
+        user_agent="unit_test",
+        auth_method=AuthMethod.BASIC.value,
+    )
+
+    assert actual_headers["Authorization"] == expected_authorization_header
+
+
+def test_generate_telesign_headers_default_date_and_nonce(
+    customer_id,
+    api_key,
+):
+    headers = RestClient.generate_telesign_headers(
+        customer_id,
+        api_key,
+        "GET",
+        "/v1/resource",
+        "",
+        user_agent="unit_test",
+    )
+
+    assert parsedate_tz(headers.get("Date")) is not None
+
+    UUID(headers.get("x-ts-nonce"))
+
+
+@patch("telesign.rest.RestClient.generate_telesign_headers", return_value={})
+def test_post(mock_headers, customer_id, api_key):
+    client = RestClient(customer_id, api_key, rest_endpoint="https://test.com")
+    client.session.post = Mock()
+
+    client.post("/test/resource", test="123_\u03ff_test")
+
+    client.session.post.assert_called_once()
+
+    args, kwargs = client.session.post.call_args
+
+    assert args == ("https://test.com/test/resource",)
+    assert kwargs == {
+        "headers": {},
+        "data": "test=123_%CF%BF_test",
+        "timeout": client.timeout,
+    }
+
+
+@patch("telesign.rest.RestClient.generate_telesign_headers", return_value={})
+def test_post_body(mock_headers, customer_id, api_key):
+    client = RestClient(customer_id, api_key, rest_endpoint="https://test.com")
+    client.session.post = Mock()
+
+    params = {"test": "123_\u03ff_test"}
+
+    client.post("/test/resource", body=params)
+
+    client.session.post.assert_called_once()
+
+    args, kwargs = client.session.post.call_args
+
+    assert args == ("https://test.com/test/resource",)
+    assert kwargs == {
+        "headers": {},
+        "json": params,
+        "timeout": client.timeout,
+    }
+
+
+@patch("telesign.rest.RestClient.generate_telesign_headers", return_value={})
+def test_get(mock_headers, customer_id, api_key):
+    client = RestClient(customer_id, api_key, rest_endpoint="https://test.com")
+    client.session.get = Mock()
+
+    client.get("/test/resource", test="123_\u03ff_test")
+
+    client.session.get.assert_called_once()
+
+    args, kwargs = client.session.get.call_args
+
+    assert args == ("https://test.com/test/resource",)
+    assert kwargs == {
+        "headers": {},
+        "params": "test=123_%CF%BF_test",
+        "timeout": client.timeout,
+    }
+
+
+@patch("telesign.rest.RestClient.generate_telesign_headers", return_value={})
+def test_put(mock_headers, customer_id, api_key):
+    client = RestClient(customer_id, api_key, rest_endpoint="https://test.com")
+    client.session.put = Mock()
+
+    client.put("/test/resource", test="123_\u03ff_test")
+
+    client.session.put.assert_called_once()
+
+    args, kwargs = client.session.put.call_args
+
+    assert args == ("https://test.com/test/resource",)
+    assert kwargs == {
+        "headers": {},
+        "data": "test=123_%CF%BF_test",
+        "timeout": client.timeout,
+    }
+
+
+@patch("telesign.rest.RestClient.generate_telesign_headers", return_value={})
+def test_delete(mock_headers, customer_id, api_key):
+    client = RestClient(customer_id, api_key, rest_endpoint="https://test.com")
+    client.session.delete = Mock()
+
+    client.delete("/test/resource", test="123_\u03ff_test")
+
+    client.session.delete.assert_called_once()
+
+    args, kwargs = client.session.delete.call_args
+
+    assert args == ("https://test.com/test/resource",)
+    assert kwargs == {
+        "headers": {},
+        "params": "test=123_%CF%BF_test",
+        "timeout": client.timeout,
+    }
+
+
+@patch("requests.Session.patch")
+@patch("telesign.rest.RestClient.generate_telesign_headers", return_value={})
+def test_patch(mock_headers, mock_patch, customer_id, api_key):
+    client = RestClient(customer_id, api_key, rest_endpoint="https://test.com")
+
+    client.patch("/test/resource", test="123_\u03ff_test")
+
+    client.session.patch.assert_called_once()
+
+    args, kwargs = client.session.patch.call_args
+
+    assert args == ("https://test.com/test/resource",)
+    assert kwargs == {
+        "headers": {},
+        "params": "test=123_%CF%BF_test",
+        "timeout": client.timeout,
+    }
+
+
+@patch("time.time")
+def test_create_session(mock_time, customer_id, api_key):
+    mock_time.return_value = 1000
+
+    client = RestClient(customer_id, api_key)
+
+    assert client.session is not None
+    assert client._session_created_at == 1000
+    assert isinstance(client.session, requests.Session)
+
+
+@patch("time.time")
+def test_ensure_session(mock_time, customer_id, api_key):
+    mock_time.return_value = 1000
+
+    client = RestClient(
+        customer_id,
+        api_key,
+        pool_recycle=10,
+    )
+
+    initial_session = client.session
+    initial_created_at = client._session_created_at
+
+    mock_time.return_value = 1012
+
+    client._ensure_session()
+
+    assert client.session is not initial_session
+    assert client._session_created_at != initial_created_at
+
+
+@patch("telesign.rest.RestClient.generate_telesign_headers", return_value={})
+def test_post_basic_auth(mock_headers, customer_id, api_key):
+    client = RestClient(
+        customer_id,
+        api_key,
+        rest_endpoint="https://test.com",
+        auth_method=AuthMethod.BASIC.value,
+    )
+
+    client.session.post = Mock()
+
+    client.post("/test/resource", test="123_\u03ff_test")
+
+    client.session.post.assert_called_once()
+
+    args, kwargs = client.session.post.call_args
+
+    assert args == ("https://test.com/test/resource",)
+    assert kwargs == {
+        "headers": {},
+        "data": "test=123_%CF%BF_test",
+        "timeout": client.timeout,
+    }
+
+
+def test_session_adapter_is_httpadapter(customer_id, api_key):
+    client = RestClient(customer_id, api_key)
+
+    https_adapter = client.session.adapters["https://"]
+
+    assert isinstance(
+        https_adapter,
+        requests.adapters.HTTPAdapter,
+    )
+
+
+@patch("time.time")
+def test_session_refresh_on_pool_recycle(
+    mock_time,
+    customer_id,
+    api_key,
+):
+    mock_time.return_value = 1000
+
+    client = RestClient(
+        customer_id,
+        api_key,
+        pool_recycle=10,
+    )
+
+    created_at_first = client._session_created_at
+
+    mock_time.return_value = 1012
+
+    client._ensure_session()
+
+    created_at_second = client._session_created_at
+
+    assert created_at_first != created_at_second
